@@ -184,11 +184,6 @@ export const servicePages: ServicePageContent[] = [
         body:
           "Retargeting structure, audience layering, exclusions, and follow-up paths designed to keep warm traffic moving instead of stalling.",
       },
-      {
-        title: "Measurement and experiment stack",
-        body:
-          "Tracking setup, test priorities, naming logic, and learning loops that make campaign decisions easier to read and act on.",
-      },
     ],
     outcomes: [
       {

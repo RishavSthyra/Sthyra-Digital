@@ -69,7 +69,9 @@ export function CreativeHero() {
       }
 
       const pageWidth = document.documentElement.clientWidth;
-      const availableWidth = Math.max(pageWidth - 20, 0);
+      const mobileViewport = pageWidth < 640;
+      const horizontalPadding = mobileViewport ? 56 : 20;
+      const availableWidth = Math.max(pageWidth - horizontalPadding, 0);
       const measuredWidth = measureNode.getBoundingClientRect().width;
 
       if (availableWidth === 0 || measuredWidth === 0) {
@@ -77,7 +79,9 @@ export function CreativeHero() {
       }
 
       const fittedSize = marqueeMeasureBase * (availableWidth / measuredWidth);
-      const clampedSize = Math.max(78, fittedSize * 0.99);
+      const clampedSize = mobileViewport
+        ? Math.max(54, Math.min(92, fittedSize * 0.9))
+        : Math.max(78, fittedSize * 0.99);
       setMarqueeViewportWidth(pageWidth);
       setMarqueeFontSize(clampedSize);
 
@@ -266,15 +270,15 @@ export function CreativeHero() {
     <section
       ref={sectionRef}
       id="top"
-      className="relative isolate min-h-[100svh] overflow-x-hidden bg-[var(--hero-bg)] text-white"
+      className="relative isolate overflow-x-hidden bg-[var(--hero-bg)] text-white sm:min-h-[100svh]"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.22),transparent_48%),radial-gradient(circle_at_20%_70%,rgba(0,180,255,0.18),transparent_38%),radial-gradient(circle_at_80%_24%,rgba(255,255,255,0.16),transparent_26%)]" />
       <div className="hero-noise absolute inset-0 opacity-35 mix-blend-soft-light" />
 
-      <div className="relative z-10 flex min-h-[100svh] w-full flex-col px-4 pb-10 pt-4 sm:px-6 sm:pb-12 sm:pt-5 lg:px-8 lg:pt-6 xl:px-12">
+      <div className="relative z-10 flex w-full flex-col px-4 pb-3 pt-4 sm:min-h-[100svh] sm:px-6 sm:pb-6 sm:pt-5 lg:px-8 lg:pb-8 lg:pt-6 xl:px-12">
         <CreativeNavbar headerRef={headerRef} />
 
-        <div className="relative flex flex-1 flex-col items-center pt-10 sm:pt-12 md:pt-16 lg:pt-6">
+        <div className="relative flex flex-1 flex-col items-center pt-8 sm:pt-10 md:pt-12 lg:pt-6">
           <div
             ref={svgLayerRef}
             className="pointer-events-none absolute left-1/2 top-[15%] z-10 max-w-none -translate-x-1/2 select-none sm:top-[14%] md:top-[15%] lg:top-[12%]"
@@ -329,7 +333,7 @@ export function CreativeHero() {
           <div className="relative z-30 mt-[clamp(0.5rem,2vh,1.5rem)] flex w-full flex-col items-center gap-5 sm:gap-6">
             <div
               ref={marqueeViewportRef}
-              className="pointer-events-none relative left-[52%] -translate-x-1/2 overflow-hidden"
+              className="pointer-events-none relative left-1/2 -translate-x-1/2 overflow-hidden sm:left-[52%]"
               style={{ width: marqueeViewportWidth ? `${marqueeViewportWidth}px` : "100vw" }}
             >
               <div

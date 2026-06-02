@@ -193,37 +193,39 @@ function RoughBubble({ slide }: { slide: ShowcaseSlide }) {
 function WorkflowCalendarCard({
   slide,
   mobile = false,
+  compact = false,
 }: {
   slide: ShowcaseSlide;
   mobile?: boolean;
+  compact?: boolean;
 }) {
   return (
     <div
       data-showcase-card
       className={`relative w-full pt-6 ${
-        mobile ? "max-w-[40rem]" : "max-w-none"
+        mobile ? "max-w-[40rem]" : compact ? "max-w-[33rem]" : "max-w-none"
       }`}
     >
       <div className="overflow-hidden rounded-[1.75rem] border border-black/10 bg-[#fffaf3] shadow-[0_18px_48px_rgba(0,0,0,0.14)] xl:rounded-[2.1rem] xl:shadow-[0_24px_70px_rgba(0,0,0,0.16)]">
         <CalendarBindings />
 
-        <div className="relative flex items-center justify-between border-b border-black/10 bg-[#f5eee4] px-4 py-3.5 sm:px-5 xl:px-6 xl:py-4">
+        <div className="relative flex items-center justify-between border-b border-black/10 bg-[#f5eee4] px-4 py-3 sm:px-5 xl:px-6 xl:py-4">
           <div className="absolute inset-x-0 top-0 h-2 bg-[linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0))]" />
           <div className="flex items-end gap-3">
             <span
               data-showcase-stage
-              className={`${baumans.className} text-[clamp(1.95rem,2.5vw,3rem)] leading-none tracking-[-0.04em] text-[#171717] xl:text-[clamp(2.1rem,3vw,3.55rem)]`}
+              className={`${baumans.className} ${compact ? "text-[clamp(1.55rem,1.9vw,2.15rem)] xl:text-[clamp(1.7rem,2.2vw,2.5rem)]" : "text-[clamp(1.75rem,2.2vw,2.6rem)] xl:text-[clamp(2rem,2.8vw,3.15rem)]"} leading-none tracking-[-0.04em] text-[#171717]`}
             >
               {slide.stage}
             </span>
-            <span className={`${comfortaa.className} pb-1 text-[0.58rem] font-bold uppercase tracking-[0.24em] text-black/34 sm:text-[0.66rem] xl:text-xs`}>
+            <span className={`${comfortaa.className} ${compact ? "text-[0.5rem] sm:text-[0.56rem] xl:text-[0.66rem]" : "text-[0.54rem] sm:text-[0.62rem] xl:text-[0.72rem]"} pb-1 font-bold uppercase tracking-[0.24em] text-black/34`}>
               phase
             </span>
           </div>
 
           <div
             data-showcase-workflow
-            className={`${comfortaa.className} rounded-full border border-black/10 bg-[#171717] px-3 py-1.5 text-[0.58rem] font-bold uppercase tracking-[0.18em] text-white sm:px-4 sm:text-[0.62rem] xl:py-2 xl:text-[0.68rem]`}
+            className={`${comfortaa.className} rounded-full border border-black/10 bg-[#171717] px-3 py-1.5 font-bold uppercase tracking-[0.18em] text-white ${compact ? "text-[0.5rem] sm:px-3.5 sm:text-[0.56rem] xl:py-1.5 xl:text-[0.62rem]" : "text-[0.54rem] sm:px-4 sm:text-[0.6rem] xl:py-2 xl:text-[0.66rem]"}`}
           >
             Workflow
           </div>
@@ -232,50 +234,163 @@ function WorkflowCalendarCard({
         <div className="px-4 pb-4 pt-4 sm:px-5 sm:pb-5 sm:pt-5 xl:px-6 xl:pb-6 xl:pt-6">
           <div
             data-showcase-chip
-            className={`${comfortaa.className} mb-3 inline-flex -rotate-[1.5deg] rounded-full border border-black/10 bg-white/82 px-4 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#3d3734] sm:text-[0.66rem] xl:mb-4 xl:py-2 xl:text-[0.72rem]`}
+            className={`${comfortaa.className} mb-3 inline-flex -rotate-[1.5deg] rounded-full border border-black/10 bg-white/82 px-4 py-1.5 font-bold uppercase tracking-[0.2em] text-[#3d3734] ${compact ? "text-[0.54rem] sm:text-[0.58rem] xl:mb-3 xl:py-1.5 xl:text-[0.64rem]" : "text-[0.58rem] sm:text-[0.62rem] xl:mb-4 xl:py-2 xl:text-[0.7rem]"}`}
           >
             How we work
           </div>
 
           <h2
             data-showcase-title
-            className={`${baumans.className} max-w-[8.5ch] text-[clamp(2.45rem,4.6vw,4.2rem)] leading-[0.88] tracking-[-0.045em] text-[#171717] sm:text-[clamp(2.8rem,4.8vw,4.65rem)] xl:text-[clamp(3.3rem,5.1vw,5.55rem)]`}
+            className={`${baumans.className} tracking-[-0.045em] text-[#171717] ${compact ? "max-w-[9.8ch] text-[clamp(1.7rem,2.7vw,2.45rem)] leading-[0.92] sm:text-[clamp(1.9rem,2.9vw,2.7rem)] xl:max-w-[9.2ch] xl:text-[clamp(2.15rem,3.2vw,3.2rem)]" : "max-w-[9.5ch] text-[clamp(2rem,3.6vw,3.2rem)] leading-[0.9] sm:text-[clamp(2.2rem,3.9vw,3.5rem)] xl:max-w-[8.5ch] xl:text-[clamp(2.85rem,4.3vw,4.6rem)]"}`}
           >
             {slide.title}
           </h2>
 
           <p
             data-showcase-body
-            className={`${comfortaa.className} mt-3 max-w-[32rem] text-[clamp(0.88rem,0.98vw,1rem)] leading-[1.72] text-[#2f2a28] sm:text-[clamp(0.94rem,1.04vw,1.06rem)] xl:mt-4 xl:text-[clamp(1rem,1.08vw,1.12rem)] xl:leading-[1.82]`}
+            className={`${comfortaa.className} mt-3 text-[#2f2a28] ${compact ? "max-w-[28rem] text-[clamp(0.78rem,0.82vw,0.86rem)] leading-[1.5] sm:text-[clamp(0.82rem,0.88vw,0.9rem)] xl:mt-3 xl:text-[clamp(0.86rem,0.92vw,0.98rem)] xl:leading-[1.62]" : "max-w-[30rem] text-[clamp(0.82rem,0.9vw,0.94rem)] leading-[1.62] sm:text-[clamp(0.88rem,0.96vw,1rem)] xl:mt-4 xl:max-w-[32rem] xl:text-[clamp(0.96rem,1.02vw,1.08rem)] xl:leading-[1.76]"}`}
           >
             {slide.body}
           </p>
 
-          <div className="mt-4 space-y-2.5 sm:space-y-3 xl:mt-6 xl:space-y-3.5">
-            {slide.bullets.map((bullet, index) => (
-              <div
-                key={bullet.title}
-                data-showcase-bullet
-                className="rounded-[1.25rem] border border-black/10 bg-white/80 px-4 py-3 shadow-[0_8px_20px_rgba(0,0,0,0.04)] sm:px-4.5 sm:py-3.5 xl:rounded-[1.45rem] xl:px-5 xl:py-4"
-              >
-                <div className="flex items-start gap-4">
-                  <div className={`${baumans.className} flex h-10 w-10 shrink-0 items-center justify-center rounded-[0.95rem] bg-[#171717] text-[0.92rem] text-white xl:h-11 xl:w-11 xl:rounded-[1rem] xl:text-[1rem]`}>
-                    0{index + 1}
-                  </div>
-
-                  <div className="min-w-0">
-                    <div className={`${comfortaa.className} text-[clamp(0.92rem,1vw,1.06rem)] font-bold leading-5 text-[#171717] xl:text-[clamp(1rem,1.08vw,1.16rem)] xl:leading-6`}>
-                      {bullet.title}
+          {mobile || compact ? (
+            <MobileBulletCarousel bullets={slide.bullets} compact={compact && !mobile} />
+          ) : (
+            <div className="mt-4 space-y-2.5 sm:space-y-3 xl:mt-5 xl:space-y-3.5">
+              {slide.bullets.map((bullet, index) => (
+                <div
+                  key={bullet.title}
+                  data-showcase-bullet
+                  className="rounded-[1.15rem] border border-black/10 bg-white/80 px-3.5 py-2.5 shadow-[0_8px_20px_rgba(0,0,0,0.04)] sm:px-4 sm:py-3 xl:rounded-[1.35rem] xl:px-5 xl:py-3.5"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className={`${baumans.className} flex h-9 w-9 shrink-0 items-center justify-center rounded-[0.85rem] bg-[#171717] text-[0.84rem] text-white xl:h-10 xl:w-10 xl:rounded-[0.95rem] xl:text-[0.92rem]`}>
+                      0{index + 1}
                     </div>
-                    <p className={`${comfortaa.className} mt-1 text-[clamp(0.82rem,0.94vw,0.92rem)] leading-5 text-[#746b67] xl:text-[clamp(0.9rem,1vw,1rem)] xl:leading-6`}>
-                      {bullet.body}
-                    </p>
+
+                    <div className="min-w-0">
+                      <div className={`${comfortaa.className} text-[clamp(0.88rem,0.96vw,1rem)] font-bold leading-5 text-[#171717] xl:text-[clamp(0.96rem,1.02vw,1.1rem)] xl:leading-6`}>
+                        {bullet.title}
+                      </div>
+                      <p className={`${comfortaa.className} mt-1 text-[clamp(0.78rem,0.88vw,0.88rem)] leading-5 text-[#746b67] xl:text-[clamp(0.86rem,0.96vw,0.96rem)] xl:leading-6`}>
+                        {bullet.body}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
+      </div>
+    </div>
+  );
+}
+
+function MobileBulletCarousel({
+  bullets,
+  compact = false,
+}: {
+  bullets: ShowcaseSlide["bullets"];
+  compact?: boolean;
+}) {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const node = carouselRef.current;
+
+    if (!node) {
+      return;
+    }
+
+    let ticking = false;
+
+    const updateActiveSlide = () => {
+      const nextIndex = Math.round(node.scrollLeft / Math.max(node.clientWidth, 1));
+      setActiveIndex((currentIndex) =>
+        currentIndex === nextIndex ? currentIndex : nextIndex,
+      );
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (ticking) {
+        return;
+      }
+
+      ticking = true;
+      window.requestAnimationFrame(updateActiveSlide);
+    };
+
+    node.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => node.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <div className="mt-4">
+      <div
+        ref={carouselRef}
+        className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {bullets.map((bullet, index) => (
+          <div key={bullet.title} className="w-full shrink-0 snap-center">
+            <div
+              data-showcase-bullet
+              className={`rounded-[1.15rem] border border-black/10 bg-white/80 shadow-[0_8px_20px_rgba(0,0,0,0.04)] ${
+                compact ? "px-3 py-2" : "px-3.5 py-2.5"
+              }`}
+            >
+              <div className="flex items-start gap-4">
+                <div className={`${baumans.className} flex shrink-0 items-center justify-center rounded-[0.85rem] bg-[#171717] text-white ${
+                  compact ? "h-8 w-8 text-[0.78rem]" : "h-9 w-9 text-[0.84rem]"
+                }`}>
+                  0{index + 1}
+                </div>
+
+                <div className="min-w-0">
+                  <div className={`${comfortaa.className} font-bold leading-5 text-[#171717] ${
+                    compact ? "text-[0.92rem]" : "text-[0.98rem]"
+                  }`}>
+                    {bullet.title}
+                  </div>
+                  <p className={`${comfortaa.className} mt-1 text-[#746b67] ${
+                    compact ? "text-[0.8rem] leading-5" : "text-[0.88rem] leading-6"
+                  }`}>
+                    {bullet.body}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-3 flex justify-center gap-2">
+        {bullets.map((bullet, index) => (
+          <button
+            key={`${bullet.title}-dash`}
+            type="button"
+            aria-label={`Go to bullet ${index + 1}`}
+            aria-pressed={activeIndex === index}
+            onClick={() => {
+              const node = carouselRef.current;
+
+              if (!node) {
+                return;
+              }
+
+              node.scrollTo({
+                left: node.clientWidth * index,
+                behavior: "smooth",
+              });
+            }}
+            className={`h-1.5 rounded-full transition-all duration-300 ${
+              activeIndex === index ? "w-8 bg-[#171717]" : "w-4 bg-black/20"
+            }`}
+          />
+        ))}
       </div>
     </div>
   );
@@ -284,11 +399,13 @@ function WorkflowCalendarCard({
 function ShowcasePanel({
   slide,
   panelWidth,
+  compact = false,
   contentRef,
   panelRef,
 }: {
   slide: ShowcaseSlide;
   panelWidth: string;
+  compact?: boolean;
   contentRef?: (node: HTMLDivElement | null) => void;
   panelRef?: (node: HTMLElement | null) => void;
 }) {
@@ -308,9 +425,13 @@ function ShowcasePanel({
 
       <div
         ref={contentRef}
-        className="relative mx-auto grid w-full max-w-[min(40rem,86vw)] grid-cols-1 items-start gap-5 px-6 py-2 lg:max-w-[min(44rem,88vw)] lg:px-7 xl:max-w-[86vw] xl:grid-cols-[1.16fr_0.84fr] xl:items-center xl:gap-8 xl:px-14 xl:py-8"
+        className={`relative mx-auto grid w-full grid-cols-1 items-start px-6 py-2 lg:px-7 ${
+          compact
+            ? "max-w-[94vw] gap-4 xl:max-w-[94vw] xl:grid-cols-[1.1fr_0.9fr] xl:items-center xl:gap-3 xl:px-9 xl:py-4"
+            : "max-w-[min(42rem,88vw)] gap-5 lg:max-w-[min(48rem,90vw)] xl:max-w-[90vw] xl:grid-cols-[1.12fr_0.88fr] xl:items-center xl:gap-3 xl:px-10 xl:py-8"
+        }`}
       >
-        <div className="relative w-full max-w-[34rem] justify-self-center xl:max-w-none xl:justify-self-auto">
+        <div className={`relative mx-auto w-full ${compact ? "max-w-[36rem] xl:max-w-[42rem]" : "max-w-[46rem] xl:max-w-[54rem]"}`}>
           <div className="mb-5 -rotate-[2deg]">
             <RoughBubble slide={slide} />
           </div>
@@ -319,12 +440,16 @@ function ShowcasePanel({
             src={slide.lottieSrc}
             loop
             autoplay
-            className="aspect-[4/3] w-full max-h-[17rem] lg:max-h-[21rem] xl:max-h-[46rem]"
+            className={`mx-auto w-full ${
+              compact
+                ? "h-[clamp(22rem,48vh,34rem)] xl:h-[clamp(26rem,56vh,40rem)]"
+                : "h-[clamp(28rem,58vh,42rem)] xl:h-[clamp(34rem,72vh,56rem)]"
+            }`}
           />
         </div>
 
         <div className="relative flex w-full justify-center">
-          <WorkflowCalendarCard slide={slide} />
+          <WorkflowCalendarCard slide={slide} compact={compact} />
         </div>
       </div>
     </article>
@@ -377,13 +502,20 @@ export function CreativeShowcaseSection() {
   const [desktopViewportHeight, setDesktopViewportHeight] = useState<number | null>(
     null,
   );
+  const [isCompactDesktop, setIsCompactDesktop] = useState(false);
 
   useEffect(() => {
     const updateDesktopViewportHeight = () => {
       if (window.innerWidth < 768) {
         setDesktopViewportHeight(null);
+        setIsCompactDesktop(false);
         return;
       }
+
+      const compactDesktop = window.innerWidth < 1440 || window.innerHeight < 920;
+      setIsCompactDesktop((currentValue) =>
+        currentValue === compactDesktop ? currentValue : compactDesktop,
+      );
 
       const tallestPanel = panelContentRefs.current.reduce((maxHeight, node) => {
         if (!node) {
@@ -397,14 +529,9 @@ export function CreativeShowcaseSection() {
         return;
       }
 
-      const compactStackedLayout = window.innerWidth < 1280;
-
-      if (compactStackedLayout) {
-        setDesktopViewportHeight(window.innerHeight);
-        return;
-      }
-
-      const nextHeight = Math.max(window.innerHeight, Math.ceil(tallestPanel));
+      const nextHeight = compactDesktop
+        ? window.innerHeight
+        : Math.max(window.innerHeight, Math.ceil(tallestPanel) + 24);
 
       setDesktopViewportHeight((currentHeight) =>
         currentHeight === nextHeight ? currentHeight : nextHeight,
@@ -609,7 +736,7 @@ export function CreativeShowcaseSection() {
   }, [desktopViewportHeight]);
 
   return (
-      <section
+    <section
       ref={sectionRef}
       id="services"
       className="relative overflow-hidden bg-[#09b7ea] py-8 md:py-0"
@@ -633,7 +760,10 @@ export function CreativeShowcaseSection() {
         }
       >
         {desktopViewportHeight ? (
-          <PaperPlaneProgressOverlay progressRef={desktopScrollProgressRef} />
+          <PaperPlaneProgressOverlay
+            progressRef={desktopScrollProgressRef}
+            compact={isCompactDesktop}
+          />
         ) : null}
 
         <div
@@ -645,6 +775,7 @@ export function CreativeShowcaseSection() {
             <ShowcasePanel
               key={slide.title}
               slide={slide}
+              compact={isCompactDesktop}
               panelWidth={`${100 / slides.length}%`}
               panelRef={(node) => {
                 desktopPanelRefs.current[index] = node;

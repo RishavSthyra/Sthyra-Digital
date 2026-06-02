@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 type PaperPlaneProgressOverlayProps = {
+  compact?: boolean;
   progressRef: MutableRefObject<number>;
 };
 
@@ -93,11 +94,26 @@ function getOverlayMetrics(
 function createFlightCurve(
   viewportWidth: number,
   metrics: OverlayMetrics,
+  compact: boolean,
 ) {
   const startX = RAIL_PADDING + metrics.planeLength * 0.46;
   const endX = viewportWidth - RAIL_PADDING - metrics.planeLength * 0.5;
   const width = Math.max(endX - startX, 1);
   const baseY = metrics.topOffset + 8;
+
+  if (compact) {
+    return new THREE.CatmullRomCurve3(
+      [
+        new THREE.Vector3(startX, baseY, 0),
+        new THREE.Vector3(startX + width * 0.28, baseY + metrics.waveMedium * 0.78, 0),
+        new THREE.Vector3(startX + width * 0.64, baseY + metrics.waveLarge * 0.72, 0),
+        new THREE.Vector3(endX, baseY + metrics.endLift, 0),
+      ],
+      false,
+      "centripetal",
+      0.45,
+    );
+  }
 
   return new THREE.CatmullRomCurve3(
     [
@@ -135,6 +151,7 @@ function disposeSceneMaterials(scene: THREE.Scene) {
 }
 
 export function PaperPlaneProgressOverlay({
+  compact = false,
   progressRef,
 }: PaperPlaneProgressOverlayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -154,11 +171,11 @@ export function PaperPlaneProgressOverlay({
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
-      antialias: true,
+      antialias: !compact,
       powerPreference: "high-performance",
     });
     renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, compact ? 1.25 : 2));
     renderer.domElement.className = "h-full w-full";
     container.appendChild(renderer.domElement);
 
@@ -186,7 +203,7 @@ export function PaperPlaneProgressOverlay({
     let overlayMetrics = getOverlayMetrics(1, 1);
     let currentX = RAIL_PADDING + overlayMetrics.planeLength * 0.46;
     let currentY = overlayMetrics.topOffset + 8;
-    let flightCurve = createFlightCurve(1, overlayMetrics);
+    let flightCurve = createFlightCurve(1, overlayMetrics, compact);
     let flightCurveLength = flightCurve.getLength();
     let planeModel: THREE.Object3D | null = null;
     let planeModelLongestSide = 1;
@@ -206,7 +223,7 @@ export function PaperPlaneProgressOverlay({
       const height = Math.max(container.clientHeight, 1);
       viewportHeight = height;
       overlayMetrics = getOverlayMetrics(width, height);
-      flightCurve = createFlightCurve(width, overlayMetrics);
+      flightCurve = createFlightCurve(width, overlayMetrics, compact);
       flightCurveLength = flightCurve.getLength();
 
       if (planeModel) {
@@ -241,8 +258,10 @@ export function PaperPlaneProgressOverlay({
         return;
       }
 
-      const points = Array.from({ length: TRAIL_SAMPLES }, (_, index) => {
-        const sampleProgress = tailProgress * (index / (TRAIL_SAMPLES - 1));
+      const sampleCount = compact ? 20 : TRAIL_SAMPLES;
+      const points = Array.from({ length: sampleCount }, (_, index) => {
+        const sampleProgress =
+          tailProgress * (index / Math.max(sampleCount - 1, 1));
         const point = getProgressPoint(sampleProgress);
         const tangent = flightCurve
           .getTangentAt(Math.min(sampleProgress + 0.002, 1))
@@ -374,7 +393,7 @@ export function PaperPlaneProgressOverlay({
       renderer.forceContextLoss();
       container.removeChild(renderer.domElement);
     };
-  }, [progressRef]);
+  }, [compact, progressRef]);
 
   return (
     <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-[clamp(88px,10vw,168px)]">

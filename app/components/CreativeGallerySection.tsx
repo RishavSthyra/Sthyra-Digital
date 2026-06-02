@@ -176,7 +176,7 @@ export function CreativeGallerySection() {
     <section
       id="notes"
       ref={sectionRef}
-      className="relative isolate min-h-[72svh] overflow-hidden bg-[#fff8ef] px-5 py-[clamp(4rem,6vw,6rem)] sm:min-h-[100svh] sm:px-8 lg:min-h-[100svh] lg:px-12"
+      className="relative isolate min-h-[72svh] overflow-hidden bg-[#fff] px-5 py-[clamp(4rem,6vw,6rem)] sm:min-h-[100svh] sm:px-8 lg:min-h-[100svh] lg:px-12"
     >
       <div className="absolute inset-0 opacity-90">
         <div

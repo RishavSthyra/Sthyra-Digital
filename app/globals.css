@@ -27,6 +27,18 @@ body {
   font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  html.site-doodle-cursor,
+  html.site-doodle-cursor body,
+  html.site-doodle-cursor body * {
+    cursor: url("/cursorimg.png") 6 4, auto !important;
+  }
+
+  html.site-doodle-cursor body :is(input, textarea) {
+    cursor: text !important;
+  }
+}
+
 .font-display {
   font-family: var(--font-irish-grover), serif;
   font-weight: 400;
@@ -78,6 +90,34 @@ body {
 .hero-marquee-track {
   width: max-content;
   will-change: transform;
+}
+
+.cursor-click-sparkle-active {
+  animation: cursor-click-sparkle 360ms cubic-bezier(0.18, 0.88, 0.32, 1.12) forwards;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+@keyframes cursor-click-sparkle {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0.08rem, 0) scale(0.68) rotate(-5deg);
+  }
+
+  18% {
+    opacity: 1;
+    transform: translate3d(0, -0.08rem, 0) scale(0.98) rotate(2deg);
+  }
+
+  64% {
+    opacity: 0.96;
+    transform: translate3d(0, -0.18rem, 0) scale(1.04) rotate(-1deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -0.26rem, 0) scale(0.92) rotate(3deg);
+  }
 }
 
 .notebook-paper {

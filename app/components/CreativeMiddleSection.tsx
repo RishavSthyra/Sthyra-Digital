@@ -3,7 +3,8 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { BsFillCursorFill } from "react-icons/bs";
 import { SketchFrame } from "@/app/components/SketchFrame";
 import { SquigglyText } from "@/components/ui/squiggly-text";
 import asteriskIcon from "@/public/icons/Sketch-annotation-element-brush-pen-icon-asterisk-1.png";
@@ -299,12 +300,151 @@ function PinHoles({ dark = false }: { dark?: boolean }) {
   );
 }
 
+type FloatingCursorNote = {
+  accent: string;
+  fill: string;
+  floatX: number;
+  floatY: number;
+  id: string;
+  label: string;
+  side: "left" | "right";
+  text: string;
+  top: string;
+};
+
+const FLOATING_CURSOR_NOTES: Record<number, FloatingCursorNote> = {
+  0: {
+    id: "hook-first",
+    label: "Hook first",
+    fill: "#ffe55a",
+    accent: "#ffe55a",
+    text: "#5f4600",
+    side: "left",
+    top: "clamp(2.4rem, 4.2vw, 3.15rem)",
+    floatX: 4,
+    floatY: -7,
+  },
+  1: {
+    id: "motion-cue",
+    label: "Motion cue",
+    fill: "#ff9a76",
+    accent: "#ff9a76",
+    text: "#ffffff",
+    side: "right",
+    top: "clamp(1.25rem, 2vw, 1.6rem)",
+    floatX: 5,
+    floatY: -6,
+  },
+  2: {
+    id: "tone-dialed",
+    label: "Tone dialed",
+    fill: "#56bef9",
+    accent: "#84d4ff",
+    text: "#ffffff",
+    side: "right",
+    top: "clamp(1.35rem, 2.15vw, 1.65rem)",
+    floatX: 4,
+    floatY: -5,
+  },
+  3: {
+    id: "story-thread",
+    label: "Story thread",
+    fill: "#fb7185",
+    accent: "#fb7185",
+    text: "#ffffff",
+    side: "left",
+    top: "clamp(2.3rem, 3.8vw, 3rem)",
+    floatX: 4,
+    floatY: 7,
+  },
+  4: {
+    id: "proof-pops",
+    label: "Proof pops",
+    fill: "#c5a0ff",
+    accent: "#b691ff",
+    text: "#ffffff",
+    side: "right",
+    top: "clamp(2.2rem, 3.3vw, 2.9rem)",
+    floatX: 4,
+    floatY: 7,
+  },
+};
+
+function FloatingCursorTooltip({ note }: { note: FloatingCursorNote }) {
+  const bubblePaddingClassName =
+    note.side === "left" ? "pl-4 pr-5" : "pl-5 pr-4";
+  const edgeGap = "clamp(0.5rem, 1vw, 1rem)";
+  const anchorTransform =
+    note.side === "left"
+      ? `translateX(calc(-100% - ${edgeGap}))`
+      : `translateX(calc(100% + ${edgeGap}))`;
+  const iconTransform =
+    note.side === "left" ? "rotate(10deg)" : "scaleX(-1) rotate(10deg)";
+
+  return (
+    <div
+      className="middle-arrow-note pointer-events-none absolute z-30"
+      data-float-x={note.floatX}
+      data-float-y={note.floatY}
+      style={{
+        top: note.top,
+        [note.side]: 0,
+      }}
+    >
+      <div style={{ transform: anchorTransform }}>
+        <div
+          className={`flex items-center gap-2.5 ${
+            note.side === "right" ? "flex-row-reverse" : ""
+          }`}
+        >
+          <div
+            className={`rounded-full ${bubblePaddingClassName} py-1.5 shadow-[0_10px_20px_rgba(0,0,0,0.14)] ring-1 ring-white/24 sm:py-2`}
+            style={{ backgroundColor: note.fill }}
+          >
+            <div
+              className="font-[family:var(--font-geist-mono)] text-[0.52rem] font-semibold uppercase tracking-[0.22em] sm:text-[0.58rem]"
+              style={{ color: note.text }}
+            >
+              {note.label}
+            </div>
+          </div>
+
+          <BsFillCursorFill
+            aria-hidden="true"
+            className="relative z-10 h-5 w-5 shrink-0 opacity-95 drop-shadow-[0_5px_8px_rgba(0,0,0,0.2)] sm:h-6 sm:w-6"
+            style={{
+              color: note.accent,
+              transform: iconTransform,
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function CreativeMiddleSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
   const subheadingRef = useRef<HTMLParagraphElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [viewportWidth, setViewportWidth] = useState(1440);
+
+  const showCursorNotes = viewportWidth >= 1280;
+
+  useEffect(() => {
+    const updateViewportWidth = () => {
+      setViewportWidth(window.innerWidth);
+    };
+
+    updateViewportWidth();
+    window.addEventListener("resize", updateViewportWidth);
+
+    return () => {
+      window.removeEventListener("resize", updateViewportWidth);
+    };
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -315,12 +455,18 @@ export function CreativeMiddleSection() {
 
     const ctx = gsap.context(() => {
       const cards = cardsRef.current.filter(Boolean);
+      const arrowNotes = gsap.utils.toArray<HTMLElement>(".middle-arrow-note");
 
       gsap.set(cards, {
         opacity: 0,
         y: 70,
         rotate: (index) => (index % 2 === 0 ? -2.5 : 2.5),
         transformOrigin: "center center",
+      });
+      gsap.set(arrowNotes, {
+        autoAlpha: 0,
+        scale: 0.9,
+        y: (index) => (index % 2 === 0 ? -18 : 18),
       });
 
       const intro = gsap.timeline({
@@ -356,6 +502,17 @@ export function CreativeMiddleSection() {
           0.18,
         )
         .to(
+          arrowNotes,
+          {
+            autoAlpha: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.55,
+            stagger: 0.06,
+          },
+          0.2,
+        )
+        .to(
           cards,
           {
             opacity: 1,
@@ -366,10 +523,24 @@ export function CreativeMiddleSection() {
           },
           0.28,
         );
+
+      arrowNotes.forEach((note, index) => {
+        const xOffset = Number(note.dataset.floatX ?? 0);
+        const yOffset = Number(note.dataset.floatY ?? 0);
+
+        gsap.to(note, {
+          x: xOffset,
+          y: yOffset,
+          duration: 2.8 + index * 0.24,
+          ease: "sine.inOut",
+          repeat: -1,
+          yoyo: true,
+        });
+      });
     }, section);
 
     return () => ctx.revert();
-  }, []);
+  }, [viewportWidth]);
 
   const handleCardEnter = (index: number) => {
     const node = cardsRef.current[index];
@@ -478,15 +649,19 @@ export function CreativeMiddleSection() {
               details everywhere that make the whole thing feel alive.
             </p>
 
-            <div className="mt-16 grid w-full gap-5 md:grid-cols-12 md:auto-rows-[minmax(10rem,auto)]">
+            <div className="relative mt-16 w-full">
+              <div className="grid w-full gap-5 md:grid-cols-12 md:auto-rows-[minmax(10rem,auto)]">
               <div
                 ref={(node) => {
                   cardsRef.current[0] = node;
                 }}
                 onMouseEnter={() => handleCardEnter(0)}
                 onMouseLeave={() => handleCardLeave(0)}
-                className="md:col-span-7 md:row-span-2"
+                className="relative md:col-span-7 md:row-span-2"
               >
+                {showCursorNotes ? (
+                  <FloatingCursorTooltip note={FLOATING_CURSOR_NOTES[0]} />
+                ) : null}
                 <SketchFrame
                   className="h-full px-6 py-6 md:px-7 md:py-7"
                   fill="#fff8ef"
@@ -578,8 +753,11 @@ export function CreativeMiddleSection() {
                 }}
                 onMouseEnter={() => handleCardEnter(1)}
                 onMouseLeave={() => handleCardLeave(1)}
-                className="md:col-span-5"
+                className="relative md:col-span-5"
               >
+                {showCursorNotes ? (
+                  <FloatingCursorTooltip note={FLOATING_CURSOR_NOTES[1]} />
+                ) : null}
                 <SketchFrame
                   className="h-full px-5 py-5 sm:px-6 sm:py-6"
                   fill="#dff2ff"
@@ -632,8 +810,11 @@ export function CreativeMiddleSection() {
                 }}
                 onMouseEnter={() => handleCardEnter(2)}
                 onMouseLeave={() => handleCardLeave(2)}
-                className="md:col-span-5"
+                className="relative md:col-span-5"
               >
+                {showCursorNotes ? (
+                  <FloatingCursorTooltip note={FLOATING_CURSOR_NOTES[2]} />
+                ) : null}
                 <SketchFrame
                   className="h-full px-5 py-5 sm:px-6 sm:py-6"
                   fill="#fff2b1"
@@ -685,8 +866,11 @@ export function CreativeMiddleSection() {
                 }}
                 onMouseEnter={() => handleCardEnter(3)}
                 onMouseLeave={() => handleCardLeave(3)}
-                className="md:col-span-8"
+                className="relative md:col-span-8"
               >
+                {showCursorNotes ? (
+                  <FloatingCursorTooltip note={FLOATING_CURSOR_NOTES[3]} />
+                ) : null}
                 <SketchFrame
                   className="h-full px-6 py-6 md:px-7 md:py-7"
                   fill="#131c29"
@@ -761,8 +945,11 @@ export function CreativeMiddleSection() {
                 }}
                 onMouseEnter={() => handleCardEnter(4)}
                 onMouseLeave={() => handleCardLeave(4)}
-                className="md:col-span-4"
+                className="relative md:col-span-4"
               >
+                {showCursorNotes ? (
+                  <FloatingCursorTooltip note={FLOATING_CURSOR_NOTES[4]} />
+                ) : null}
                 <SketchFrame
                   className="h-full px-5 py-5 sm:px-6 sm:py-6"
                   fill="#f6f1e8"
@@ -819,6 +1006,7 @@ export function CreativeMiddleSection() {
                   </div>
                 </SketchFrame>
               </div>
+            </div>
             </div>
               </div>
             </div>

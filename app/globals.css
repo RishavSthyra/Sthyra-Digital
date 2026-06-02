@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --hero-bg: #09b7ea;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-irish-grover), serif;
+  font-weight: 400;
+}
+
+.font-baumans {
+  font-family: var(--font-baumans), cursive;
+  font-weight: 400;
+}
+
+.font-comfortaa {
+  font-family: var(--font-comfortaa), "Segoe UI", sans-serif;
+}
+
+.hero-noise {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+
+.hero-burst {
+  clip-path: polygon(
+    50% 0%,
+    63% 33%,
+    100% 50%,
+    63% 67%,
+    50% 100%,
+    37% 67%,
+    0% 50%,
+    37% 33%
+  );
+}
+
+.hero-illustration-shell {
+  width: min(92vw, 42rem);
+}
+
+.hero-we-are {
+  will-change: transform;
+}
+
+.hero-letter {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.hero-marquee-track {
+  width: max-content;
+  will-change: transform;
+}
+
+.notebook-paper {
+  background-image:
+    linear-gradient(to bottom, rgba(226, 140, 112, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.1));
+  background-size: 100% 2.1rem, 100% 100%;
+}
+
+.notebook-paper-blue {
+  background-image:
+    linear-gradient(to bottom, rgba(68, 149, 219, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.08));
+  background-size: 100% 2rem, 100% 100%;
+}
+
+.notebook-paper-yellow {
+  background-image:
+    linear-gradient(to bottom, rgba(208, 151, 32, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.08));
+  background-size: 100% 2rem, 100% 100%;
+}
+
+.notebook-paper-soft {
+  background-image:
+    linear-gradient(to bottom, rgba(106, 87, 73, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
+  background-size: 100% 2rem, 100% 100%;
+}
+
+.notebook-grid-dark {
+  background-image:
+    linear-gradient(rgba(132, 212, 255, 0.11) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(132, 212, 255, 0.11) 1px, transparent 1px);
+  background-size: 1.2rem 1.2rem;
+}
+
+.notebook-margin {
+  background: rgba(226, 140, 112, 0.33);
+}
+
+.notebook-margin-dark {
+  background: rgba(132, 212, 255, 0.24);
+}
+
+@media (min-width: 640px) {
+  .hero-illustration-shell {
+    width: min(84vw, 50rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-illustration-shell {
+    width: min(74vw, 60rem);
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-illustration-shell {
+    width: clamp(38rem, 60vw, 74rem);
+  }
+}

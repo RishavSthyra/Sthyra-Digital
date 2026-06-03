@@ -2,16 +2,34 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { ContactNotebookPopup } from "@/app/components/ContactNotebookPopup";
 
 const tooltipOffset = { x: 22, y: 18 };
 const sparkleOffset = { x: 1, y: -10 };
 
 export function GlobalHandCursor() {
+  const paperAudioRef = useRef<HTMLAudioElement | null>(null);
   const sparkleRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
   const pointerRef = useRef({ x: 0, y: 0 });
   const [showTooltip, setShowTooltip] = useState(false);
+  const [isNotebookOpen, setIsNotebookOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const audio = new Audio("/audio/makigai_maimai-paper-245786.mp3");
+    audio.preload = "auto";
+    paperAudioRef.current = audio;
+
+    return () => {
+      audio.pause();
+      paperAudioRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     const sparkleNode = sparkleRef.current;
@@ -66,14 +84,50 @@ export function GlobalHandCursor() {
     };
   }, []);
 
+  const playPaperSound = () => {
+    const audio = paperAudioRef.current;
+
+    if (!audio) {
+      return;
+    }
+
+    audio.currentTime = 0;
+    void audio.play().catch(() => {});
+  };
+
+  const openNotebook = () => {
+    if (isNotebookOpen) {
+      return;
+    }
+
+    playPaperSound();
+    setIsNotebookOpen(true);
+  };
+
+  const closeNotebook = () => {
+    if (!isNotebookOpen) {
+      return;
+    }
+
+    playPaperSound();
+    setIsNotebookOpen(false);
+  };
+
   return (
     <>
+      <ContactNotebookPopup
+        isOpen={isNotebookOpen}
+        onClose={closeNotebook}
+      />
+
       <div className="pointer-events-none fixed inset-x-0 top-0 z-[140]">
-        <div
-          aria-hidden="true"
-          className="group pointer-events-auto absolute right-2 top-0 flex h-[7.75rem] w-[4.5rem] -translate-y-[18%] rotate-180 items-start justify-center sm:right-3 sm:h-[9rem] sm:w-[5.25rem] md:right-4 md:h-[10.5rem] md:w-[6rem] xl:right-6 xl:h-[11.5rem] xl:w-[6.75rem]"
+        <button
+          type="button"
+          aria-label="Open contact notebook"
+          className="group pointer-events-auto absolute right-2 top-0 flex h-[7.75rem] w-[4.5rem] -translate-y-[18%] rotate-180 items-start justify-center border-0 bg-transparent p-0 sm:right-3 sm:h-[9rem] sm:w-[5.25rem] md:right-4 md:h-[10.5rem] md:w-[6rem] xl:right-6 xl:h-[11.5rem] xl:w-[6.75rem]"
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
+          onClick={openNotebook}
         >
           <span className="relative block h-full w-full">
             <Image
@@ -85,7 +139,7 @@ export function GlobalHandCursor() {
               className="object-contain transition-transform duration-500 ease-out group-hover:scale-[1.02]"
             />
           </span>
-        </div>
+        </button>
       </div>
 
       <div
@@ -94,7 +148,7 @@ export function GlobalHandCursor() {
         aria-hidden="true"
       >
         <span className="block rounded-full border-2 border-black bg-[#fff5df] px-3 py-1 text-[0.65rem] font-black uppercase tracking-[0.24em] text-black shadow-[3px_3px_0_rgba(0,0,0,0.18)]">
-          Wave back
+          Open note
         </span>
       </div>
 

@@ -500,7 +500,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
 
             <p
               data-hero-copy
-              className="mt-6 max-w-[56rem] text-[0.98rem] leading-7 text-[#fff7f0] sm:text-[1.05rem]"
+              className="mt-6 max-w-[56rem] text-[0.98rem] leading-7 text-[#fff] sm:text-[1.05rem]"
             >
               {service.description}
             </p>
@@ -947,7 +947,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
 
       <section
         data-service-section
-        className="relative overflow-hidden bg-[#fff8ef] px-5 py-[clamp(4rem,6vw,6rem)] sm:px-8 lg:px-12"
+        className="relative overflow-hidden bg-[#fff] px-5 py-[clamp(4rem,6vw,6rem)] sm:px-8 lg:px-12"
       >
         <div className="mx-auto grid max-w-[80rem] items-stretch gap-6 lg:grid-cols-[1fr_0.92fr]">
           <div>

@@ -3,9 +3,11 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { BsFillCursorFill } from "react-icons/bs";
 import { SketchFrame } from "@/app/components/SketchFrame";
+import { servicePages } from "@/app/services/servicePageContent";
 import { SquigglyText } from "@/components/ui/squiggly-text";
 import asteriskIcon from "@/public/icons/Sketch-annotation-element-brush-pen-icon-asterisk-1.png";
 import graphMonitorIcon from "@/public/icons/Sketch-annotation-element-brush-pen-icon-graph-monitor.png";
@@ -423,6 +425,20 @@ function FloatingCursorTooltip({ note }: { note: FloatingCursorNote }) {
   );
 }
 
+function getFeaturedService(slug: (typeof servicePages)[number]["slug"]) {
+  const service = servicePages.find((entry) => entry.slug === slug);
+
+  if (!service) {
+    throw new Error(`Missing featured service for slug: ${slug}`);
+  }
+
+  return service;
+}
+
+const creativeManagementService = getFeaturedService("creative-management");
+const webDevelopmentService = getFeaturedService("web-development");
+const performanceMarketingService = getFeaturedService("performance-marketing");
+
 export function CreativeMiddleSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
@@ -662,89 +678,99 @@ export function CreativeMiddleSection() {
                 {showCursorNotes ? (
                   <FloatingCursorTooltip note={FLOATING_CURSOR_NOTES[0]} />
                 ) : null}
-                <SketchFrame
-                  className="h-full px-6 py-6 md:px-7 md:py-7"
-                  fill="#fff8ef"
-                  stroke="#171717"
-                  strokeWidth={1.7}
-                  roughness={1.15}
-                  bowing={1.9}
-                  inset={1.5}
-                  radius={24}
-                  overlayFill="rgba(255, 163, 131, 0.14)"
-                  overlayFillStyle="zigzag-line"
-                  overlayFillWeight={0.85}
-                  overlayHachureGap={12}
-                  overlayHachureAngle={26}
+                <Link
+                  href={`/services/${creativeManagementService.slug}`}
+                  className="block h-full focus:outline-none focus-visible:rounded-[1.6rem] focus-visible:ring-2 focus-visible:ring-[#171717] focus-visible:ring-offset-4 focus-visible:ring-offset-[#f50d30]"
+                  aria-label={`Open ${creativeManagementService.name}`}
                 >
-                  <div className="relative flex h-full flex-col gap-6 overflow-hidden rounded-[1.1rem] pl-0 md:pl-8">
-                    <div className="notebook-paper absolute inset-0 rounded-[1.1rem]" />
-                    <div className="notebook-margin absolute bottom-4 top-4 left-7 hidden w-px md:block" />
-                    <PinHoles />
+                  <SketchFrame
+                    className="h-full px-6 py-6 md:px-7 md:py-7"
+                    fill="#fff8ef"
+                    stroke="#171717"
+                    strokeWidth={1.7}
+                    roughness={1.15}
+                    bowing={1.9}
+                    inset={1.5}
+                    radius={24}
+                    overlayFill="rgba(255, 163, 131, 0.14)"
+                    overlayFillStyle="zigzag-line"
+                    overlayFillWeight={0.85}
+                    overlayHachureGap={12}
+                    overlayHachureAngle={26}
+                  >
+                    <div className="relative flex h-full flex-col gap-6 overflow-hidden rounded-[1.1rem] pl-0 md:pl-8">
+                      <div className="notebook-paper absolute inset-0 rounded-[1.1rem]" />
+                      <div className="notebook-margin absolute bottom-4 top-4 left-7 hidden w-px md:block" />
+                      <PinHoles />
 
-                  <div className="relative flex items-start justify-between gap-4">
-                    <div className="space-y-3">
-                      <p className="text-[0.76rem] font-semibold uppercase tracking-[0.19em] text-[#9e4a18]">
-                        Creative systems
-                      </p>
-                      <h3 className="max-w-[22rem] text-[1.9rem] font-semibold leading-[1.02] tracking-[-0.05em] text-[#171717]">
-                        Start messy.
-                        <br />
-                        End magnetic.
-                      </h3>
-                    </div>
-                    <Image
-                      src={highfiveIcon}
-                      alt=""
-                      className={topRightIconClassName}
-                    />
-                  </div>
-
-                  <p className="relative max-w-[30rem] text-[1rem] leading-7 text-[#41352f]">
-                    The strongest pages usually begin as scribbles, arrows,
-                    crossed-out lines, and one very good instinct. We keep that
-                    raw spark, then turn it into a digital experience with
-                    clarity, rhythm, and bite.
-                  </p>
-
-                  <div className="relative grid gap-3 sm:grid-cols-3">
-                    {[
-                      {
-                        icon: whatsappIcon,
-                        title: "Message",
-                        body: "A hook people understand in one glance.",
-                      },
-                      {
-                        icon: thunderIcon,
-                        title: "Motion",
-                        body: "Movement that adds momentum, not clutter.",
-                      },
-                      {
-                        icon: asteriskIcon,
-                        title: "Direction",
-                        body: "Every section nudges attention where it matters.",
-                      },
-                    ].map((item) => (
-                      <div
-                        key={item.title}
-                        className="rounded-[1.1rem] border border-black/8 bg-white/55 p-4 backdrop-blur-[2px]"
-                      >
-                        <Image
-                          src={item.icon}
-                          alt=""
-                          className={featureIconClassName}
-                        />
-                        <div className="mb-3 text-sm font-semibold tracking-[-0.02em] text-[#151515]">
-                          {item.title}
+                      <div className="relative flex items-start justify-between gap-4">
+                        <div className="space-y-3">
+                          <p className="text-[0.76rem] font-semibold uppercase tracking-[0.19em] text-[#9e4a18]">
+                            {creativeManagementService.heroEyebrow}
+                          </p>
+                          <h3 className="max-w-[24rem] text-[1.9rem] font-semibold leading-[1.02] tracking-[-0.05em] text-[#171717]">
+                            Direction first.
+                            <br />
+                            Then content that keeps moving.
+                          </h3>
                         </div>
-                        <p className="text-sm leading-6 text-[#54453d]">
-                          {item.body}
-                        </p>
+                        <Image
+                          src={highfiveIcon}
+                          alt=""
+                          className={topRightIconClassName}
+                        />
                       </div>
-                    ))}
-                  </div>
-                  </div>
-                </SketchFrame>
+
+                      <p className="relative max-w-[32rem] text-[1rem] leading-7 text-[#41352f]">
+                        We build creative direction, review rhythms, and content
+                        systems that help campaigns stay sharp as more channels,
+                        collaborators, and assets pile on.
+                      </p>
+
+                      <div className="relative grid gap-3 sm:grid-cols-3">
+                        {[
+                          {
+                            icon: whatsappIcon,
+                            title: creativeManagementService.pillars[0]?.chip ?? "Direction",
+                            body: creativeManagementService.pillars[0]?.body ?? "",
+                          },
+                          {
+                            icon: thunderIcon,
+                            title: creativeManagementService.pillars[1]?.chip ?? "Production",
+                            body: creativeManagementService.pillars[1]?.body ?? "",
+                          },
+                          {
+                            icon: asteriskIcon,
+                            title: creativeManagementService.pillars[2]?.chip ?? "Adaptation",
+                            body: creativeManagementService.pillars[2]?.body ?? "",
+                          },
+                        ].map((item) => (
+                          <div
+                            key={item.title}
+                            className="rounded-[1.1rem] border border-black/8 bg-white/55 p-4 backdrop-blur-[2px]"
+                          >
+                            <Image
+                              src={item.icon}
+                              alt=""
+                              className={featureIconClassName}
+                            />
+                            <div className="mb-3 text-sm font-semibold tracking-[-0.02em] text-[#151515]">
+                              {item.title}
+                            </div>
+                            <p className="text-sm leading-6 text-[#54453d]">
+                              {item.body}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="relative mt-auto inline-flex items-center gap-2 text-sm font-semibold text-[#171717]">
+                        <span>Explore service page</span>
+                        <span aria-hidden="true">/services/{creativeManagementService.slug}</span>
+                      </div>
+                    </div>
+                  </SketchFrame>
+                </Link>
               </div>
 
               <div
@@ -758,50 +784,61 @@ export function CreativeMiddleSection() {
                 {showCursorNotes ? (
                   <FloatingCursorTooltip note={FLOATING_CURSOR_NOTES[1]} />
                 ) : null}
-                <SketchFrame
-                  className="h-full px-5 py-5 sm:px-6 sm:py-6"
-                  fill="#dff2ff"
-                  stroke="#171717"
-                  strokeWidth={1.65}
-                  roughness={1.12}
-                  bowing={1.85}
-                  inset={1.45}
-                  radius={22}
-                  overlayFill="rgba(31, 143, 255, 0.12)"
-                  overlayFillStyle="zigzag-line"
-                  overlayFillWeight={0.84}
-                  overlayHachureGap={12}
-                  overlayHachureAngle={30}
+                <Link
+                  href={`/services/${webDevelopmentService.slug}`}
+                  className="block h-full focus:outline-none focus-visible:rounded-[1.5rem] focus-visible:ring-2 focus-visible:ring-[#171717] focus-visible:ring-offset-4 focus-visible:ring-offset-[#f50d30]"
+                  aria-label={`Open ${webDevelopmentService.name}`}
                 >
-                  <div className="relative h-full overflow-hidden rounded-[1.05rem]">
-                    <div className="notebook-paper-blue absolute inset-0 rounded-[1.05rem]" />
-                    <div className="relative flex h-full flex-col justify-between gap-5">
-                    <div className="space-y-3">
-                      <div className="flex items-start justify-between gap-4">
-                        <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[#11639f]">
-                          Motion cues
-                        </p>
-                        <Image
-                          src={smileyLoveIcon}
-                          alt=""
-                          className={topRightIconClassName}
-                        />
-                      </div>
-                      <h3 className="text-[1.4rem] font-semibold leading-[1.04] tracking-[-0.04em] text-[#171717]">
-                        Little animations.
-                        <br />
-                        Big recall.
-                      </h3>
-                    </div>
+                  <SketchFrame
+                    className="h-full px-5 py-5 sm:px-6 sm:py-6"
+                    fill="#dff2ff"
+                    stroke="#171717"
+                    strokeWidth={1.65}
+                    roughness={1.12}
+                    bowing={1.85}
+                    inset={1.45}
+                    radius={22}
+                    overlayFill="rgba(31, 143, 255, 0.12)"
+                    overlayFillStyle="zigzag-line"
+                    overlayFillWeight={0.84}
+                    overlayHachureGap={12}
+                    overlayHachureAngle={30}
+                  >
+                    <div className="relative h-full overflow-hidden rounded-[1.05rem]">
+                      <div className="notebook-paper-blue absolute inset-0 rounded-[1.05rem]" />
+                      <div className="relative flex h-full flex-col justify-between gap-5">
+                        <div className="space-y-3">
+                          <div className="flex items-start justify-between gap-4">
+                            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[#11639f]">
+                              {webDevelopmentService.heroEyebrow}
+                            </p>
+                            <Image
+                              src={smileyLoveIcon}
+                              alt=""
+                              className={topRightIconClassName}
+                            />
+                          </div>
+                          <h3 className="text-[1.4rem] font-semibold leading-[1.04] tracking-[-0.04em] text-[#171717]">
+                            Custom builds.
+                            <br />
+                            Fast, distinct, and ready to convert.
+                          </h3>
+                        </div>
 
-                    <p className="max-w-[24rem] text-sm leading-6 text-[#36566f]">
-                      Scroll reveals, scribble accents, and timing that feels
-                      human make the interface read more like a living idea than
-                      a static deck.
-                    </p>
-                  </div>
-                  </div>
-                </SketchFrame>
+                        <p className="max-w-[24rem] text-sm leading-6 text-[#36566f]">
+                          Custom websites shaped around clarity, performance,
+                          technical SEO, and a frontend experience people
+                          actually remember.
+                        </p>
+
+                        <div className="inline-flex items-center gap-2 text-sm font-semibold text-[#0f5487]">
+                          <span>Open service page</span>
+                          <span aria-hidden="true">/services/{webDevelopmentService.slug}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </SketchFrame>
+                </Link>
               </div>
 
               <div
@@ -815,49 +852,63 @@ export function CreativeMiddleSection() {
                 {showCursorNotes ? (
                   <FloatingCursorTooltip note={FLOATING_CURSOR_NOTES[2]} />
                 ) : null}
-                <SketchFrame
-                  className="h-full px-5 py-5 sm:px-6 sm:py-6"
-                  fill="#fff2b1"
-                  stroke="#171717"
-                  strokeWidth={1.65}
-                  roughness={1.12}
-                  bowing={1.85}
-                  inset={1.45}
-                  radius={22}
-                  overlayFill="rgba(255, 179, 71, 0.13)"
-                  overlayFillStyle="zigzag-line"
-                  overlayFillWeight={0.84}
-                  overlayHachureGap={12}
-                  overlayHachureAngle={24}
+                <Link
+                  href={`/services/${performanceMarketingService.slug}`}
+                  className="block h-full focus:outline-none focus-visible:rounded-[1.5rem] focus-visible:ring-2 focus-visible:ring-[#171717] focus-visible:ring-offset-4 focus-visible:ring-offset-[#f50d30]"
+                  aria-label={`Open ${performanceMarketingService.name}`}
                 >
-                  <div className="relative h-full overflow-hidden rounded-[1.05rem]">
-                    <div className="notebook-paper-yellow absolute inset-0 rounded-[1.05rem]" />
-                    <div className="relative flex h-full flex-col justify-between gap-5">
-                    <div className="space-y-3">
-                      <div className="flex items-start justify-between gap-4">
-                        <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[#966400]">
-                          Tone
-                        </p>
-                        <Image
-                          src={smileyGrindingIcon}
-                          alt=""
-                          className={topRightIconClassName}
-                        />
-                      </div>
-                      <h3 className="text-[1.4rem] font-semibold leading-[1.04] tracking-[-0.04em] text-[#171717]">
-                        Polished enough to trust.
-                        <br />
-                        Playful enough to feel.
-                      </h3>
-                    </div>
+                  <SketchFrame
+                    className="h-full px-5 py-5 sm:px-6 sm:py-6"
+                    fill="#fff2b1"
+                    stroke="#171717"
+                    strokeWidth={1.65}
+                    roughness={1.12}
+                    bowing={1.85}
+                    inset={1.45}
+                    radius={22}
+                    overlayFill="rgba(255, 179, 71, 0.13)"
+                    overlayFillStyle="zigzag-line"
+                    overlayFillWeight={0.84}
+                    overlayHachureGap={12}
+                    overlayHachureAngle={24}
+                  >
+                    <div className="relative h-full overflow-hidden rounded-[1.05rem]">
+                      <div className="notebook-paper-yellow absolute inset-0 rounded-[1.05rem]" />
+                      <div className="relative flex h-full flex-col justify-between gap-5">
+                        <div className="space-y-3">
+                          <div className="flex items-start justify-between gap-4">
+                            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[#966400]">
+                              {performanceMarketingService.heroEyebrow}
+                            </p>
+                            <Image
+                              src={smileyGrindingIcon}
+                              alt=""
+                              className={topRightIconClassName}
+                            />
+                          </div>
+                          <h3 className="text-[1.4rem] font-semibold leading-[1.04] tracking-[-0.04em] text-[#171717]">
+                            Sharper clicks.
+                            <br />
+                            Cleaner conversions.
+                          </h3>
+                        </div>
 
-                    <p className="max-w-[24rem] text-sm leading-6 text-[#695430]">
-                      We like interfaces with a pulse: warm, clever, and a bit
-                      unexpected, but never so loud they drown the brand.
-                    </p>
-                  </div>
-                  </div>
-                </SketchFrame>
+                        <p className="max-w-[24rem] text-sm leading-6 text-[#695430]">
+                          Paid social, search, landing pages, and measurement
+                          planned together so stronger clicks turn into cleaner
+                          conversion paths.
+                        </p>
+
+                        <div className="inline-flex items-center gap-2 text-sm font-semibold text-[#7c5700]">
+                          <span>Open service page</span>
+                          <span aria-hidden="true">
+                            /services/{performanceMarketingService.slug}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </SketchFrame>
+                </Link>
               </div>
 
               <div

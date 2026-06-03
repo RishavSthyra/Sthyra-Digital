@@ -119,7 +119,7 @@ export function CreativeNavbar({ headerRef }: CreativeNavbarProps) {
 
       <div className="flex items-center gap-3">
         <span className="hidden font-[family:var(--font-geist-mono)] text-sm tracking-[0.08em] text-white/88 md:block">
-          just for fun &lt;3
+          &nbsp;
         </span>
         <TalkButton
           className="px-4 py-2 lg:hidden"

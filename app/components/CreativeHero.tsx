@@ -10,7 +10,11 @@ const FIGMA_FRAME_WIDTH = 1436;
 const SVG_WIDTH_RATIO = 1396.12 / FIGMA_FRAME_WIDTH;
 const ILLUSTRATION_WIDTH_RATIO = 1148 / FIGMA_FRAME_WIDTH;
 const HERO_SVG_VIEWBOX = "0 0 1397 526";
-const marqueeText = "Too F** Creative";
+const marqueeText = ["Too F** Creative", "Build Different", "Too F** Targeted"];
+const marqueeLoopText = [...marqueeText, ...marqueeText];
+const marqueeMeasureText = marqueeText.reduce((longest, current) =>
+  current.length > longest.length ? current : longest,
+);
 const marqueeMeasureBase = 200;
 
 gsap.registerPlugin(ScrollTrigger);
@@ -125,25 +129,16 @@ export function CreativeHero() {
       return;
     }
 
-    gsap.set(marqueeTrack, {
-      x: -marqueeViewportWidth,
-    });
+    const loopWidth = marqueeText.length * marqueeViewportWidth;
 
-    const marquee = gsap.timeline({
+    gsap.set(marqueeTrack, { x: 0 });
+
+    const marquee = gsap.to(marqueeTrack, {
+      x: -loopWidth,
+      duration: marqueeText.length * 3.2,
+      ease: "none",
       repeat: -1,
-      repeatDelay: 0,
     });
-
-    marquee
-      .to({}, { duration: 2 })
-      .to(marqueeTrack, {
-        x: -(marqueeViewportWidth * 2),
-        duration: 1.15,
-        ease: "power3.inOut",
-      })
-      .set(marqueeTrack, {
-        x: -marqueeViewportWidth,
-      });
 
     return () => {
       marquee.kill();
@@ -340,16 +335,16 @@ export function CreativeHero() {
                 ref={marqueeTrackRef}
                 className="hero-marquee-track flex items-end whitespace-nowrap"
               >
-                {[0, 1, 2].map((copy) => (
+                {marqueeLoopText.map((text, index) => (
                   <div
-                    key={copy}
+                    key={`${text}-${index}`}
                     className="font-display flex h-full shrink-0 items-end justify-center text-center leading-[0.9] tracking-[-0.04em] text-white"
                     style={{
                       width: marqueeViewportWidth ? `${marqueeViewportWidth}px` : "100vw",
                       fontSize: `${marqueeFontSize}px`,
                     }}
                   >
-                    <span>{marqueeText}</span>
+                    <span>{text}</span>
                   </div>
                 ))}
               </div>
@@ -374,7 +369,7 @@ export function CreativeHero() {
             className="font-display pointer-events-none absolute opacity-0 whitespace-nowrap"
             style={{ fontSize: `${marqueeMeasureBase}px` }}
           >
-            {marqueeText}
+            {marqueeMeasureText}
           </span>
         </div>
       </div>

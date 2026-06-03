@@ -1,5 +1,6 @@
 import {
   Baumans,
+  Cabin_Sketch,
   Comfortaa,
   Geist,
   Geist_Mono,
@@ -30,6 +31,12 @@ export const baumans = Baumans({
 
 export const comfortaa = Comfortaa({
   variable: "--font-comfortaa",
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
+
+export const cabinSketch = Cabin_Sketch({
+  variable: "--font-cabin-sketch",
   weight: ["400", "700"],
   subsets: ["latin"],
 });

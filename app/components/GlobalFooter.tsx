@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 import { CherryBlossomSplash } from "@/app/components/CherryBlossomSplash";
 
 const brandLetters = "STHYRA".split("");
-const subBrandLetters = "sthyra.digital".split("");
 
 export function GlobalFooter() {
   const headlineRef = useRef<HTMLDivElement>(null);
@@ -48,7 +47,7 @@ export function GlobalFooter() {
           />
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-[inherit] w-full max-w-[1800px] flex-col justify-end px-4 sm:px-6 lg:px-10">
+        <div className="relative z-10 mx-auto flex min-h-[inherit] w-full max-w-[1800px] flex-col justify-end px-4 pb-10 sm:px-6 sm:pb-14 lg:px-10 lg:pb-20 xl:pb-24">
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -67,7 +66,7 @@ export function GlobalFooter() {
 
           <div
             ref={headlineRef}
-            className="relative z-10 mx-auto flex w-full max-w-[1700px] justify-center"
+            className="relative z-10 mx-auto -mt-2 flex w-full max-w-[1700px] justify-center sm:mt-0 lg:mt-2"
           >
             <motion.h2
               aria-label="STHYRA"
@@ -102,32 +101,6 @@ export function GlobalFooter() {
               ))}
             </motion.h2>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.7, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-            className="relative z-10 mx-auto -mt-1 mb-16 flex max-w-[92vw] flex-wrap items-center justify-center gap-x-1 gap-y-2 text-center font-[family:var(--font-geist-mono)] text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-[#74746d] sm:mb-20 sm:text-[0.8rem] lg:mb-24"
-            aria-label="sthyra.digital"
-          >
-            {subBrandLetters.map((character, index) => (
-              <motion.span
-                key={`${character}-${index}`}
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{
-                  duration: 0.4,
-                  delay: 0.32 + index * 0.025,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="inline-block"
-              >
-                {character === " " ? "\u00A0" : character}
-              </motion.span>
-            ))}
-          </motion.div>
         </div>
 
         <CherryBlossomSplash burstKey={splashBurstKey} />
@@ -143,7 +116,7 @@ export function GlobalFooter() {
           />
         </div>
 
-        <div className="absolute inset-x-0 top-0 z-30 px-4 pb-4 pt-5 sm:px-6 sm:pt-6 lg:inset-x-0 lg:bottom-0 lg:top-auto lg:bg-gradient-to-t lg:from-white lg:via-white/90 lg:to-transparent lg:px-10 lg:pb-4 lg:pt-12">
+        <div className="absolute inset-x-0 top-0 z-30 px-4 pb-4 pt-5 sm:px-6 sm:pt-6 lg:inset-x-0 lg:bottom-0 lg:top-auto lg:bg-gradient-to-t lg:from-white/92 lg:via-white/65 lg:to-transparent lg:px-10 lg:pb-3 lg:pt-8">
           <div className="mx-auto flex w-full max-w-[1600px] flex-col items-start gap-3 text-left text-[0.72rem] font-medium text-[#2d302d] sm:text-[0.8rem] lg:flex-row lg:items-end lg:justify-between lg:text-left">
             <div className="space-y-1">
               <p className="font-[family:var(--font-geist-mono)] uppercase tracking-[0.24em] text-[#5e6259]">

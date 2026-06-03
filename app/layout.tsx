@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {
   baumans,
+  cabinSketch,
   comfortaa,
   geistMono,
   geistSans,
@@ -57,7 +58,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`site-doodle-cursor ${geistSans.variable} ${geistMono.variable} ${irishGrover.variable} ${baumans.variable} ${comfortaa.variable} h-full antialiased`}
+      className={`site-doodle-cursor ${geistSans.variable} ${geistMono.variable} ${irishGrover.variable} ${baumans.variable} ${comfortaa.variable} ${cabinSketch.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <GlobalHandCursor />

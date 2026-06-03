@@ -53,6 +53,10 @@ body {
   font-family: var(--font-comfortaa), "Segoe UI", sans-serif;
 }
 
+.font-cabin-sketch {
+  font-family: var(--font-cabin-sketch), "Segoe UI", sans-serif;
+}
+
 .hero-noise {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
@@ -163,9 +167,71 @@ body {
   background: rgba(132, 212, 255, 0.24);
 }
 
+.contact-notebook-grid {
+  background-color: rgba(255, 251, 248, 0.94);
+  background-image:
+    linear-gradient(rgba(246, 184, 206, 0.46) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(246, 184, 206, 0.46) 1px, transparent 1px);
+  background-size: 1.08rem 1.08rem;
+}
+
+.contact-note-input {
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid rgba(17, 17, 17, 0.56);
+  background: transparent;
+  color: #16120f;
+  font-family: var(--font-cabin-sketch), "Segoe UI", sans-serif;
+  font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+  line-height: 1.25;
+  outline: none;
+  padding: 0 0 0.45rem;
+}
+
+.contact-note-input::placeholder {
+  color: rgba(33, 27, 22, 0.34);
+}
+
+.contact-note-textarea {
+  min-height: clamp(8.5rem, 18vw, 13rem);
+  resize: none;
+  border-bottom: 0;
+  background-image: linear-gradient(
+    to bottom,
+    transparent calc(100% - 2px),
+    rgba(17, 17, 17, 0.34) calc(100% - 2px)
+  );
+  background-size: 100% 2.9rem;
+  padding-top: 0.1rem;
+}
+
+.contact-note-textarea::-webkit-scrollbar {
+  width: 0.55rem;
+}
+
+.contact-note-textarea::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(17, 17, 17, 0.18);
+}
+
+@keyframes notebook-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
 @media (min-width: 640px) {
   .hero-illustration-shell {
     width: min(84vw, 50rem);
+  }
+
+  .contact-notebook-grid {
+    background-size: 1.22rem 1.22rem;
   }
 }
 

@@ -363,7 +363,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
         color: "var(--service-ink)",
       }}
     >
-      <section className="relative isolate overflow-hidden">
+      <section className="relative isolate overflow-x-hidden overflow-y-visible lg:overflow-hidden">
         <div
           className="absolute inset-0"
           style={{ backgroundColor: "var(--service-hero)" }}
@@ -422,7 +422,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
         <div className="pointer-events-none absolute inset-0 z-[2] overflow-hidden lg:hidden" aria-hidden="true">
           <div
             data-hero-portrait
-            className="absolute bottom-0 left-[-1.25rem] flex h-[14rem] w-[9rem] items-end justify-start opacity-95 sm:h-[18rem] sm:w-[11.5rem] md:h-[24rem] md:w-[15rem]"
+            className="absolute bottom-[-4.5rem] left-[-1.9rem] flex h-[20.5rem] w-[12.75rem] items-end justify-start opacity-95 sm:bottom-[-6.5rem] sm:left-[-2.2rem] sm:h-[24rem] sm:w-[14.75rem] md:bottom-[-17rem] md:left-[-3.5rem] md:h-[46rem] md:w-[27rem]"
           >
             <Image
               src="/Man1.svg"
@@ -430,14 +430,14 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
               width={236}
               height={500}
               unoptimized
-              sizes="(min-width: 768px) 224px, 176px"
+              sizes="(min-width: 768px) 432px, 236px"
               className="h-full w-auto object-contain"
             />
           </div>
 
           <div
             data-hero-portrait
-            className="absolute bottom-0 right-[-1.25rem] flex h-[14rem] w-[9rem] items-end justify-end opacity-95 sm:h-[18rem] sm:w-[11.5rem] md:h-[24rem] md:w-[15rem]"
+            className="absolute bottom-[-5rem] right-[-1.7rem] flex h-[19rem] w-[11.75rem] items-end justify-end opacity-95 sm:bottom-[-7rem] sm:right-[-2.2rem] sm:h-[24rem] sm:w-[14.75rem] md:bottom-[-17rem] md:right-[-3.5rem] md:h-[44rem] md:w-[26rem]"
           >
             <Image
               src="/Woman1.svg"
@@ -445,13 +445,13 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
               width={236}
               height={500}
               unoptimized
-              sizes="(min-width: 768px) 224px, 176px"
+              sizes="(min-width: 768px) 416px, 224px"
               className="h-full w-auto object-contain"
             />
           </div>
         </div>
 
-        <div className="relative z-10 mx-auto max-w-[90rem] px-5 pb-40 pt-5 sm:px-8 sm:pb-52 md:pb-64 lg:px-12 lg:pb-24 lg:pt-6">
+        <div className="relative z-10 mx-auto max-w-[90rem] px-5 pb-28 pt-5 sm:px-8 sm:pb-36 md:pb-[14rem] lg:px-12 lg:pb-24 lg:pt-6">
           <header
             data-hero-header
             className="mb-12 flex flex-col gap-4 lg:mb-16 lg:flex-row lg:items-center lg:justify-between"
@@ -496,7 +496,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
             </SketchFrame>
           </header>
 
-          <div className="relative mx-auto flex min-h-[32rem] max-w-[74rem] flex-col items-center justify-center py-12 text-center sm:min-h-[36rem] sm:py-14 lg:min-h-[40rem] lg:py-16">
+          <div className="relative mx-auto flex min-h-[32rem] max-w-[74rem] flex-col items-center justify-start pt-8 text-center sm:min-h-[36rem] sm:pt-10 md:min-h-[42rem] md:pt-12 lg:min-h-[40rem] lg:justify-center lg:py-16">
             <HeroOrbitTag
               className="left-[-2%] top-[10%] rotate-[-8deg]"
               color="var(--service-paper)"

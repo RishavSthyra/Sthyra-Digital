@@ -575,27 +575,54 @@ export function CreativeShowcaseSection() {
     mm.add("(min-width: 768px)", () => {
       const getDistance = () =>
         Math.max(track.scrollWidth - viewport.clientWidth, 0);
+      const getEdgeHoldDistance = () =>
+        Math.max(Math.min(viewport.clientWidth * 0.42, 420), 180);
+      const getTotalDistance = () =>
+        getDistance() + getEdgeHoldDistance() * 2;
 
       gsap.set(track, { x: 0 });
       desktopScrollProgressRef.current = 0;
 
-      const tween = gsap.to(track, {
-        x: () => -getDistance(),
-        ease: "none",
+      const tween = gsap.timeline({
+        defaults: { ease: "none" },
         scrollTrigger: {
           trigger: viewport,
           start: "top top",
-          end: () => `+=${getDistance()}`,
+          end: () => `+=${getTotalDistance()}`,
           pin: viewport,
-          scrub: 1,
+          scrub: 1.15,
           anticipatePin: 1,
-          fastScrollEnd: true,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             desktopScrollProgressRef.current = self.progress;
           },
         },
       });
+
+      const buildHorizontalScroll = () => {
+        const distance = getDistance();
+        const edgeHoldDistance = getEdgeHoldDistance();
+
+        tween.clear();
+        gsap.set(track, { x: 0 });
+
+        tween
+          .to(track, {
+            x: 0,
+            duration: edgeHoldDistance,
+          })
+          .to(track, {
+            x: -distance,
+            duration: distance,
+          })
+          .to(track, {
+            x: -distance,
+            duration: edgeHoldDistance,
+          });
+      };
+
+      buildHorizontalScroll();
+      ScrollTrigger.addEventListener("refreshInit", buildHorizontalScroll);
 
       const animationContext = gsap.context(() => {
         desktopPanelRefs.current.forEach((panel) => {
@@ -726,6 +753,7 @@ export function CreativeShowcaseSection() {
 
       return () => {
         desktopScrollProgressRef.current = 0;
+        ScrollTrigger.removeEventListener("refreshInit", buildHorizontalScroll);
         animationContext.revert();
         tween.scrollTrigger?.kill();
         tween.kill();

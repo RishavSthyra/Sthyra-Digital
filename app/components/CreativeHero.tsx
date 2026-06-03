@@ -10,7 +10,7 @@ const FIGMA_FRAME_WIDTH = 1436;
 const SVG_WIDTH_RATIO = 1396.12 / FIGMA_FRAME_WIDTH;
 const ILLUSTRATION_WIDTH_RATIO = 1148 / FIGMA_FRAME_WIDTH;
 const HERO_SVG_VIEWBOX = "0 0 1397 526";
-const marqueeText = ["Too F** Creative", "Build Different", "Too F** Targeted"];
+const marqueeText = ["Too F** Creative", "Built Different", "Too F** Targeted"];
 const marqueeLoopText = [...marqueeText, ...marqueeText];
 const marqueeMeasureText = marqueeText.reduce((longest, current) =>
   current.length > longest.length ? current : longest,

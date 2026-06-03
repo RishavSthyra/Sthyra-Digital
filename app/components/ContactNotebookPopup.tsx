@@ -84,7 +84,7 @@ export function ContactNotebookPopup({
           className="fixed inset-0 z-[220] bg-[rgba(28,18,33,0.34)] backdrop-blur-[6px]"
           onClick={onClose}
         >
-          <div className="flex min-h-screen items-start justify-center overflow-y-auto px-2 py-14 sm:px-4 sm:py-16 lg:px-8 lg:py-10">
+          <div className="flex min-h-screen items-start justify-center overflow-y-auto px-2 py-10 sm:px-4 sm:py-12 lg:px-8 lg:py-10">
             <motion.section
               initial={{ opacity: 0, y: 30, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -95,9 +95,9 @@ export function ContactNotebookPopup({
             >
               <div className="relative overflow-hidden rounded-[1.8rem] border-[3px] border-[#8a4dff] shadow-[0_30px_90px_rgba(59,31,90,0.28)] sm:rounded-[2.2rem]">
                 <div className="contact-notebook-grid absolute inset-0" />
-                <div className="absolute inset-y-0 left-0 w-[clamp(3.6rem,7vw,5.8rem)] bg-[#030303]" />
+                <div className="absolute inset-y-0 left-0 hidden w-[clamp(3.6rem,7vw,5.8rem)] bg-[#030303] lg:block" />
 
-                <div className="pointer-events-none absolute left-[clamp(4.6rem,9vw,7.4rem)] top-[1rem] z-20 h-[clamp(3.8rem,7vw,5.8rem)] w-[clamp(4.4rem,11vw,7.6rem)] -rotate-[18deg] sm:top-[1.4rem]">
+                <div className="pointer-events-none absolute left-[1.1rem] top-[1rem] z-20 h-[clamp(3.8rem,7vw,5.8rem)] w-[clamp(4.4rem,11vw,7.6rem)] -rotate-[18deg] sm:left-[1.6rem] sm:top-[1.4rem] lg:left-[clamp(4.6rem,9vw,7.4rem)]">
                   <Image
                     src="/Tape Piece.svg"
                     alt=""
@@ -154,28 +154,28 @@ export function ContactNotebookPopup({
                   </span>
                 </button>
 
-                <div className="relative z-20 grid min-h-[min(56rem,calc(100vh-5rem))] gap-8 px-4 pb-5 pt-14 sm:px-6 sm:pb-6 sm:pt-[4.5rem] lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:gap-10 lg:px-10 lg:pb-8 lg:pt-20">
-                  <div className="flex flex-col justify-between gap-6 pl-[clamp(4rem,7vw,6rem)]">
+                <div className="relative z-20 grid min-h-[min(44rem,calc(100vh-2.5rem))] gap-6 px-4 pb-5 pt-12 sm:min-h-[min(46rem,calc(100vh-3rem))] sm:px-6 sm:pb-6 sm:pt-14 lg:min-h-[min(56rem,calc(100vh-5rem))] lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:gap-10 lg:px-10 lg:pb-8 lg:pt-20">
+                  <div className="flex flex-col justify-between gap-5 pl-0 lg:pl-[clamp(4rem,7vw,6rem)]">
                     <div>
                       <span className="inline-flex rotate-[-3deg] rounded-full border-2 border-black/70 bg-[#fff36d] px-4 py-1 font-[family:var(--font-geist-mono)] text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-black shadow-[3px_3px_0_rgba(0,0,0,0.1)]">
                         floating notebook
                       </span>
-                      <h2 className="font-cabin-sketch mt-5 max-w-[8ch] text-[clamp(2.8rem,7vw,5.8rem)] leading-[0.9] text-[#17120f]">
+                      <h2 className="font-cabin-sketch mt-4 max-w-[8ch] text-[clamp(2.15rem,9vw,3.8rem)] leading-[0.92] text-[#17120f] lg:mt-5 lg:text-[clamp(2.8rem,7vw,5.8rem)] lg:leading-[0.9]">
                         Leave a little note.
                       </h2>
-                      <p className="mt-4 max-w-[30rem] text-sm leading-relaxed text-[#342923] sm:text-base">
+                      <p className="mt-3 max-w-[30rem] text-[0.92rem] leading-relaxed text-[#342923] sm:text-[0.98rem] lg:mt-4 lg:text-base">
                         This is the playful popup version, not the footer. Drop the
                         basics here and we can wire the real send flow later.
                       </p>
                       <a
                         href="mailto:hello@sthyra.digital"
-                        className="font-cabin-sketch mt-4 inline-block text-[clamp(1.25rem,2.4vw,1.75rem)] text-[#382722] transition hover:opacity-65"
+                        className="font-cabin-sketch mt-3 inline-block text-[clamp(1.05rem,4vw,1.45rem)] text-[#382722] transition hover:opacity-65 lg:mt-4 lg:text-[clamp(1.25rem,2.4vw,1.75rem)]"
                       >
                         hello@sthyra.digital
                       </a>
                     </div>
 
-                    <div className="max-w-[26rem] self-start rounded-[1.5rem] border-2 border-dashed border-[#f09db9] bg-[#fffaf9]/88 p-5 shadow-[0_12px_28px_rgba(0,0,0,0.05)]">
+                    <div className="hidden max-w-[26rem] self-start rounded-[1.5rem] border-2 border-dashed border-[#f09db9] bg-[#fffaf9]/88 p-5 shadow-[0_12px_28px_rgba(0,0,0,0.05)] lg:block">
                       <p className="font-[family:var(--font-geist-mono)] text-[0.68rem] font-semibold uppercase tracking-[0.25em] text-[#6e625c]">
                         quick note
                       </p>
@@ -190,12 +190,12 @@ export function ContactNotebookPopup({
                   </div>
 
                   <form
-                    className="flex h-full flex-col justify-center gap-6 bg-transparent pl-0 pr-2 sm:gap-7 lg:pr-6"
+                    className="flex h-full flex-col justify-center gap-4 bg-transparent pl-0 pr-2 sm:gap-5 lg:gap-6 lg:pr-6"
                     onSubmit={(event) => event.preventDefault()}
                   >
                     {contactFields.map((field) => (
                       <label key={field.id} htmlFor={field.id} className="block">
-                        <span className="font-cabin-sketch block text-[clamp(1.7rem,3vw,2.55rem)] leading-none text-[#14100d]">
+                        <span className="font-cabin-sketch block text-[clamp(1.35rem,6vw,1.95rem)] leading-none text-[#14100d] lg:text-[clamp(1.7rem,3vw,2.55rem)]">
                           {field.label}
                         </span>
                         {field.multiline ? (
@@ -203,7 +203,7 @@ export function ContactNotebookPopup({
                             id={field.id}
                             name={field.id}
                             placeholder={field.placeholder}
-                            className="contact-note-input contact-note-textarea mt-3"
+                            className="contact-note-input contact-note-textarea mt-2 text-[0.95rem] lg:mt-3"
                           />
                         ) : (
                           <input
@@ -211,19 +211,19 @@ export function ContactNotebookPopup({
                             name={field.id}
                             type={field.type}
                             placeholder={field.placeholder}
-                            className="contact-note-input mt-3"
+                            className="contact-note-input mt-2 text-[0.95rem] lg:mt-3"
                           />
                         )}
                       </label>
                     ))}
 
-                    <div className="mt-2 flex flex-wrap items-center justify-between gap-4 pt-6 sm:pt-8">
+                    <div className="mt-1 flex flex-wrap items-center justify-between gap-4 pt-4 sm:pt-5 lg:mt-2 lg:pt-6">
                       <p className="font-[family:var(--font-geist-mono)] text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-[#7a6e67]">
                         ui only for now
                       </p>
                       <button
                         type="submit"
-                        className="font-cabin-sketch rounded-full border-2 border-black/80 bg-[#fff36d] px-5 py-2 text-[1.15rem] text-black shadow-[4px_4px_0_rgba(0,0,0,0.12)] transition hover:-translate-y-0.5 hover:rotate-[-2deg]"
+                        className="font-cabin-sketch rounded-full border-2 border-black/80 bg-[#fff36d] px-4 py-2 text-[1rem] text-black shadow-[4px_4px_0_rgba(0,0,0,0.12)] transition hover:-translate-y-0.5 hover:rotate-[-2deg] lg:px-5 lg:text-[1.15rem]"
                       >
                         pin this note
                       </button>

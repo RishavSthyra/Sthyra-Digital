@@ -91,6 +91,10 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
   const rootRef = useRef<HTMLElement>(null);
   const [activeShowcaseIndex, setActiveShowcaseIndex] = useState(0);
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
+  const heroHighlightColor =
+    service.slug === "creative-management"
+      ? "var(--service-accent-soft)"
+      : "var(--service-accent)";
 
   const showcasePalettes = [
     {
@@ -383,7 +387,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
           <div className="absolute bottom-[10%] left-1/2 h-52 w-52 -translate-x-1/2 rounded-full bg-[#ffffff]/7 blur-[118px]" />
         </div>
 
-        <div className="pointer-events-none absolute inset-0 z-[2] hidden md:block" aria-hidden="true">
+        <div className="pointer-events-none absolute inset-0 z-[2] hidden overflow-hidden lg:block" aria-hidden="true">
           <div
             data-hero-portrait
             className="absolute bottom-[-20rem] left-[-2rem] flex h-[44rem] w-[22rem] items-end justify-start opacity-95 lg:bottom-[-29rem] lg:left-[-3rem] lg:h-[64rem] lg:w-[32rem]"
@@ -415,7 +419,39 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
           </div>
         </div>
 
-        <div className="relative z-10 mx-auto max-w-[90rem] px-5 pb-16 pt-5 sm:px-8 lg:px-12 lg:pb-24 lg:pt-6">
+        <div className="pointer-events-none absolute inset-0 z-[2] overflow-hidden lg:hidden" aria-hidden="true">
+          <div
+            data-hero-portrait
+            className="absolute bottom-0 left-[-1.25rem] flex h-[14rem] w-[9rem] items-end justify-start opacity-95 sm:h-[18rem] sm:w-[11.5rem] md:h-[24rem] md:w-[15rem]"
+          >
+            <Image
+              src="/Man1.svg"
+              alt=""
+              width={236}
+              height={500}
+              unoptimized
+              sizes="(min-width: 768px) 224px, 176px"
+              className="h-full w-auto object-contain"
+            />
+          </div>
+
+          <div
+            data-hero-portrait
+            className="absolute bottom-0 right-[-1.25rem] flex h-[14rem] w-[9rem] items-end justify-end opacity-95 sm:h-[18rem] sm:w-[11.5rem] md:h-[24rem] md:w-[15rem]"
+          >
+            <Image
+              src="/Woman1.svg"
+              alt=""
+              width={236}
+              height={500}
+              unoptimized
+              sizes="(min-width: 768px) 224px, 176px"
+              className="h-full w-auto object-contain"
+            />
+          </div>
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-[90rem] px-5 pb-40 pt-5 sm:px-8 sm:pb-52 md:pb-64 lg:px-12 lg:pb-24 lg:pt-6">
           <header
             data-hero-header
             className="mb-12 flex flex-col gap-4 lg:mb-16 lg:flex-row lg:items-center lg:justify-between"
@@ -460,7 +496,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
             </SketchFrame>
           </header>
 
-          <div className="relative mx-auto flex min-h-[32rem] max-w-[74rem] flex-col items-center justify-center py-14 text-center sm:min-h-[36rem] lg:min-h-[40rem] lg:py-16">
+          <div className="relative mx-auto flex min-h-[32rem] max-w-[74rem] flex-col items-center justify-center py-12 text-center sm:min-h-[36rem] sm:py-14 lg:min-h-[40rem] lg:py-16">
             <HeroOrbitTag
               className="left-[-2%] top-[10%] rotate-[-8deg]"
               color="var(--service-paper)"
@@ -490,10 +526,19 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
 
             <h1
               data-hero-title
-              className={`max-w-[22ch] ${baumans.className} text-[clamp(2.8rem,5vw,5rem)] leading-[0.92] tracking-[-0.068em] text-white`}
+              className={`max-w-[26ch] text-balance ${baumans.className} text-[clamp(2.45rem,5vw,5rem)] leading-[0.92] tracking-[-0.068em] text-white sm:max-w-[25ch] lg:max-w-[24ch]`}
             >
               <span>{service.heroTitle}</span>{" "}
-              <span className={`inline-block `} style={{ color: "var(--service-accent)" }}>
+              <span
+                className="inline text-balance"
+                style={{
+                  color: heroHighlightColor,
+                  textShadow:
+                    service.slug === "creative-management"
+                      ? "0 6px 18px rgba(74,25,118,0.14)"
+                      : undefined,
+                }}
+              >
                 {service.heroHighlight}
               </span>
             </h1>

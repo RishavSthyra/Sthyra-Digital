@@ -727,7 +727,7 @@ export function CreativeMiddleSection() {
                         collaborators, and assets pile on.
                       </p>
 
-                      <div className="relative grid gap-3 sm:grid-cols-3">
+                      <div className="relative grid gap-3 min-[560px]:grid-cols-2 xl:grid-cols-3">
                         {[
                           {
                             icon: whatsappIcon,
@@ -744,10 +744,14 @@ export function CreativeMiddleSection() {
                             title: creativeManagementService.pillars[2]?.chip ?? "Adaptation",
                             body: creativeManagementService.pillars[2]?.body ?? "",
                           },
-                        ].map((item) => (
+                        ].map((item, index) => (
                           <div
                             key={item.title}
-                            className="rounded-[1.1rem] border border-black/8 bg-white/55 p-4 backdrop-blur-[2px]"
+                            className={`rounded-[1.1rem] border border-black/8 bg-white/55 p-4 backdrop-blur-[2px] ${
+                              index === 2
+                                ? "min-[560px]:col-span-2 xl:col-span-1"
+                                : ""
+                            }`}
                           >
                             <Image
                               src={item.icon}

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useRef, useState, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { twMerge } from "tailwind-merge";
 import { SketchFrame } from "@/app/components/SketchFrame";
 import { SquigglyText } from "@/components/ui/squiggly-text";
@@ -20,7 +20,7 @@ type GalleryCard = {
 
 const galleryCards: GalleryCard[] = [
   {
-    src: "https://images.unsplash.com/photo-1635373670332-43ea883bb081?q=80&w=2781&auto=format&fit=crop",
+    src: "https://cdn.sthyra.com/sthyra-labs/sthyra-digital/ChatGPT%20Image%20Jun%203%2C%202026%2C%2002_43_26%20PM%20(1).png",
     alt: "Colorful abstract design materials spread across a desk",
     caption: "Color tests",
     sticker: "#ff8b5e",
@@ -31,7 +31,7 @@ const galleryCards: GalleryCard[] = [
     className: "w-40 sm:w-48 lg:w-60 xl:w-72 2xl:w-[20rem]",
   },
   {
-    src: "https://images.unsplash.com/photo-1576174464184-fb78fe882bfd?q=80&w=2787&auto=format&fit=crop",
+    src: "https://cdn.sthyra.com/sthyra-labs/sthyra-digital/ChatGPT%20Image%20Jun%203%2C%202026%2C%2002_43_28%20PM%20(4).png",
     alt: "Hands arranging pastel product boxes for a campaign shoot",
     caption: "Launch props",
     sticker: "#0ea5e9",
@@ -42,7 +42,7 @@ const galleryCards: GalleryCard[] = [
     className: "w-32 sm:w-40 lg:w-48 xl:w-56 2xl:w-64",
   },
   {
-    src: "https://images.unsplash.com/photo-1503751071777-d2918b21bbd9?q=80&w=2670&auto=format&fit=crop",
+    src: "https://cdn.sthyra.com/sthyra-labs/sthyra-digital/ChatGPT%20Image%20Jun%203%2C%202026%2C%2002_43_30%20PM%20(5).png",
     alt: "Close-up of a bright lifestyle shoot with soft natural light",
     caption: "Hero still",
     sticker: "#facc15",
@@ -53,7 +53,7 @@ const galleryCards: GalleryCard[] = [
     className: "w-44 sm:w-56 lg:w-72 xl:w-[20rem] 2xl:w-[23rem]",
   },
   {
-    src: "https://images.unsplash.com/photo-1620428268482-cf1851a36764?q=80&w=2609&auto=format&fit=crop",
+    src: "https://cdn.sthyra.com/sthyra-labs/sthyra-digital/ChatGPT%20Image%20Jun%203%2C%202026%2C%2002_43_30%20PM%20(6).png",
     alt: "Creative team reviewing packaging and color boards together",
     caption: "Review wall",
     sticker: "#fb7185",
@@ -64,7 +64,7 @@ const galleryCards: GalleryCard[] = [
     className: "w-40 sm:w-52 lg:w-64 xl:w-72 2xl:w-[21rem]",
   },
   {
-    src: "https://images.unsplash.com/photo-1602212096437-d0af1ce0553e?q=80&w=2671&auto=format&fit=crop",
+    src: "https://cdn.sthyra.com/sthyra-labs/sthyra-digital/ChatGPT%20Image%20Jun%203%2C%202026%2C%2002_46_23%20PM%20(4).png",
     alt: "Studio table with campaign notes and editorial references",
     caption: "Messy table",
     sticker: "#34d399",
@@ -75,7 +75,7 @@ const galleryCards: GalleryCard[] = [
     className: "w-36 sm:w-44 lg:w-52 xl:w-60 2xl:w-[17rem]",
   },
   {
-    src: "https://images.unsplash.com/photo-1622313762347-3c09fe5f2719?q=80&w=2640&auto=format&fit=crop",
+    src: "https://cdn.sthyra.com/sthyra-labs/sthyra-digital/ChatGPT%20Image%20Jun%203%2C%202026%2C%2002_46_21%20PM%20(2).png",
     alt: "Phone mockup and interface sketches during content planning",
     caption: "Mobile draft",
     sticker: "#a78bfa",
@@ -104,6 +104,7 @@ function DragCard({
   zIndex = 1,
 }: DragCardProps) {
   const [activeZIndex, setActiveZIndex] = useState(zIndex);
+  const backgroundImage = `url("${src}")`;
 
   const updateZIndex = () => {
     const dragRoot = containerRef.current;
@@ -160,7 +161,7 @@ function DragCard({
         role="img"
         aria-label={alt}
         className="pointer-events-none aspect-[4/5] w-full rounded-[1rem] bg-cover bg-center select-none"
-        style={{ backgroundImage: `url(${src})` }}
+        style={{ backgroundImage }}
       />
       <figcaption className="px-3 pt-3 font-[family:var(--font-geist-mono)] text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-[#473f39] sm:text-[0.68rem]">
         {caption}
@@ -171,6 +172,45 @@ function DragCard({
 
 export function CreativeGallerySection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const preloadRef = useRef<HTMLImageElement[]>([]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const idleWindow = window as Window &
+      typeof globalThis & {
+        cancelIdleCallback?: (handle: number) => void;
+        requestIdleCallback?: (
+          callback: IdleRequestCallback,
+          options?: IdleRequestOptions,
+        ) => number;
+      };
+
+    const warmGalleryImages = () => {
+      preloadRef.current = galleryCards.map((card) => {
+        const image = new window.Image();
+        image.decoding = "async";
+        image.fetchPriority = "low";
+        image.src = card.src;
+
+        return image;
+      });
+    };
+
+    if (typeof idleWindow.requestIdleCallback === "function") {
+      const idleId = idleWindow.requestIdleCallback(warmGalleryImages, {
+        timeout: 1800,
+      });
+
+      return () => idleWindow.cancelIdleCallback?.(idleId);
+    }
+
+    const timeoutId = globalThis.setTimeout(warmGalleryImages, 900);
+
+    return () => globalThis.clearTimeout(timeoutId);
+  }, []);
 
   return (
     <section

@@ -2,8 +2,8 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import type { HTMLInputTypeAttribute } from "react";
-import { useEffect } from "react";
+import type { FormEvent, HTMLInputTypeAttribute } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type ContactField =
   | {
@@ -47,10 +47,33 @@ type ContactNotebookPopupProps = {
   onClose: () => void;
 };
 
+type SubmitState =
+  | { kind: "idle"; message: string }
+  | { kind: "success"; message: string }
+  | { kind: "error"; message: string };
+
 export function ContactNotebookPopup({
   isOpen,
   onClose,
 }: ContactNotebookPopupProps) {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitState, setSubmitState] = useState<SubmitState>({
+    kind: "idle",
+    message: "",
+  });
+
+  const resetFormState = () => {
+    formRef.current?.reset();
+    setIsSubmitting(false);
+    setSubmitState({ kind: "idle", message: "" });
+  };
+
+  const handleClose = () => {
+    resetFormState();
+    onClose();
+  };
+
   useEffect(() => {
     if (!isOpen) {
       return;
@@ -61,6 +84,7 @@ export function ContactNotebookPopup({
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        resetFormState();
         onClose();
       }
     };
@@ -73,6 +97,55 @@ export function ContactNotebookPopup({
     };
   }, [isOpen, onClose]);
 
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    setIsSubmitting(true);
+    setSubmitState({ kind: "idle", message: "" });
+
+    const formData = new FormData(event.currentTarget);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = (await response.json().catch(() => null)) as
+        | { message?: string }
+        | null;
+
+      if (!response.ok) {
+        throw new Error(
+          result?.message ?? "The note could not be sent right now.",
+        );
+      }
+
+      formRef.current?.reset();
+      setSubmitState({
+        kind: "success",
+        message: result?.message ?? "Your note has been sent successfully.",
+      });
+    } catch (error) {
+      setSubmitState({
+        kind: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "The note could not be sent right now.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const submitMessageClassName =
+    submitState.kind === "error" ? "text-[#b44235]" : "text-[#4d5d20]";
+
   return (
     <AnimatePresence>
       {isOpen ? (
@@ -82,7 +155,7 @@ export function ContactNotebookPopup({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.24, ease: "easeOut" }}
           className="fixed inset-0 z-[220] bg-[rgba(28,18,33,0.34)] backdrop-blur-[6px]"
-          onClick={onClose}
+          onClick={handleClose}
         >
           <div className="flex min-h-screen items-start justify-center overflow-y-auto px-2 py-10 sm:px-4 sm:py-12 lg:px-8 lg:py-10">
             <motion.section
@@ -145,7 +218,7 @@ export function ContactNotebookPopup({
                 <button
                   type="button"
                   aria-label="Close popup"
-                  onClick={onClose}
+                  onClick={handleClose}
                   className="absolute right-3 top-3 z-30 flex h-11 w-11 items-center justify-center rounded-full border-2 border-black/80 bg-[#fff8f4] text-black shadow-[4px_4px_0_rgba(0,0,0,0.12)] transition hover:-translate-y-0.5 hover:rotate-6 sm:right-5 sm:top-5"
                 >
                   <span className="relative block h-4 w-4">
@@ -164,8 +237,8 @@ export function ContactNotebookPopup({
                         Leave a little note.
                       </h2>
                       <p className="mt-3 max-w-[30rem] text-[0.92rem] leading-relaxed text-[#342923] sm:text-[0.98rem] lg:mt-4 lg:text-base">
-                        This is the playful popup version, not the footer. Drop the
-                        basics here and we can wire the real send flow later.
+                        Drop the basics here and this notebook will send your
+                        message straight to the inbox.
                       </p>
                       <a
                         href="mailto:hello@sthyra.digital"
@@ -183,15 +256,16 @@ export function ContactNotebookPopup({
                         no boring boxes, just notebook lines.
                       </p>
                       <p className="mt-3 text-sm leading-relaxed text-[#4b3e37]">
-                        UI first, backend later. Keep it loose, sketchy, and easy to
-                        read.
+                        Real mail flow is wired in now, with the same sketchy,
+                        easy-to-read notebook feel.
                       </p>
                     </div>
                   </div>
 
                   <form
+                    ref={formRef}
                     className="flex h-full flex-col justify-center gap-4 bg-transparent pl-0 pr-2 sm:gap-5 lg:gap-6 lg:pr-6"
-                    onSubmit={(event) => event.preventDefault()}
+                    onSubmit={handleSubmit}
                   >
                     {contactFields.map((field) => (
                       <label key={field.id} htmlFor={field.id} className="block">
@@ -203,6 +277,9 @@ export function ContactNotebookPopup({
                             id={field.id}
                             name={field.id}
                             placeholder={field.placeholder}
+                            required
+                            rows={6}
+                            disabled={isSubmitting}
                             className="contact-note-input contact-note-textarea mt-2 text-[0.95rem] lg:mt-3"
                           />
                         ) : (
@@ -211,6 +288,15 @@ export function ContactNotebookPopup({
                             name={field.id}
                             type={field.type}
                             placeholder={field.placeholder}
+                            autoComplete={
+                              field.id === "name"
+                                ? "name"
+                                : field.id === "email"
+                                  ? "email"
+                                  : "off"
+                            }
+                            required
+                            disabled={isSubmitting}
                             className="contact-note-input mt-2 text-[0.95rem] lg:mt-3"
                           />
                         )}
@@ -218,14 +304,18 @@ export function ContactNotebookPopup({
                     ))}
 
                     <div className="mt-1 flex flex-wrap items-center justify-between gap-4 pt-4 sm:pt-5 lg:mt-2 lg:pt-6">
-                      <p className="font-[family:var(--font-geist-mono)] text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-[#7a6e67]">
-                        ui only for now
+                      <p
+                        className={`font-[family:var(--font-geist-mono)] text-[0.68rem] font-semibold uppercase tracking-[0.24em] ${submitState.message ? submitMessageClassName : "text-[#7a6e67]"}`}
+                        role={submitState.message ? "status" : undefined}
+                      >
+                        {submitState.message || "all fields are required"}
                       </p>
                       <button
                         type="submit"
+                        disabled={isSubmitting}
                         className="font-cabin-sketch rounded-full border-2 border-black/80 bg-[#fff36d] px-4 py-2 text-[1rem] text-black shadow-[4px_4px_0_rgba(0,0,0,0.12)] transition hover:-translate-y-0.5 hover:rotate-[-2deg] lg:px-5 lg:text-[1.15rem]"
                       >
-                        pin this note
+                        {isSubmitting ? "sending..." : "pin this note"}
                       </button>
                     </div>
                   </form>

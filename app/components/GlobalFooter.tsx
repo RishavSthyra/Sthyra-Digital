@@ -24,6 +24,19 @@ const headlineVariants = {
 
 export function GlobalFooter() {
   const headlineRef = useRef<HTMLDivElement>(null);
+  const footerImageRefs = useRef<{
+    desktopBack: HTMLImageElement | null;
+    desktopFront: HTMLImageElement | null;
+    mobileBack: HTMLImageElement | null;
+    mobileFront: HTMLImageElement | null;
+  }>({
+    desktopBack: null,
+    desktopFront: null,
+    mobileBack: null,
+    mobileFront: null,
+  });
+  const warmedSourcesRef = useRef(new Set<string>());
+  const preloadRef = useRef<HTMLImageElement[]>([]);
   const previousHeadlineInViewRef = useRef(false);
   const headlineInView = useInView(headlineRef, {
     once: false,
@@ -46,6 +59,70 @@ export function GlobalFooter() {
     return () => window.clearTimeout(timer);
   }, [headlineInView]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const idleWindow = window as Window &
+      typeof globalThis & {
+        cancelIdleCallback?: (handle: number) => void;
+        requestIdleCallback?: (
+          callback: IdleRequestCallback,
+          options?: IdleRequestOptions,
+        ) => number;
+      };
+
+    const warmFooterImages = () => {
+      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+      const activeImages = isDesktop
+        ? [
+            footerImageRefs.current.desktopBack,
+            footerImageRefs.current.desktopFront,
+          ]
+        : [
+            footerImageRefs.current.mobileBack,
+            footerImageRefs.current.mobileFront,
+          ];
+
+      activeImages.forEach((imageNode) => {
+        if (!imageNode) {
+          return;
+        }
+
+        const source = imageNode.currentSrc || imageNode.src;
+
+        if (!source || warmedSourcesRef.current.has(source)) {
+          return;
+        }
+
+        imageNode.loading = "eager";
+        imageNode.decoding = "async";
+        imageNode.fetchPriority = "low";
+
+        const preloadImage = new window.Image();
+        preloadImage.decoding = "async";
+        preloadImage.fetchPriority = "low";
+        preloadImage.src = source;
+
+        preloadRef.current.push(preloadImage);
+        warmedSourcesRef.current.add(source);
+      });
+    };
+
+    if (typeof idleWindow.requestIdleCallback === "function") {
+      const idleId = idleWindow.requestIdleCallback(warmFooterImages, {
+        timeout: 2200,
+      });
+
+      return () => idleWindow.cancelIdleCallback?.(idleId);
+    }
+
+    const timeoutId = globalThis.setTimeout(warmFooterImages, 1200);
+
+    return () => globalThis.clearTimeout(timeoutId);
+  }, []);
+
   return (
     <footer
       id="contact"
@@ -54,6 +131,9 @@ export function GlobalFooter() {
       <div className="relative min-h-[34rem] pt-24 sm:min-h-[42rem] sm:pt-28 lg:min-h-[50rem] lg:pt-36 xl:min-h-[58rem] xl:pt-40">
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 flex justify-center lg:hidden">
           <Image
+            ref={(node) => {
+              footerImageRefs.current.mobileBack = node;
+            }}
             src="/BACK_SMALL.png"
             alt=""
             width={1351}
@@ -65,6 +145,9 @@ export function GlobalFooter() {
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 hidden justify-center lg:flex">
           <Image
+            ref={(node) => {
+              footerImageRefs.current.desktopBack = node;
+            }}
             src="/BACK.png"
             alt=""
             width={2172}
@@ -121,6 +204,9 @@ export function GlobalFooter() {
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center lg:hidden">
           <Image
+            ref={(node) => {
+              footerImageRefs.current.mobileFront = node;
+            }}
             src="/FRONT_SMALL.png"
             alt=""
             width={941}
@@ -132,6 +218,9 @@ export function GlobalFooter() {
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 hidden justify-center lg:flex">
           <Image
+            ref={(node) => {
+              footerImageRefs.current.desktopFront = node;
+            }}
             src="/BACK2.png"
             alt=""
             width={4344}

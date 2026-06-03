@@ -60,6 +60,10 @@ export default function RootLayout({
       lang="en"
       className={`site-doodle-cursor ${geistSans.variable} ${geistMono.variable} ${irishGrover.variable} ${baumans.variable} ${comfortaa.variable} ${cabinSketch.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preconnect" href="https://cdn.sthyra.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://cdn.sthyra.com" />
+      </head>
       <body className="min-h-full flex flex-col">
         <GlobalHandCursor />
         <div className="flex-1">{children}</div>

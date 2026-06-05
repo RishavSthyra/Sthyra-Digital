@@ -2,6 +2,14 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ServicePageTemplate } from "@/app/components/ServicePageTemplate";
 import { getServicePage, servicePages } from "@/app/services/servicePageContent";
+import {
+  buildBreadcrumbSchema,
+  buildOrganizationSchema,
+  buildPageMetadata,
+  buildWebPageSchema,
+  buildWebsiteSchema,
+  siteConfig,
+} from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -22,83 +30,53 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const path = `/services/${service.slug}`;
 
   return {
-    title: service.name,
-    description: service.metaDescription,
-    keywords: service.keywords,
-    alternates: {
-      canonical: path,
-    },
-    openGraph: {
-      title: service.name,
+    ...buildPageMetadata({
+      category: "services",
       description: service.metaDescription,
-      url: path,
-      siteName: "sthyra.digital",
-      type: "website",
-    },
-    twitter: {
-      card: "summary",
+      keywords: service.keywords,
+      path,
       title: service.name,
-      description: service.metaDescription,
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-        "max-video-preview": -1,
-      },
-    },
+    }),
     category: "services",
   };
 }
 
 function buildStructuredData(service: (typeof servicePages)[number]) {
-  const pageUrl = `https://sthyra.digital/services/${service.slug}`;
+  const path = `/services/${service.slug}`;
+  const pageUrl = `${siteConfig.url}${path}`;
 
   return [
+    buildOrganizationSchema(),
+    buildWebsiteSchema(),
     {
       "@context": "https://schema.org",
       "@type": "Service",
+      "@id": `${pageUrl}#service`,
       name: service.name,
       serviceType: service.name,
+      category: service.primaryKeyword,
       description: service.metaDescription,
       url: pageUrl,
-      areaServed: "Worldwide",
+      areaServed: "Bangalore",
       keywords: service.keywords.join(", "),
       provider: {
         "@type": "Organization",
-        name: "sthyra.digital",
-        url: "https://sthyra.digital",
-        email: "hello@sthyra.digital",
+        "@id": `${siteConfig.url}/#organization`,
+        name: siteConfig.name,
+        url: siteConfig.url,
+        email: siteConfig.email,
       },
     },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: "https://sthyra.digital/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Services",
-          item: "https://sthyra.digital/services",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: service.name,
-          item: pageUrl,
-        },
-      ],
-    },
+    buildBreadcrumbSchema(path, [
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+      { name: service.name, path },
+    ]),
+    buildWebPageSchema({
+      description: service.metaDescription,
+      name: service.name,
+      path,
+    }),
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",

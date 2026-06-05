@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "motion/react";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { twMerge } from "tailwind-merge";
@@ -104,7 +105,6 @@ function DragCard({
   zIndex = 1,
 }: DragCardProps) {
   const [activeZIndex, setActiveZIndex] = useState(zIndex);
-  const backgroundImage = `url("${src}")`;
 
   const updateZIndex = () => {
     const dragRoot = containerRef.current;
@@ -157,12 +157,15 @@ function DragCard({
         className="absolute left-4 top-3 h-3 w-14 rounded-full opacity-85 shadow-[0_1px_0_rgba(255,255,255,0.65)] blur-[0.2px]"
         style={{ backgroundColor: sticker }}
       />
-      <div
-        role="img"
-        aria-label={alt}
-        className="pointer-events-none aspect-[4/5] w-full rounded-[1rem] bg-cover bg-center select-none"
-        style={{ backgroundImage }}
-      />
+      <div className="pointer-events-none relative aspect-[4/5] w-full overflow-hidden rounded-[1rem] select-none">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(max-width: 640px) 40vw, (max-width: 1024px) 28vw, 20rem"
+          className="object-cover"
+        />
+      </div>
       <figcaption className="px-3 pt-3 font-[family:var(--font-geist-mono)] text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-[#473f39] sm:text-[0.68rem]">
         {caption}
       </figcaption>

@@ -9,34 +9,31 @@ import {
 } from "./fonts";
 import { GlobalFooter } from "@/app/components/GlobalFooter";
 import { GlobalHandCursor } from "@/app/components/GlobalHandCursor";
+import { siteConfig } from "@/lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sthyra.digital"),
+  metadataBase: new URL(siteConfig.url),
+  applicationName: siteConfig.name,
   title: {
-    default: "sthyra.digital",
-    template: "%s | sthyra.digital",
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
   },
-  description:
-    "Creative digital agency building expressive websites, performance marketing systems, and content-led service pages with strong SEO foundations.",
-  alternates: {
-    canonical: "/",
-  },
+  description: siteConfig.description,
   openGraph: {
-    title: "sthyra.digital",
-    description:
-      "Creative digital agency building expressive websites, performance marketing systems, and content-led service pages with strong SEO foundations.",
-    url: "/",
-    siteName: "sthyra.digital",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
     type: "website",
-    locale: "en_US",
+    locale: siteConfig.locale,
   },
   twitter: {
-    card: "summary",
-    title: "sthyra.digital",
-    description:
-      "Creative digital agency building expressive websites, performance marketing systems, and content-led service pages with strong SEO foundations.",
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
   },
+  manifest: "/manifest.webmanifest",
   robots: {
     index: true,
     follow: true,
@@ -63,6 +60,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://cdn.sthyra.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://cdn.sthyra.com" />
+        <link rel="dns-prefetch" href="https://lottie.host" />
       </head>
       <body className="min-h-full flex flex-col">
         <GlobalHandCursor />

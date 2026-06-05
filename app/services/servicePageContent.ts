@@ -49,6 +49,7 @@ export type ServiceFaq = {
 
 export type ServicePageContent = {
   audience: string;
+  conciseAnswer: string;
   description: string;
   deliverables: ServiceDeliverable[];
   faq: ServiceFaq[];
@@ -61,10 +62,14 @@ export type ServicePageContent = {
   name: string;
   outcomes: ServiceOutcome[];
   pillars: ServicePillar[];
+  primaryKeyword: string;
   process: ServiceProcessStep[];
+  secondaryKeywords: string[];
+  semanticKeywords: string[];
   shortName: string;
   slug: ServiceSlug;
   stats: ServiceStat[];
+  summary: string;
   theme: ServiceTheme;
 };
 
@@ -78,12 +83,33 @@ export const servicePages: ServicePageContent[] = [
     heroHighlight: "conversions.",
     description:
       "We plan, build, and refine paid campaigns that connect strategy, creative, landing pages, and measurement. The goal is not just more traffic. It is better signal, faster learning, and conversion paths that hold up under scale.",
+    conciseAnswer:
+      "Performance marketing services that connect paid social, paid search, landing pages, and conversion tracking into one measurable growth system.",
     metaDescription:
       "Performance marketing services focused on paid social, search ads, landing page optimization, AEO-aware messaging, and conversion systems for ambitious brands.",
     audience:
       "Best for brands that need a paid media partner who can shape the message, pressure-test the funnel, and keep creative performance tied to business outcomes.",
+    primaryKeyword: "performance marketing agency",
+    secondaryKeywords: [
+      "paid social agency",
+      "PPC management services",
+      "landing page optimization agency",
+      "conversion rate optimization services",
+    ],
+    semanticKeywords: [
+      "paid search advertising",
+      "Meta ads management",
+      "Google Ads strategy",
+      "creative testing",
+      "conversion tracking",
+      "funnel optimization",
+      "AI search marketing",
+      "answer engine optimization",
+    ],
     keywords: [
       "performance marketing agency",
+      "performance marketing agency Bangalore",
+      "PPC agency Bangalore",
       "paid social agency",
       "PPC management services",
       "conversion rate optimization",
@@ -92,6 +118,8 @@ export const servicePages: ServicePageContent[] = [
       "AI search marketing",
       "AEO marketing strategy",
     ],
+    summary:
+      "Sthyra Digital helps brands tighten paid media messaging, build cleaner landing paths, and turn campaign data into weekly optimization decisions that improve acquisition quality.",
     heroChips: [
       "Paid social",
       "Search campaigns",
@@ -250,12 +278,33 @@ export const servicePages: ServicePageContent[] = [
     heroHighlight: "convert.",
     description:
       "We design and develop brand-led websites that balance expression with performance. Every build is shaped around clarity, responsiveness, technical SEO, Core Web Vitals, and a frontend experience that people actually remember.",
+    conciseAnswer:
+      "Web development services for brands that need custom websites with technical SEO, fast performance, and conversion-focused user journeys.",
     metaDescription:
       "Web development services for custom marketing sites, technical SEO, Core Web Vitals, landing page development, CMS builds, and conversion-focused UX.",
     audience:
       "Best for teams that need a site to work harder as a brand asset, a conversion tool, and a search-ready foundation without flattening the creative.",
+    primaryKeyword: "web development agency",
+    secondaryKeywords: [
+      "custom website development",
+      "technical SEO web development",
+      "landing page development",
+      "responsive website development",
+    ],
+    semanticKeywords: [
+      "Core Web Vitals optimization",
+      "Next.js development agency",
+      "conversion-focused web design",
+      "website information architecture",
+      "semantic HTML",
+      "page speed optimization",
+      "CMS implementation",
+      "technical SEO foundation",
+    ],
     keywords: [
       "web development agency",
+      "web development agency Bangalore",
+      "website development company Bangalore",
       "custom website development",
       "technical SEO web development",
       "Core Web Vitals optimization",
@@ -264,6 +313,8 @@ export const servicePages: ServicePageContent[] = [
       "responsive website development",
       "Next.js development agency",
     ],
+    summary:
+      "Sthyra Digital builds custom marketing websites that combine distinct visual direction with technical SEO, semantic structure, fast loading, and flexible content systems.",
     heroChips: [
       "Custom builds",
       "Technical SEO",
@@ -407,12 +458,33 @@ export const servicePages: ServicePageContent[] = [
     heroHighlight: "moving.",
     description:
       "We help brands manage creative like an operating system, not a pile of disconnected assets. That means tighter briefs, stronger story direction, sharper review loops, better repurposing, and a production rhythm that can keep up with modern channels.",
+    conciseAnswer:
+      "Creative management services that give brands clearer direction, stronger content systems, and a more repeatable campaign production workflow.",
     metaDescription:
       "Creative management services for campaign direction, content operations, brand storytelling, repurposing systems, short-form video planning, and AI-assisted workflows.",
     audience:
       "Best for teams with ideas, channels, and collaborators already in motion who need stronger creative leadership and cleaner production systems.",
+    primaryKeyword: "creative management services",
+    secondaryKeywords: [
+      "creative direction agency",
+      "content production management",
+      "brand storytelling services",
+      "social media creative management",
+    ],
+    semanticKeywords: [
+      "short form video strategy",
+      "content repurposing system",
+      "campaign planning",
+      "creative operations",
+      "brief development",
+      "review workflows",
+      "AI content workflow",
+      "multi-channel storytelling",
+    ],
     keywords: [
       "creative management services",
+      "creative management services Bangalore",
+      "creative agency Bangalore",
       "creative direction agency",
       "content production management",
       "brand storytelling services",
@@ -421,6 +493,8 @@ export const servicePages: ServicePageContent[] = [
       "content repurposing system",
       "AI content workflow",
     ],
+    summary:
+      "Sthyra Digital helps brands organize creative direction, review language, repurposing, and content operations so campaigns move faster without losing quality or point of view.",
     heroChips: [
       "Creative direction",
       "Content ops",

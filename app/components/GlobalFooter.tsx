@@ -246,6 +246,27 @@ export function GlobalFooter() {
               <Link href="/" className="transition hover:opacity-65">
                 Home
               </Link>
+              <Link href="/services" className="transition hover:opacity-65">
+                Services
+              </Link>
+              <Link
+                href="/services/performance-marketing"
+                className="transition hover:opacity-65"
+              >
+                Performance Marketing
+              </Link>
+              <Link
+                href="/services/web-development"
+                className="transition hover:opacity-65"
+              >
+                Web Development
+              </Link>
+              <Link
+                href="/services/creative-management"
+                className="transition hover:opacity-65"
+              >
+                Creative Management
+              </Link>
               <a
                 href="mailto:hello@sthyra.digital"
                 className="transition hover:opacity-65"

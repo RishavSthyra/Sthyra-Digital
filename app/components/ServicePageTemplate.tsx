@@ -9,7 +9,10 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { baumans } from "@/app/fonts";
 import { SketchFrame } from "@/app/components/SketchFrame";
-import type { ServicePageContent } from "@/app/services/servicePageContent";
+import {
+  servicePages,
+  type ServicePageContent,
+} from "@/app/services/servicePageContent";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -91,6 +94,8 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
   const rootRef = useRef<HTMLElement>(null);
   const [activeShowcaseIndex, setActiveShowcaseIndex] = useState(0);
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
+  const relatedServices = servicePages.filter((entry) => entry.slug !== service.slug);
+  const [firstRelatedService, secondRelatedService] = relatedServices;
   const heroHighlightColor =
     service.slug === "creative-management"
       ? "var(--service-accent-soft)"
@@ -620,36 +625,75 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
             >
               {service.audience}
             </p>
-          </div>
+            <p
+              data-section-heading
+              className="mt-4 max-w-[46rem] text-[0.98rem] leading-7 text-[#54463e]"
+            >
+              {service.slug === "performance-marketing" ? (
+                <>
+                  If the campaigns need a faster site foundation, our{" "}
+                  <Link
+                    href={`/services/${firstRelatedService.slug}`}
+                    className="font-semibold underline decoration-[#f50d30] underline-offset-4"
+                  >
+                    {firstRelatedService.name.toLowerCase()}
+                  </Link>{" "}
+                  work helps improve landing speed, technical SEO, and
+                  conversion clarity, while{" "}
+                  <Link
+                    href={`/services/${secondRelatedService.slug}`}
+                    className="font-semibold underline decoration-[#f50d30] underline-offset-4"
+                  >
+                    {secondRelatedService.name.toLowerCase()}
+                  </Link>{" "}
+                  keeps creative production aligned with what the ads are
+                  learning.
+                </>
+              ) : null}
 
-          {/* <div className="mb-6 grid gap-3 sm:grid-cols-3">
-            {service.stats.map((stat) => (
-              <div key={stat.value} data-reveal-card>
-                <SketchFrame
-                  className="h-full px-4 py-4"
-                  fill="rgba(255,255,255,0.72)"
-                  stroke="#171717"
-                  strokeWidth={1.42}
-                  roughness={1.08}
-                  bowing={1.72}
-                  inset={1.2}
-                  radius={20}
-                  overlayFill="rgba(255,255,255,0.10)"
-                  overlayFillStyle="zigzag-line"
-                  overlayFillWeight={0.72}
-                  overlayHachureGap={10}
-                  overlayHachureAngle={24}
-                >
-                  <div className="space-y-2">
-                    <div className="text-[1.02rem] font-semibold tracking-[-0.03em] text-[#171717]">
-                      {stat.value}
-                    </div>
-                    <p className="text-sm leading-6 text-[#564842]">{stat.label}</p>
-                  </div>
-                </SketchFrame>
-              </div>
-            ))}
-          </div> */}
+              {service.slug === "web-development" ? (
+                <>
+                  If the new site also needs acquisition momentum, our{" "}
+                  <Link
+                    href={`/services/${firstRelatedService.slug}`}
+                    className="font-semibold underline decoration-[#f50d30] underline-offset-4"
+                  >
+                    {firstRelatedService.name.toLowerCase()}
+                  </Link>{" "}
+                  service connects landing pages and paid traffic, while{" "}
+                  <Link
+                    href={`/services/${secondRelatedService.slug}`}
+                    className="font-semibold underline decoration-[#f50d30] underline-offset-4"
+                  >
+                    {secondRelatedService.name.toLowerCase()}
+                  </Link>{" "}
+                  helps the messaging and content workflow stay consistent after
+                  launch.
+                </>
+              ) : null}
+
+              {service.slug === "creative-management" ? (
+                <>
+                  When the creative system also needs stronger distribution or a
+                  sharper website, our{" "}
+                  <Link
+                    href={`/services/${firstRelatedService.slug}`}
+                    className="font-semibold underline decoration-[#f50d30] underline-offset-4"
+                  >
+                    {firstRelatedService.name.toLowerCase()}
+                  </Link>{" "}
+                  service helps campaigns scale, and{" "}
+                  <Link
+                    href={`/services/${secondRelatedService.slug}`}
+                    className="font-semibold underline decoration-[#f50d30] underline-offset-4"
+                  >
+                    {secondRelatedService.name.toLowerCase()}
+                  </Link>{" "}
+                  gives the content a faster, more search-ready home.
+                </>
+              ) : null}
+            </p>
+          </div>
 
           <div className="grid gap-5 lg:grid-cols-3">
             {service.pillars.map((pillar, index) => (
@@ -1003,7 +1047,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
               data-section-heading
               className="mt-5 max-w-[14ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-[0.92] tracking-[-0.055em] text-[#171717]"
             >
-              Same page structure. Different story, color, and emphasis.
+              Questions teams ask before choosing this service.
             </h2>
 
             <div className="mt-8 space-y-4">
@@ -1075,6 +1119,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
               src="https://lottie.host/6a916d11-4bad-4a77-bd71-ca7d46e27f4f/eGayMAUVBF.lottie"
               loop
               autoplay
+              aria-hidden="true"
               className="h-full w-full"
               style={{ height: "100%", width: "100%" }}
             />

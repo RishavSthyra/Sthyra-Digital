@@ -4,8 +4,10 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import illustration from "@/public/illustration.png";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { CreativeNavbar } from "@/app/components/CreativeNavbar";
+import { SquigglyText } from "@/components/ui/squiggly-text";
 const FIGMA_FRAME_WIDTH = 1436;
 const SVG_WIDTH_RATIO = 1396.12 / FIGMA_FRAME_WIDTH;
 const ILLUSTRATION_WIDTH_RATIO = 1148 / FIGMA_FRAME_WIDTH;
@@ -350,17 +352,49 @@ export function CreativeHero() {
               </div>
             </div>
 
+            <div className="mx-auto flex w-full max-w-[72rem] flex-col items-center px-6 text-center">
+              <p className="font-[family:var(--font-geist-mono)] text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[#ffe9a3]">
+                Digital marketing agency in Bangalore
+              </p>
+              <h1 className="mt-4 max-w-[26ch] text-balance font-sans text-[clamp(2.2rem,4.6vw,4.4rem)] font-semibold leading-[1.02] tracking-[-0.04em] text-white">
+                Performance marketing for{" "}
+                <SquigglyText
+                  as="span"
+                  stepDuration={72}
+                  scale={[3, 5]}
+                  className="text-[#ffe55a]"
+                >
+                  bold brands
+                </SquigglyText>
+                , built to grow.
+              </h1>
+            </div>
+
             <p
               ref={paragraphRef}
-              className="mx-auto max-w-[47rem] px-6 text-center text-[0.95rem] leading-7 text-[#bde9ff] sm:text-base"
+              className="mx-auto max-w-[50rem] px-6 text-center text-[0.95rem] leading-7 text-[#bde9ff] sm:text-base"
             >
-              We build playful digital experiences for ambitious brands, blending
-              motion, storytelling, code, and design into work that feels sharp,
-              human, and unforgettable. Every screen is shaped with intention,
-              every interaction earns its place, and every detail works harder to
-              make the final experience feel alive, bold, and beautifully
-              original today.
+              Sthyra Digital blends technical SEO, performance marketing, custom
+              websites, and creative direction into one connected growth system.
+              We help ambitious teams launch memorable digital experiences that
+              load fast, explain the offer clearly, and convert attention into
+              measurable demand.
             </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 px-6">
+              <Link
+                href="/services"
+                className="rounded-full bg-[#ffe55a] px-5 py-3 text-sm font-semibold text-[#171717] transition hover:-translate-y-0.5"
+              >
+                Explore service pages
+              </Link>
+              <a
+                href="mailto:hello@sthyra.digital"
+                className="rounded-full border border-white/18 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/16"
+              >
+                Start a project
+              </a>
+            </div>
           </div>
 
           <span

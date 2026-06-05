@@ -7,7 +7,7 @@ import { SketchFrame } from "@/app/components/SketchFrame";
 const navItems = [
   { href: "#top", label: "Home" },
   { href: "#studio", label: "Studio" },
-  { href: "#services", label: "Services" },
+  { href: "/services", label: "Services" },
   { href: "#notes", label: "Work" },
   { href: "#contact", label: "Contact" },
 ];

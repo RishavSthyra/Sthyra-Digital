@@ -210,7 +210,7 @@ function WorkflowCalendarCard({
         <CalendarBindings />
 
         <div className="relative flex items-center justify-between border-b border-black/10 bg-[#f5eee4] px-4 py-3 sm:px-5 xl:px-6 xl:py-4">
-          <div className="absolute inset-x-0 top-0 h-2 bg-[linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0))]" />
+          {/* <div className="absolute inset-x-0 top-0 h-2 bg-[linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0))]" /> */}
           <div className="flex items-end gap-3">
             <span
               data-showcase-stage
@@ -416,14 +416,6 @@ function ShowcasePanel({
       style={{ backgroundColor: slide.background, width: panelWidth }}
     >
       <div
-        className="absolute inset-0 opacity-80"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 16% 20%, rgba(255,255,255,0.22), transparent 18%), radial-gradient(circle at 82% 26%, rgba(255,255,255,0.14), transparent 16%), radial-gradient(circle at 70% 80%, rgba(255,255,255,0.1), transparent 18%), linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.05))",
-        }}
-      />
-
-      <div
         ref={contentRef}
         className={`relative mx-auto grid w-full grid-cols-1 items-start px-6 py-2 lg:px-7 ${
           compact
@@ -466,14 +458,6 @@ function ShowcaseMobileCard({
       className="relative overflow-hidden px-5 py-16 sm:px-8"
       style={{ backgroundColor: slide.background }}
     >
-      <div
-        className="absolute inset-0 opacity-80"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 18% 20%, rgba(255,255,255,0.2), transparent 18%), radial-gradient(circle at 80% 24%, rgba(255,255,255,0.14), transparent 14%), linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.05))",
-        }}
-      />
-
       <div className="relative mx-auto flex max-w-[38rem] flex-col gap-8">
         <div className="-rotate-[2deg]">
           <RoughBubble slide={slide} />

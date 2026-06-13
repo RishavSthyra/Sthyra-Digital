@@ -96,10 +96,30 @@ body {
   will-change: transform;
 }
 
+.trusted-marquee-track {
+  width: max-content;
+  will-change: transform;
+  animation: trusted-marquee 30s linear infinite;
+}
+
+.trusted-marquee-track-reverse {
+  animation-direction: reverse;
+}
+
 .cursor-click-sparkle-active {
   animation: cursor-click-sparkle 360ms cubic-bezier(0.18, 0.88, 0.32, 1.12) forwards;
   transform-origin: center;
   will-change: transform, opacity;
+}
+
+@keyframes trusted-marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 @keyframes cursor-click-sparkle {

@@ -15,7 +15,7 @@ export default function NotFound() {
           404
         </p>
         <h1 className="mt-4 text-[clamp(2.6rem,6vw,5rem)] font-semibold leading-[0.92] tracking-[-0.06em]">
-          This page wandered off the notebook.
+          This page wandered off the website.
         </h1>
         <p className="mx-auto mt-5 max-w-[36rem] text-[1rem] leading-8 text-[#5a4d45]">
           The URL may have changed, the page may have been removed, or the link

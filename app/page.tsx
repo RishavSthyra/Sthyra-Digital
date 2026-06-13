@@ -2,6 +2,7 @@ import { CreativeGallerySection } from "@/app/components/CreativeGallerySection"
 import { CreativeHero } from "@/app/components/CreativeHero";
 import { CreativeMiddleSection } from "@/app/components/CreativeMiddleSection";
 import { CreativeShowcaseSection } from "@/app/components/CreativeShowcaseSection";
+import { TrustedPortfolioSection } from "@/app/components/TrustedPortfolioSection";
 import {
   buildBreadcrumbSchema,
   buildOrganizationSchema,
@@ -52,6 +53,7 @@ export default function Home() {
       <main>
         <CreativeHero />
         <CreativeMiddleSection />
+        <TrustedPortfolioSection />
         <CreativeShowcaseSection />
         <CreativeGallerySection />
       </main>

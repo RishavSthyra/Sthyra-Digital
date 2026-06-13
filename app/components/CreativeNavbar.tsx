@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import type { RefObject } from "react";
 import { SketchFrame } from "@/app/components/SketchFrame";
@@ -64,12 +65,17 @@ export function CreativeNavbar({ headerRef }: CreativeNavbarProps) {
     >
       <Link
         href="#top"
-        className="font-[family:var(--font-geist-mono)] text-sm font-semibold tracking-[0.08em] text-white/92 transition hover:text-white sm:text-base"
+        className="transition hover:opacity-85"
+        aria-label="Sthyra Digital home"
       >
-        made by{" "}
-        <span className="underline decoration-white/60 underline-offset-4">
-          sthyra.digital
-        </span>
+        <Image
+          src="/Sthyra_Logo_Png.png"
+          alt="Sthyra Digital"
+          width={3508}
+          height={1168}
+          priority
+          className="h-auto w-[8rem] sm:w-[9.25rem] lg:w-[10rem]"
+        />
       </Link>
 
       <SketchFrame

@@ -10,10 +10,13 @@
   },
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.19.4",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
     "@rive-app/react-webgl2": "^4.28.6",
     "clsx": "^2.1.1",
     "framer-motion": "^12.40.0",
     "gsap": "^3.15.0",
+    "maath": "^0.10.8",
     "motion": "^12.40.0",
     "next": "16.2.6",
     "nodemailer": "^8.0.10",

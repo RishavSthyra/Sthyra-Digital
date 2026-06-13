@@ -246,6 +246,12 @@ export function GlobalFooter() {
               <Link href="/" className="transition hover:opacity-65">
                 Home
               </Link>
+              <Link
+                href="/project-overview"
+                className="transition hover:opacity-65"
+              >
+                Project Overview
+              </Link>
               <Link href="/services" className="transition hover:opacity-65">
                 Services
               </Link>

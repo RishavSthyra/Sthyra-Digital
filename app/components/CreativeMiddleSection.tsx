@@ -808,8 +808,8 @@ export function CreativeMiddleSection() {
                     overlayHachureGap={12}
                     overlayHachureAngle={30}
                   >
-                    <div className="relative h-full overflow-hidden rounded-[1.05rem]">
-                      <div className="notebook-paper-blue absolute inset-0 rounded-[1.05rem]" />
+                    <div className="relative h-full overflow-hidden ">
+                      <div className="notebook-paper-blue absolute inset-0 " />
                       <div className="relative flex h-full flex-col justify-between gap-5">
                         <div className="space-y-3">
                           <div className="flex items-start justify-between gap-4">
@@ -876,7 +876,7 @@ export function CreativeMiddleSection() {
                     overlayHachureGap={12}
                     overlayHachureAngle={24}
                   >
-                    <div className="relative h-full overflow-hidden rounded-[1.05rem]">
+                    <div className="relative h-full overflow-hidden ">
                       <div className="notebook-paper-yellow absolute inset-0 rounded-[1.05rem]" />
                       <div className="relative flex h-full flex-col justify-between gap-5">
                         <div className="space-y-3">
@@ -942,7 +942,7 @@ export function CreativeMiddleSection() {
                   overlayHachureAngle={42}
                   accentStroke="#84d4ff"
                 >
-                  <div className="relative h-full overflow-hidden rounded-[1.1rem] pl-0 md:pl-8">
+                  <div className="relative h-full overflow-hidden pl-0 md:pl-8">
                     <div className="notebook-grid-dark absolute inset-0 rounded-[1.1rem]" />
                     <div className="notebook-margin-dark absolute bottom-4 top-4 left-7 hidden w-px md:block" />
                     <PinHoles dark />
@@ -1020,7 +1020,7 @@ export function CreativeMiddleSection() {
                   overlayHachureGap={12}
                   overlayHachureAngle={28}
                 >
-                  <div className="relative h-full overflow-hidden rounded-[1.05rem]">
+                  <div className="relative h-full overflow-hidden">
                     <div className="notebook-paper-soft absolute inset-0 rounded-[1.05rem]" />
                     <div className="relative flex h-full flex-col gap-5">
                     <div className="flex items-start justify-between gap-4">

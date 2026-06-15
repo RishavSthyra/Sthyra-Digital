@@ -195,6 +195,65 @@ body {
   background-size: 1.08rem 1.08rem;
 }
 
+.cohort-application-grid {
+  background-color: #1a1530;
+  background-image:
+    radial-gradient(circle at 14% 18%, rgba(255, 210, 63, 0.10), transparent 22%),
+    radial-gradient(circle at 86% 82%, rgba(255, 93, 143, 0.10), transparent 22%),
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 1.6rem 1.6rem, 1.6rem 1.6rem;
+}
+
+.cohort-input {
+  width: 100%;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f8f4ff;
+  font-family: var(--font-geist-mono), "Segoe UI", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  padding: 0.75rem 0.9rem;
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.cohort-input::placeholder {
+  color: rgba(248, 244, 255, 0.42);
+}
+
+.cohort-input:focus {
+  outline: none;
+  border-color: var(--ek-accent, #ffd23f);
+  background: rgba(255, 255, 255, 0.10);
+  box-shadow: 0 0 0 3px rgba(255, 210, 63, 0.18);
+}
+
+.cohort-input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.cohort-textarea {
+  min-height: 7rem;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.cohort-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23ffd23f'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.24 4.38a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.1rem;
+  padding-right: 2.4rem;
+}
+
+.cohort-select option {
+  background: #1a1530;
+  color: #f8f4ff;
+}
+
 .contact-note-input {
   width: 100%;
   border: 0;

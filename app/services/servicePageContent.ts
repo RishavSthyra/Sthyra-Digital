@@ -436,6 +436,16 @@ export const servicePages: ServicePageContent[] = [
         answer:
           "We handle it as part of the structure: semantic content, route planning, metadata, page speed, internal links, and search intent all shape the build from the start.",
       },
+      {
+        question: "Do you use AI in your web development work?",
+        answer:
+          "No. We do not use AI at all in this work. Strategy, design thinking, copy structure, development, and QA are handled directly so the final site stays original, intentional, and fully human-made.",
+      },
+      {
+        question: "Will our team be able to update the site after launch?",
+        answer:
+          "Yes. We build with maintainability in mind, so content sections, page structure, and handoff patterns are kept clear enough for your team to manage without the site turning messy.",
+      },
     ],
     theme: {
       page: "#09b7ea",

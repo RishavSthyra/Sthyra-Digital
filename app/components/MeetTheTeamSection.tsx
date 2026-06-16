@@ -302,7 +302,7 @@ function ToolbarButton({
       aria-label={label}
       aria-pressed={active}
       onClick={onClick}
-      className={`flex h-14 w-14 items-center justify-center rounded-full shadow-[0_10px_20px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5 ${
+      className={`flex h-14 w-14 items-center justify-center rounded-full shadow-[0_10px_20px_rgba(0,0,0,0.08)] transition ${
         danger
           ? "bg-[#ef4444] text-white"
           : active

@@ -295,9 +295,6 @@ export function HomeCohortPopup() {
                                 Pick your lane before the reset.
                               </h3>
                             </div>
-                            <div className="rounded-full border border-black/10 bg-white/82 px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#171717]">
-                              limited
-                            </div>
                           </div>
 
                           <div className="mt-5 grid grid-cols-2 gap-3">

@@ -1,5 +1,16 @@
 import type { Metadata } from "next";
 
+const DEFAULT_SITE_URL = "https://sthyra.digital";
+
+function getSiteUrl() {
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    process.env.SITE_URL ??
+    DEFAULT_SITE_URL;
+
+  return siteUrl.replace(/\/+$/, "");
+}
+
 export const siteConfig = {
   countryName: "Bangalore",
   description:
@@ -8,7 +19,7 @@ export const siteConfig = {
   locale: "en_US",
   name: "Sthyra Digital",
   siteName: "sthyra.digital",
-  url: "https://sthyra.digital",
+  url: getSiteUrl(),
 } as const;
 
 type PageMetadataInput = {

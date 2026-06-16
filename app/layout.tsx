@@ -61,6 +61,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://cdn.sthyra.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://cdn.sthyra.com" />
         <link rel="dns-prefetch" href="https://lottie.host" />
+        <link
+          rel="preconnect"
+          href="https://assets.calendly.com"
+          crossOrigin=""
+        />
       </head>
       <body className="min-h-full flex flex-col">
         <GlobalHandCursor />

@@ -3,6 +3,7 @@ import { CreativeHero } from "@/app/components/CreativeHero";
 import { CreativeMiddleSection } from "@/app/components/CreativeMiddleSection";
 import { CreativeShowcaseSection } from "@/app/components/CreativeShowcaseSection";
 import { HomeCohortPopup } from "@/app/components/HomeCohortPopup";
+import { MeetTheTeamSection } from "@/app/components/MeetTheTeamSection";
 import { TrustedPortfolioSection } from "@/app/components/TrustedPortfolioSection";
 import {
   buildBreadcrumbSchema,
@@ -55,6 +56,7 @@ export default function Home() {
         <CreativeHero />
         <CreativeMiddleSection />
         <TrustedPortfolioSection />
+        <MeetTheTeamSection />
         <CreativeShowcaseSection />
         <CreativeGallerySection />
         <HomeCohortPopup />

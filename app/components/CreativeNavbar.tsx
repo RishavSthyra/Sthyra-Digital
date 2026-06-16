@@ -8,7 +8,6 @@ import { SketchFrame } from "@/app/components/SketchFrame";
 const navItems = [
   { href: "#top", label: "Home" },
   { href: "/services", label: "Services" },
-  { href: "/elevate-starter-kit", label: "Cohort", highlight: true },
   { href: "#notes", label: "Work" },
   { href: "#contact", label: "Studio" },
 ];
@@ -47,12 +46,12 @@ function TalkButton({ className, textClassName }: TalkButtonProps) {
       overlayHachureAngle={28}
       accentStroke="#e0314b"
     >
-      <a
-        href="mailto:hello@sthyra.digital"
+      <Link
+        href="/elevate-starter-kit"
         className={`block transition duration-300 hover:-translate-y-0.5 ${textClassName}`}
       >
-        Let&apos;s talk
-      </a>
+        Cohort
+      </Link>
     </SketchFrame>
   );
 }
@@ -109,15 +108,8 @@ export function CreativeNavbar({ headerRef }: CreativeNavbarProps) {
             <div key={item.label} className="flex items-center">
               <Link
                 href={item.href}
-                className={
-                  item.highlight
-                    ? "relative inline-flex items-center gap-1.5 rounded-full border-2 border-black/80 bg-[#ffe55a] px-3 py-1 text-[0.85rem] font-semibold uppercase tracking-[0.08em] text-[#171717] shadow-[2px_2px_0_rgba(0,0,0,0.18)] transition duration-300 hover:-translate-y-0.5 hover:rotate-[-2deg]"
-                    : "transition duration-300 hover:-translate-y-0.5 hover:text-black/70"
-                }
+                className="transition duration-300 hover:-translate-y-0.5 hover:text-black/70"
               >
-                {item.highlight ? (
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#e0314b]" aria-hidden="true" />
-                ) : null}
                 {item.label}
               </Link>
             </div>

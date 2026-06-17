@@ -26,21 +26,21 @@ type TeamMember = {
 
 const TEAM_MEMBERS: TeamMember[] = [
   {
-    name: "Maya Lin",
-    role: "Creative Director",
+    name: "Abhigna Muchala",
+    role: "Co-Founder",
     roleBg: "#1f6cff",
     speaking: true,
     micColor: "#44c35e",
   },
   {
     name: "Aasish Muchala",
-    role: "Lead Designer",
+    role: "Co-Founder",
     roleBg: "#f4cb2b",
     micColor: "#ffffff",
   },
   {
     name: "Sai Datta",
-    role: "Brand Strategist",
+    role: "CMO",
     roleBg: "#ef4444",
     micColor: "#ffffff",
   },

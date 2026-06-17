@@ -67,7 +67,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     imageScale: "",
     imageSrc: "/team/rishav.png",
     name: "Rishav Mondal",
-    role: "Frontend Developer",
+    role: "CTO",
     roleBg: "#4ea54e",
     micColor: "#ffffff",
   },

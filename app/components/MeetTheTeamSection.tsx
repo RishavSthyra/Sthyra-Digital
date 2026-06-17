@@ -52,14 +52,150 @@ const TEAM_MEMBERS: TeamMember[] = [
   },
 ];
 
+const REACTION_EMOJIS = [
+  "\u{1F600}",
+  "\u{1F601}",
+  "\u{1F602}",
+  "\u{1F603}",
+  "\u{1F604}",
+  "\u{1F605}",
+  "\u{1F606}",
+  "\u{1F607}",
+  "\u{1F608}",
+  "\u{1F609}",
+  "\u{1F60A}",
+  "\u{1F60B}",
+  "\u{1F60D}",
+  "\u{1F60E}",
+  "\u{1F60F}",
+  "\u{1F618}",
+  "\u{1F61A}",
+  "\u{1F61C}",
+  "\u{1F61D}",
+  "\u{1F61E}",
+  "\u{1F61F}",
+  "\u{1F642}",
+  "\u{1F643}",
+  "\u{1F970}",
+  "\u{1F973}",
+  "\u{1F97A}",
+  "\u{1F929}",
+  "\u{1F60D}",
+  "\u{1F917}",
+  "\u{1F92D}",
+  "\u{1F92F}",
+  "\u{1F44F}",
+  "\u{1F44D}",
+  "\u{1F44C}",
+  "\u{1F90C}",
+  "\u{1F91D}",
+  "\u{1F64C}",
+  "\u{1F4AA}",
+  "\u{1F525}",
+  "\u{2728}",
+  "\u{1F31F}",
+  "\u{2B50}",
+  "\u{1F4AB}",
+  "\u{1F389}",
+  "\u{1F38A}",
+  "\u{1F38F}",
+  "\u{1F380}",
+  "\u{1F381}",
+  "\u{1F382}",
+  "\u{1F388}",
+  "\u{1F39A}",
+  "\u{1F3A8}",
+  "\u{1F3A7}",
+  "\u{1F3A4}",
+  "\u{1F3B6}",
+  "\u{1F3B5}",
+  "\u{1F680}",
+  "\u{1F6F8}",
+  "\u{2604}",
+  "\u{1F31E}",
+  "\u{1F31D}",
+  "\u{1F31A}",
+  "\u{1F308}",
+  "\u{2600}",
+  "\u{26A1}",
+  "\u{1F4A5}",
+  "\u{1F4A8}",
+  "\u{1F4AF}",
+  "\u{1F496}",
+  "\u{1F497}",
+  "\u{1F498}",
+  "\u{1F499}",
+  "\u{1F49A}",
+  "\u{1F49B}",
+  "\u{1F49C}",
+  "\u{1F49D}",
+  "\u{1F49E}",
+  "\u{1F49F}",
+  "\u{2764}",
+  "\u{1FA75}",
+  "\u{1FA77}",
+  "\u{1F90D}",
+  "\u{1F9E1}",
+  "\u{1F49E}",
+  "\u{1F90E}",
+  "\u{1F337}",
+  "\u{1F338}",
+  "\u{1F339}",
+  "\u{1F33A}",
+  "\u{1F33B}",
+  "\u{1F33C}",
+  "\u{1F490}",
+  "\u{1F332}",
+  "\u{1F331}",
+  "\u{1FAB4}",
+  "\u{1F98B}",
+  "\u{1F98A}",
+  "\u{1F9CB}",
+  "\u{1F984}",
+  "\u{1F9E9}",
+  "\u{1F9F8}",
+  "\u{1F4A1}",
+  "\u{1F4BB}",
+  "\u{1F4F1}",
+  "\u{1F3AF}",
+  "\u{1F3C6}",
+  "\u{1F947}",
+  "\u{1F948}",
+  "\u{1F949}",
+  "\u{1F451}",
+  "\u{1F48E}",
+  "\u{1F52E}",
+  "\u{1FA84}",
+  "\u{1F9F2}",
+  "\u{1F7E1}",
+  "\u{1F535}",
+  "\u{1F7E0}",
+  "\u{1F7E2}",
+  "\u{1F7E3}",
+  "\u{1F7E4}",
+  "\u{1F7E5}",
+  "\u{1F7E6}",
+  "\u{1F9E8}",
+  "\u{1F9E0}",
+  "\u{1F4CC}",
+  "\u{1F4CE}",
+  "\u{270C}",
+  "\u{1F91F}",
+  "\u{1FAF6}",
+  "\u{1F44B}",
+  "\u{1FAE1}",
+];
+
 type ReactionParticle = {
   id: number;
   driftX: number;
   durationMs: number;
   emoji: string;
+  originX: number;
+  originY: number;
   rotateDeg: number;
   sizeRem: number;
-  startOffset: number;
+  travelY: number;
 };
 
 function CloudDoodle({ className }: { className: string }) {
@@ -321,42 +457,59 @@ function TeamToolbar() {
   const [isHandRaised, setIsHandRaised] = useState(false);
   const [reactions, setReactions] = useState<ReactionParticle[]>([]);
   const reactionIdRef = useRef(0);
+  const timeoutIdsRef = useRef<number[]>([]);
 
   useEffect(() => {
-    if (!reactions.length) {
-      return;
-    }
-
-    const timers = reactions.map((reaction) =>
-      window.setTimeout(() => {
-        setReactions((current) =>
-          current.filter((item) => item.id !== reaction.id),
-        );
-      }, reaction.durationMs),
-    );
-
     return () => {
-      timers.forEach((timer) => window.clearTimeout(timer));
+      timeoutIdsRef.current.forEach((timer) => window.clearTimeout(timer));
+      timeoutIdsRef.current = [];
     };
-  }, [reactions]);
+  }, []);
+
+  function queueTimeout(callback: () => void, delayMs: number) {
+    const timer = window.setTimeout(() => {
+      timeoutIdsRef.current = timeoutIdsRef.current.filter(
+        (currentTimer) => currentTimer !== timer,
+      );
+      callback();
+    }, delayMs);
+
+    timeoutIdsRef.current.push(timer);
+  }
+
+  function addReaction(originX: number, originY: number) {
+    const durationMs = 4200 + Math.round(Math.random() * 1800);
+
+    reactionIdRef.current += 1;
+
+    const nextReaction: ReactionParticle = {
+      id: reactionIdRef.current,
+      driftX: -36 + Math.random() * 144,
+      durationMs,
+      emoji: REACTION_EMOJIS[Math.floor(Math.random() * REACTION_EMOJIS.length)],
+      originX,
+      originY,
+      rotateDeg: -22 + Math.random() * 44,
+      sizeRem: 1.3 + Math.random() * 1.1,
+      travelY: originY + 72 + Math.random() * 36,
+    };
+
+    setReactions((current) => [...current, nextReaction]);
+    queueTimeout(() => {
+      setReactions((current) =>
+        current.filter((reaction) => reaction.id !== nextReaction.id),
+      );
+    }, durationMs);
+  }
 
   function spawnReactions() {
-    const emojiPool = ["🙂", "😊", "💛", "💙", "💖"];
-    const nextBurst = Array.from({ length: 6 }, (_, index) => {
-      reactionIdRef.current += 1;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const rightInset = Math.max(100, Math.min(200, viewportWidth * 0.18));
+    const launchX = viewportWidth - rightInset + (-18 + Math.random() * 36);
+    const launchY = viewportHeight - (8 + Math.random() * 20);
 
-      return {
-        id: reactionIdRef.current,
-        driftX: -90 - Math.random() * 180,
-        durationMs: 2600 + Math.round(Math.random() * 1200),
-        emoji: emojiPool[Math.floor(Math.random() * emojiPool.length)],
-        rotateDeg: -18 + Math.random() * 36,
-        sizeRem: 1.55 + Math.random() * 0.9,
-        startOffset: index * 18 + Math.random() * 28,
-      };
-    });
-
-    setReactions((current) => [...current, ...nextBurst]);
+    addReaction(launchX, launchY);
   }
 
   return (
@@ -365,14 +518,16 @@ function TeamToolbar() {
         {reactions.map((reaction) => (
           <span
             key={reaction.id}
-            className="meet-team-reaction absolute bottom-8 right-10 select-none"
+            className="meet-team-reaction absolute select-none"
             style={
               {
                 "--meet-team-drift-x": `${reaction.driftX}px`,
                 "--meet-team-duration": `${reaction.durationMs}ms`,
-                bottom: `${2 + reaction.startOffset / 40}rem`,
+                "--meet-team-travel-y": `${reaction.travelY}px`,
                 fontSize: `${reaction.sizeRem}rem`,
+                left: `${reaction.originX}px`,
                 rotate: `${reaction.rotateDeg}deg`,
+                top: `${reaction.originY}px`,
               } as React.CSSProperties
             }
           >
@@ -432,7 +587,10 @@ function TeamToolbar() {
               <ToolbarButton label="End call" danger>
                 <FiPhoneCall className="h-6 w-6" />
               </ToolbarButton>
-              <ToolbarButton label="Reactions" onClick={spawnReactions}>
+              <ToolbarButton
+                label="Reactions"
+                onClick={spawnReactions}
+              >
                 <FiSmile className="h-6 w-6" />
               </ToolbarButton>
               <ToolbarButton
@@ -470,7 +628,8 @@ function TeamToolbar() {
 
       <style jsx>{`
         .meet-team-reaction {
-          animation: meet-team-reaction-float var(--meet-team-duration) ease-out forwards;
+          animation: meet-team-reaction-float var(--meet-team-duration) ease-out
+            forwards;
           filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.16));
           will-change: transform, opacity;
         }
@@ -478,17 +637,37 @@ function TeamToolbar() {
         @keyframes meet-team-reaction-float {
           0% {
             opacity: 0;
-            transform: translate3d(0, 1rem, 0) scale(0.82);
+            transform: translate3d(0, 0.85rem, 0) scale(0.78);
           }
 
-          12% {
+          10% {
             opacity: 1;
-            transform: translate3d(calc(var(--meet-team-drift-x) * 0.15), -1.5rem, 0) scale(1);
+            transform: translate3d(
+                calc(var(--meet-team-drift-x) * 0.08),
+                -1.25rem,
+                0
+              )
+              scale(1);
+          }
+
+          88% {
+            opacity: 1;
+            transform: translate3d(
+                calc(var(--meet-team-drift-x) * 0.88),
+                calc(var(--meet-team-travel-y) * -0.88),
+                0
+              )
+              scale(1.04);
           }
 
           100% {
             opacity: 0;
-            transform: translate3d(var(--meet-team-drift-x), -24rem, 0) scale(1.08);
+            transform: translate3d(
+                var(--meet-team-drift-x),
+                calc(var(--meet-team-travel-y) * -1),
+                0
+              )
+              scale(1.08);
           }
         }
       `}</style>

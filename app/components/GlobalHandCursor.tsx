@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { ContactNotebookPopup } from "@/app/components/ContactNotebookPopup";
+import { OPEN_CONTACT_NOTEBOOK_EVENT } from "@/lib/contact-notebook";
 
 const tooltipOffset = { x: 22, y: 18 };
 const sparkleOffset = { x: 1, y: -10 };
@@ -112,6 +113,26 @@ export function GlobalHandCursor() {
     playPaperSound();
     setIsNotebookOpen(false);
   };
+
+  useEffect(() => {
+    const handleOpenRequest = () => {
+      if (isNotebookOpen) {
+        return;
+      }
+
+      playPaperSound();
+      setIsNotebookOpen(true);
+    };
+
+    window.addEventListener(OPEN_CONTACT_NOTEBOOK_EVENT, handleOpenRequest);
+
+    return () => {
+      window.removeEventListener(
+        OPEN_CONTACT_NOTEBOOK_EVENT,
+        handleOpenRequest,
+      );
+    };
+  }, [isNotebookOpen]);
 
   return (
     <>

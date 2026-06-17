@@ -1,6 +1,6 @@
-import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { getMailConfig, sendMailWithRetry } from "@/lib/mail";
 import { consumeRateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
@@ -129,28 +129,6 @@ const buildRetryAfterHeader = (resetAt: number) => ({
   "Retry-After": Math.max(Math.ceil((resetAt - Date.now()) / 1000), 0).toString(),
 });
 
-const getMailConfig = () => {
-  const host = process.env.MAILTRAP_HOST;
-  const port = Number(process.env.MAILTRAP_PORT ?? "2525");
-  const user = process.env.MAILTRAP_USER;
-  const pass = process.env.MAILTRAP_PASS;
-  const to = process.env.CONTACT_TO_EMAIL;
-  const from = process.env.CONTACT_FROM_EMAIL;
-
-  if (!host || !user || !pass || !to || !from || Number.isNaN(port)) {
-    return null;
-  }
-
-  return {
-    from,
-    host,
-    pass,
-    port,
-    to,
-    user,
-  };
-};
-
 const offerLabel = (offer: CohortApplicationPayload["offer"]) => {
   switch (offer) {
     case "alpha-50":
@@ -264,16 +242,6 @@ export async function POST(request: Request) {
     );
   }
 
-  const transporter = nodemailer.createTransport({
-    host: mailConfig.host,
-    port: mailConfig.port,
-    secure: mailConfig.port === 465,
-    auth: {
-      user: mailConfig.user,
-      pass: mailConfig.pass,
-    },
-  });
-
   try {
     const safeCompany = escapeHtml(payload.companyName);
     const safeWebsite = escapeHtml(payload.websiteUrl || "—");
@@ -288,7 +256,7 @@ export async function POST(request: Request) {
     const safeBottleneck = escapeHtml(bottleneckLabel(payload.bottleneck));
     const safeReadiness = escapeHtml(assetReadinessLabel(payload.assetReadiness));
 
-    await transporter.sendMail({
+    await sendMailWithRetry(mailConfig, {
       from: mailConfig.from,
       to: mailConfig.to,
       replyTo: undefined,

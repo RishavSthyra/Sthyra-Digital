@@ -142,14 +142,6 @@ export function AlphaCohortApplicationPopup({
   const stepBodyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      setStep(0);
-      setForm({ ...initialFormState, offer: defaultOffer ?? null });
-      setSubmitState({ kind: "idle", message: "" });
-    }
-  }, [isOpen, defaultOffer]);
-
-  useEffect(() => {
     if (!isOpen) {
       return;
     }
@@ -371,7 +363,7 @@ export function AlphaCohortApplicationPopup({
                         <p className="mt-3 max-w-[30rem] text-[0.92rem] leading-relaxed text-white/75 sm:text-[0.98rem] lg:mt-3 lg:text-[0.96rem]">
                           Seven short steps. The cohort desk reviews every submission
                           inside 24 hours. If your brand parameters align with the
-                          active case-study blueprint, you'll get the payment gateway
+                          active case-study blueprint, you&apos;ll get the payment gateway
                           and asset upload locker instantly.
                         </p>
                         <a

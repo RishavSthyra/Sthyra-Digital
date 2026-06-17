@@ -15,8 +15,13 @@ import {
 } from "react-icons/fi";
 import { HiOutlineHandRaised } from "react-icons/hi2";
 import { comfortaa } from "@/app/fonts";
+import { openContactNotebook } from "@/lib/contact-notebook";
 
 type TeamMember = {
+  imageAlt: string;
+  imagePosition?: string;
+  imageScale?: string;
+  imageSrc: string;
   name: string;
   role: string;
   roleBg: string;
@@ -26,6 +31,10 @@ type TeamMember = {
 
 const TEAM_MEMBERS: TeamMember[] = [
   {
+    imageAlt: "Portrait of Abhigna Muchala",
+    imagePosition: "center 24%",
+    imageScale: "scale-[1.02]",
+    imageSrc: "/team/abhigna.png",
     name: "Abhigna Muchala",
     role: "Co-Founder",
     roleBg: "#1f6cff",
@@ -33,18 +42,30 @@ const TEAM_MEMBERS: TeamMember[] = [
     micColor: "#44c35e",
   },
   {
+    imageAlt: "Portrait of Aasish Muchala",
+    imagePosition: "center 22%",
+    imageScale: "scale-[1.02]",
+    imageSrc: "/team/aasish.png",
     name: "Aasish Muchala",
     role: "Co-Founder",
     roleBg: "#f4cb2b",
     micColor: "#ffffff",
   },
   {
-    name: "Sai Datta",
+    imageAlt: "Portrait of Sai Datta Reddy",
+    imagePosition: "center 18%",
+    imageScale: "scale-[1.03]",
+    imageSrc: "/team/sai datta.png",
+    name: "Sai Datta Reddy",
     role: "CMO",
     roleBg: "#ef4444",
     micColor: "#ffffff",
   },
   {
+    imageAlt: "Portrait of Rishav Mondal",
+    imagePosition: "center 20%",
+    imageScale: "",
+    imageSrc: "/team/rishav.png",
     name: "Rishav Mondal",
     role: "Frontend Developer",
     roleBg: "#4ea54e",
@@ -355,6 +376,18 @@ function TeamCard({ member }: { member: TeamMember }) {
     <article className="relative aspect-[1.82/1] w-full">
       <div className="absolute inset-0 rounded-[1.9rem] bg-[#f8efe0] p-[0.32rem] shadow-[0_18px_36px_rgba(0,0,0,0.18)]">
         <div className="relative h-full overflow-hidden rounded-[1.65rem] bg-white">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.5),_rgba(255,255,255,0.04)_54%),linear-gradient(180deg,_rgba(18,27,52,0.08),_rgba(18,27,52,0.26))]" />
+          <div className="absolute inset-0 z-[1]">
+            <Image
+              src={member.imageSrc}
+              alt={member.imageAlt}
+              fill
+              sizes="(max-width: 768px) 90vw, 44vw"
+              className={`object-cover ${member.imageScale ?? ""}`}
+              style={{ objectPosition: member.imagePosition ?? "center top" }}
+            />
+          </div>
+
           <div
             aria-hidden="true"
             className="absolute inset-0 opacity-[0.07]"
@@ -367,12 +400,14 @@ function TeamCard({ member }: { member: TeamMember }) {
 
           <div
             aria-hidden="true"
-            className="absolute inset-0"
+            className="absolute inset-0 z-[2]"
             style={{
               backgroundImage:
                 "radial-gradient(circle at 18% 24%, rgba(0,0,0,0.03), transparent 20%), radial-gradient(circle at 80% 76%, rgba(0,0,0,0.03), transparent 18%)",
             }}
           />
+
+          <div className="absolute inset-x-0 bottom-0 z-[3] h-[42%] bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.14)_28%,rgba(255,255,255,0.88)_100%)]" />
 
           {member.speaking ? (
             <div className="absolute left-4 top-4 z-20 inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.74rem] font-semibold text-[#181818] shadow-[0_8px_18px_rgba(0,0,0,0.14)] sm:text-[0.8rem]">
@@ -438,7 +473,7 @@ function ToolbarButton({
       aria-label={label}
       aria-pressed={active}
       onClick={onClick}
-      className={`flex h-14 w-14 items-center justify-center rounded-full shadow-[0_10px_20px_rgba(0,0,0,0.08)] transition ${
+      className={`flex h-14 w-14 items-center justify-center rounded-full transition ${
         danger
           ? "bg-[#ef4444] text-white"
           : active
@@ -512,6 +547,15 @@ function TeamToolbar() {
     addReaction(launchX, launchY);
   }
 
+  function resetToolbar() {
+    setIsMicMuted(false);
+    setIsVideoOff(false);
+    setIsHandRaised(false);
+    setReactions([]);
+    timeoutIdsRef.current.forEach((timer) => window.clearTimeout(timer));
+    timeoutIdsRef.current = [];
+  }
+
   return (
     <div className="relative mx-auto mt-8 w-full max-w-[92rem] px-2 sm:px-4">
       <div className="pointer-events-none fixed inset-0 z-[70] overflow-hidden">
@@ -537,8 +581,8 @@ function TeamToolbar() {
       </div>
 
       <div className="relative rounded-[2.4rem] bg-white px-5 py-4 shadow-[0_20px_40px_rgba(0,0,0,0.18)]">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-center md:justify-between">
+          <div className="order-2 flex items-center justify-center gap-4 md:order-none md:justify-start">
             <div className="flex items-center gap-2">
               <div className="flex h-12 w-12 items-center justify-center rounded-full text-[#171717]">
                 <FiUsers className="h-7 w-7" />
@@ -558,7 +602,7 @@ function TeamToolbar() {
 
           <div className="hidden h-14 w-px bg-black/10 xl:block" />
 
-          <div className="flex min-w-0 flex-1 justify-end lg:flex-none lg:justify-center">
+          <div className="order-1 flex min-w-0 justify-center md:order-none md:flex-1 md:justify-end lg:flex-none lg:justify-center">
             <div className="flex min-w-0 flex-nowrap items-center gap-3 overflow-x-auto pb-1">
               <ToolbarButton
                 label={isMicMuted ? "Turn microphone on" : "Mute microphone"}
@@ -584,7 +628,7 @@ function TeamToolbar() {
                   <FiVideo className="h-6 w-6" />
                 )}
               </ToolbarButton>
-              <ToolbarButton label="End call" danger>
+              <ToolbarButton label="End call" danger onClick={resetToolbar}>
                 <FiPhoneCall className="h-6 w-6" />
               </ToolbarButton>
               <ToolbarButton
@@ -600,7 +644,10 @@ function TeamToolbar() {
               >
                 <HiOutlineHandRaised className="h-6 w-6" />
               </ToolbarButton>
-              <ToolbarButton label="More options">
+              <ToolbarButton
+                label="Open contact notebook"
+                onClick={openContactNotebook}
+              >
                 <FiMoreHorizontal className="h-6 w-6" />
               </ToolbarButton>
             </div>

@@ -21,23 +21,29 @@ type ContactField =
     };
 
 const contactFields: readonly ContactField[] = [
-  { id: "name", label: "Name :", placeholder: "your name here", type: "text" },
+  {
+    id: "name",
+    label: "Contact name :",
+    placeholder: "who should we speak with?",
+    type: "text",
+  },
   {
     id: "email",
-    label: "Email :",
-    placeholder: "where I should reply",
+    label: "Work email :",
+    placeholder: "where should the strategy reply go?",
     type: "email",
   },
   {
     id: "idea",
-    label: "Project :",
-    placeholder: "what are we making?",
+    label: "Brand / offer :",
+    placeholder: "what are you selling or scaling?",
     type: "text",
   },
   {
     id: "note",
-    label: "Note :",
-    placeholder: "the messy first draft goes here",
+    label: "Growth brief :",
+    placeholder:
+      "tell us about the goal, bottleneck, campaign, or website problem you want fixed",
     multiline: true,
   },
 ] as const;
@@ -121,14 +127,15 @@ export function ContactNotebookPopup({
 
       if (!response.ok) {
         throw new Error(
-          result?.message ?? "The note could not be sent right now.",
+          result?.message ?? "The inquiry could not be sent right now.",
         );
       }
 
       formRef.current?.reset();
       setSubmitState({
         kind: "success",
-        message: result?.message ?? "Your note has been sent successfully.",
+        message:
+          result?.message ?? "Your growth inquiry has been sent successfully.",
       });
     } catch (error) {
       setSubmitState({
@@ -136,7 +143,7 @@ export function ContactNotebookPopup({
         message:
           error instanceof Error
             ? error.message
-            : "The note could not be sent right now.",
+            : "The inquiry could not be sent right now.",
       });
     } finally {
       setIsSubmitting(false);
@@ -232,14 +239,16 @@ export function ContactNotebookPopup({
                   <div className="flex flex-col justify-between gap-5 pl-0 lg:gap-4 lg:pl-[clamp(4rem,7vw,6rem)]">
                     <div>
                       <span className="inline-flex rotate-[-3deg] rounded-full border-2 border-black/70 bg-[#fff36d] px-4 py-1 font-[family:var(--font-geist-mono)] text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-black shadow-[3px_3px_0_rgba(0,0,0,0.1)]">
-                        floating notebook
+                        digital growth intake
                       </span>
                       <h2 className="font-cabin-sketch mt-4 max-w-[8ch] text-[clamp(2.15rem,9vw,3.8rem)] leading-[0.92] text-[#17120f] lg:mt-4 lg:text-[clamp(2.55rem,6.3vw,5rem)] lg:leading-[0.88]">
-                        Leave a little note.
+                        Leave us a little note.
                       </h2>
                       <p className="mt-3 max-w-[30rem] text-[0.92rem] leading-relaxed text-[#342923] sm:text-[0.98rem] lg:mt-3 lg:text-[0.96rem]">
-                        Drop the basics here and this notebook will send your
-                        message straight to the inbox.
+                        Share the brand, the bottleneck, and the next move you
+                        want to make. We use this form for websites,
+                        performance marketing, creative systems, and launch
+                        planning.
                       </p>
                       <a
                         href="mailto:hello@sthyra.digital"
@@ -251,14 +260,15 @@ export function ContactNotebookPopup({
 
                     <div className="hidden max-w-[26rem] self-start rounded-[1.5rem] border-2 border-dashed border-[#f09db9] bg-[#fffaf9]/88 p-4 shadow-[0_12px_28px_rgba(0,0,0,0.05)] lg:block">
                       <p className="font-[family:var(--font-geist-mono)] text-[0.68rem] font-semibold uppercase tracking-[0.25em] text-[#6e625c]">
-                        quick note
+                        best fit
                       </p>
                       <p className="font-cabin-sketch mt-2 text-[clamp(1.3rem,2.6vw,1.8rem)] leading-tight text-[#1b1411]">
-                        no boring boxes, just notebook lines.
+                        strategy, traffic, creative, or website cleanup.
                       </p>
                       <p className="mt-2 text-[0.85rem] leading-relaxed text-[#4b3e37]">
-                        Real mail flow is wired in now, with the same sketchy,
-                        easy-to-read notebook feel.
+                        Use this when you need a sharper landing page, cleaner
+                        paid performance, stronger creative direction, or a
+                        clearer digital growth plan.
                       </p>
                     </div>
                   </div>
@@ -316,7 +326,7 @@ export function ContactNotebookPopup({
                         disabled={isSubmitting}
                         className="font-cabin-sketch rounded-full border-2 border-black/80 bg-[#fff36d] px-4 py-2 text-[1rem] text-black shadow-[4px_4px_0_rgba(0,0,0,0.12)] transition hover:-translate-y-0.5 hover:rotate-[-2deg] lg:px-5 lg:text-[1.15rem]"
                       >
-                        {isSubmitting ? "sending..." : "pin this note"}
+                        {isSubmitting ? "sending..." : "send growth brief"}
                       </button>
                     </div>
                   </form>

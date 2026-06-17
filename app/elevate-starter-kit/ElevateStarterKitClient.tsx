@@ -1039,7 +1039,7 @@ export function ElevateStarterKitClient() {
                 for this 6-month cohort. We deploy our full creative director and editing
                 team asset pipeline — building a permanent conversion grid and 5 dynamic
                 performance reel hooks — at a highly optimized baseline fee of{" "}
-                <span className="font-semibold text-[#171717]">₹25,000/month</span>. We don't
+                <span className="font-semibold text-[#171717]">Rs. 25,000/month</span>. We don&apos;t
                 make vanity posts. We engineer a high-intent loop that turns raw profile
                 visitors into paying customers within 30 days.
               </p>
@@ -1065,7 +1065,7 @@ export function ElevateStarterKitClient() {
                       Do not call this
                     </p>
                     <p className="text-[0.92rem] leading-6 text-[#171717]">
-                      This is not "affordable SMM & ads." It is not a 6-month discount starter
+                      This is not &quot;affordable SMM & ads.&quot; It is not a 6-month discount starter
                       kit. It is a 30-brand flagship case-study cohort running on a
                       mathematically structured funnel engine.
                     </p>
@@ -1406,7 +1406,7 @@ export function ElevateStarterKitClient() {
             data-section-heading
             className="mx-auto mt-5 max-w-[40rem] text-[0.98rem] leading-7 text-white/85"
           >
-            Pick the offer that fits, send a one-line email, and we'll confirm your slot and
+            Pick the offer that fits, send a one-line email, and we&apos;ll confirm your slot and
             ship the kickoff packet the same day.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
@@ -1430,11 +1430,13 @@ export function ElevateStarterKitClient() {
       </section>
 
       {/* Multi-step application popup — page-scoped, not the global notebook */}
-      <AlphaCohortApplicationPopup
-        isOpen={isApplicationOpen}
-        onClose={closeApplication}
-        defaultOffer={activeOffer}
-      />
+      {isApplicationOpen ? (
+        <AlphaCohortApplicationPopup
+          isOpen={isApplicationOpen}
+          onClose={closeApplication}
+          defaultOffer={activeOffer}
+        />
+      ) : null}
 
       {/* Floating cohort trigger */}
       <button

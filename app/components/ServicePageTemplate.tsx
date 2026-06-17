@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { baumans } from "@/app/fonts";
+import { OpenContactButton } from "@/app/components/OpenContactButton";
 import { SketchFrame } from "@/app/components/SketchFrame";
 import {
   servicePages,
@@ -572,13 +573,12 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
             </div>
 
             <div className="mt-9 flex flex-wrap justify-center gap-4">
-              <Link
+              <OpenContactButton
                 data-hero-action
-                href="mailto:hello@sthyra.digital"
                 className="rounded-full border border-black/10 bg-[var(--service-accent)] px-5 py-3 font-semibold text-[#171717] shadow-[0_12px_22px_rgba(0,0,0,0.16)] transition hover:-translate-y-0.5"
               >
                 Start this service
-              </Link>
+              </OpenContactButton>
               <Link
                 data-hero-action
                 href="/services"

@@ -1,28 +1,32 @@
-import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { getMailConfig, sendMailWithRetry } from "@/lib/mail";
 import { consumeRateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
 const contactPayloadSchema = z.object({
-  name: z.string().trim().min(1, "Name is required.").max(80, "Name is too long."),
+  name: z
+    .string()
+    .trim()
+    .min(1, "Contact name is required.")
+    .max(80, "Contact name is too long."),
   email: z
     .string()
     .trim()
-    .min(1, "Email is required.")
-    .max(254, "Email is too long.")
+    .min(1, "Work email is required.")
+    .max(254, "Work email is too long.")
     .email("Please enter a valid email address."),
   idea: z
     .string()
     .trim()
-    .min(1, "Project is required.")
-    .max(120, "Project is too long."),
+    .min(1, "Brand or offer is required.")
+    .max(120, "Brand or offer is too long."),
   note: z
     .string()
     .trim()
-    .min(1, "Note is required.")
-    .max(5000, "Note is too long."),
+    .min(1, "Growth brief is required.")
+    .max(5000, "Growth brief is too long."),
 });
 
 type ContactPayload = z.infer<typeof contactPayloadSchema>;
@@ -68,28 +72,6 @@ const buildRateLimitHeaders = (rateLimit: {
 const buildRetryAfterHeader = (resetAt: number) => ({
   "Retry-After": Math.max(Math.ceil((resetAt - Date.now()) / 1000), 0).toString(),
 });
-
-const getMailConfig = () => {
-  const host = process.env.MAILTRAP_HOST;
-  const port = Number(process.env.MAILTRAP_PORT ?? "2525");
-  const user = process.env.MAILTRAP_USER;
-  const pass = process.env.MAILTRAP_PASS;
-  const to = process.env.CONTACT_TO_EMAIL;
-  const from = process.env.CONTACT_FROM_EMAIL;
-
-  if (!host || !user || !pass || !to || !from || Number.isNaN(port)) {
-    return null;
-  }
-
-  return {
-    from,
-    host,
-    pass,
-    port,
-    to,
-    user,
-  };
-};
 
 export async function POST(request: Request) {
   const mailConfig = getMailConfig();
@@ -143,48 +125,38 @@ export async function POST(request: Request) {
 
   const payload: ContactPayload = parsedPayload.data;
 
-  const transporter = nodemailer.createTransport({
-    host: mailConfig.host,
-    port: mailConfig.port,
-    secure: mailConfig.port === 465,
-    auth: {
-      user: mailConfig.user,
-      pass: mailConfig.pass,
-    },
-  });
-
   try {
     const safeName = escapeHtml(payload.name);
     const safeEmail = escapeHtml(payload.email);
     const safeIdea = escapeHtml(payload.idea);
     const safeNote = escapeHtml(payload.note).replace(/\n/g, "<br />");
 
-    await transporter.sendMail({
+    await sendMailWithRetry(mailConfig, {
       from: mailConfig.from,
       to: mailConfig.to,
       replyTo: payload.email,
-      subject: `New Sthyra contact: ${payload.idea}`,
+      subject: `New Sthyra growth inquiry: ${payload.idea}`,
       text: [
-        "New contact form submission",
-        `Name: ${payload.name}`,
-        `Email: ${payload.email}`,
-        `Project: ${payload.idea}`,
+        "New digital marketing inquiry",
+        `Contact name: ${payload.name}`,
+        `Work email: ${payload.email}`,
+        `Brand / offer: ${payload.idea}`,
         "",
-        "Note:",
+        "Growth brief:",
         payload.note,
       ].join("\n"),
       html: `
-        <h2>New contact form submission</h2>
-        <p><strong>Name:</strong> ${safeName}</p>
-        <p><strong>Email:</strong> ${safeEmail}</p>
-        <p><strong>Project:</strong> ${safeIdea}</p>
-        <p><strong>Note:</strong></p>
+        <h2>New digital marketing inquiry</h2>
+        <p><strong>Contact name:</strong> ${safeName}</p>
+        <p><strong>Work email:</strong> ${safeEmail}</p>
+        <p><strong>Brand / offer:</strong> ${safeIdea}</p>
+        <p><strong>Growth brief:</strong></p>
         <p>${safeNote}</p>
       `,
     });
 
     return NextResponse.json({
-      message: "Your note has been pinned and sent successfully.",
+      message: "Your growth inquiry has been sent successfully.",
     }, {
       headers: buildRateLimitHeaders(rateLimit),
     });
@@ -192,7 +164,7 @@ export async function POST(request: Request) {
     console.error("Contact form email failed", error);
 
     return NextResponse.json(
-      { message: "The note could not be sent right now. Please try again." },
+      { message: "The inquiry could not be sent right now. Please try again." },
       {
         status: 500,
         headers: buildRateLimitHeaders(rateLimit),

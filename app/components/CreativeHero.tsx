@@ -7,6 +7,7 @@ import illustration from "@/public/illustration.png";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { CreativeNavbar } from "@/app/components/CreativeNavbar";
+import { OpenContactButton } from "@/app/components/OpenContactButton";
 import { SquigglyText } from "@/components/ui/squiggly-text";
 const FIGMA_FRAME_WIDTH = 1436;
 const SVG_WIDTH_RATIO = 1396.12 / FIGMA_FRAME_WIDTH;
@@ -388,12 +389,11 @@ export function CreativeHero() {
               >
                 Explore service pages
               </Link>
-              <a
-                href="mailto:hello@sthyra.digital"
+              <OpenContactButton
                 className="rounded-full border border-white/18 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/16"
               >
                 Start a project
-              </a>
+              </OpenContactButton>
             </div>
           </div>
 

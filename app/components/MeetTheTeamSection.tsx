@@ -501,7 +501,7 @@ export function MeetTheTeamSection() {
     <section
       id="team"
       aria-label="Meet the team"
-      className="relative overflow-hidden bg-[#0f7ff4] py-[4.75rem] sm:py-24 lg:py-28"
+      className="relative overflow-hidden bg-[#09b7ea] py-[4.75rem] sm:py-24 lg:py-28"
     >
       <div
         aria-hidden="true"

@@ -1,14 +1,31 @@
 import type { Metadata } from "next";
 
-const DEFAULT_SITE_URL = "https://sthyra.digital";
+const CANONICAL_SITE_URL = "https://www.sthyradigital.com";
+const LEGACY_SITE_HOSTS = new Set(["sthyra.digital", "www.sthyra.digital"]);
 
 function getSiteUrl() {
-  const siteUrl =
+  const rawSiteUrl =
     process.env.NEXT_PUBLIC_SITE_URL ??
     process.env.SITE_URL ??
-    DEFAULT_SITE_URL;
+    CANONICAL_SITE_URL;
 
-  return siteUrl.replace(/\/+$/, "");
+  const siteUrl = rawSiteUrl.replace(/\/+$/, "");
+
+  try {
+    const parsedUrl = new URL(siteUrl);
+
+    if (LEGACY_SITE_HOSTS.has(parsedUrl.hostname)) {
+      return CANONICAL_SITE_URL;
+    }
+
+    if (parsedUrl.hostname === "sthyradigital.com") {
+      return `https://www.${parsedUrl.hostname}`;
+    }
+  } catch {
+    return CANONICAL_SITE_URL;
+  }
+
+  return siteUrl;
 }
 
 export const siteConfig = {
@@ -18,7 +35,7 @@ export const siteConfig = {
   email: "hello@sthyra.digital",
   locale: "en_US",
   name: "Sthyra Digital",
-  siteName: "sthyra.digital",
+  siteName: "Sthyra Digital",
   url: getSiteUrl(),
 } as const;
 

@@ -384,11 +384,10 @@ export function ElevateStarterKitClient() {
             className="absolute bottom-[-20rem] left-[-2rem] flex h-[44rem] w-[22rem] items-end justify-start opacity-95 lg:bottom-[-29rem] lg:left-[-3rem] lg:h-[64rem] lg:w-[32rem]"
           >
             <Image
-              src="/Man1.svg"
-              alt=""
+              src="/Man1.webp"
+              alt="Illustrated male figure"
               width={236}
               height={500}
-              unoptimized
               sizes="(min-width: 1024px) 512px, 352px"
               className="h-full w-auto object-contain"
             />
@@ -398,11 +397,10 @@ export function ElevateStarterKitClient() {
             className="absolute bottom-[-20rem] right-[-2rem] flex h-[44rem] w-[22rem] items-end justify-end opacity-95 lg:bottom-[-29rem] lg:right-[-3rem] lg:h-[64rem] lg:w-[32rem]"
           >
             <Image
-              src="/Woman1.svg"
-              alt=""
+              src="/Woman1.webp"
+              alt="Illustrated female figure"
               width={236}
               height={500}
-              unoptimized
               sizes="(min-width: 1024px) 512px, 352px"
               className="h-full w-auto object-contain"
             />
@@ -418,11 +416,10 @@ export function ElevateStarterKitClient() {
             className="absolute bottom-[-4.5rem] left-[-1.9rem] flex h-[20.5rem] w-[12.75rem] items-end justify-start opacity-95 sm:bottom-[-6.5rem] sm:left-[-2.2rem] sm:h-[24rem] sm:w-[14.75rem] md:bottom-[-17rem] md:left-[-3.5rem] md:h-[46rem] md:w-[27rem]"
           >
             <Image
-              src="/Man1.svg"
-              alt=""
+              src="/Man1.webp"
+              alt="Illustrated male figure"
               width={236}
               height={500}
-              unoptimized
               sizes="(min-width: 768px) 432px, 236px"
               className="h-full w-auto object-contain"
             />
@@ -432,11 +429,10 @@ export function ElevateStarterKitClient() {
             className="absolute bottom-[-5rem] right-[-1.7rem] flex h-[19rem] w-[11.75rem] items-end justify-end opacity-95 sm:bottom-[-7rem] sm:right-[-2.2rem] sm:h-[24rem] sm:w-[14.75rem] md:bottom-[-17rem] md:right-[-3.5rem] md:h-[44rem] md:w-[26rem]"
           >
             <Image
-              src="/Woman1.svg"
-              alt=""
+              src="/Woman1.webp"
+              alt="Illustrated female figure"
               width={236}
               height={500}
-              unoptimized
               sizes="(min-width: 768px) 416px, 224px"
               className="h-full w-auto object-contain"
             />
@@ -733,11 +729,12 @@ export function ElevateStarterKitClient() {
             style={{ transformOrigin: "50% 50%" }}
           >
             <Image
-              src="/measuring-circle-blank-circular-protractor-grid-measuring-degrees.png"
-              alt=""
-              fill
+              src="/measuring-circle-blank-circular-protractor-grid-measuring-degrees.webp"
+              alt="Decorative measurement grid illustration"
+              width={700}
+              height={594}
               sizes="320px"
-              className="object-contain"
+              className="absolute inset-0 h-full w-full object-contain"
             />
           </motion.div>
         </div>
@@ -753,13 +750,13 @@ export function ElevateStarterKitClient() {
                   fillStyle="zigzag-line"
                 />
               </div>
-              <h2
+              <h3
                 data-section-heading
                 className="mt-5 text-[clamp(2.4rem,4.8vw,4.6rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-white"
               >
                 The Alpha-50 <br />
                 <span style={{ color: "var(--ek-accent)" }}>Architecture Sprint.</span>
-              </h2>
+              </h3>
               <p
                 data-section-heading
                 className="mt-4 text-[0.98rem] leading-7 text-[#dbe8ff] sm:text-[1rem]"
@@ -1014,13 +1011,13 @@ export function ElevateStarterKitClient() {
                   fillStyle="hachure"
                 />
               </div>
-              <h2
+              <h3
                 data-section-heading
                 className="mt-5 text-[clamp(2.4rem,4.8vw,4.6rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-[#171717]"
               >
                 The Core-5 <br />
                 <span style={{ color: "#c2175c" }}>Growth Incubator.</span>
-              </h2>
+              </h3>
               <p
                 data-section-heading
                 className="mt-4 text-[0.98rem] leading-7 text-[#54463e] sm:text-[1rem]"
@@ -1101,12 +1098,12 @@ export function ElevateStarterKitClient() {
                 fillStyle="hachure"
               />
             </div>
-            <h2
+            <h3
               data-section-heading
               className="mt-5 text-[clamp(2.25rem,4.5vw,4.05rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-[#171717]"
             >
               The full deliverable stack, packed into one cohort.
-            </h2>
+            </h3>
             <p
               data-section-heading
               className="mt-4 max-w-[44rem] mx-auto text-[0.98rem] leading-7 text-[#54463e]"
@@ -1235,13 +1232,13 @@ export function ElevateStarterKitClient() {
                   fillStyle="zigzag-line"
                 />
               </div>
-              <h2
+              <h3
                 data-section-heading
                 className="mt-5 text-[clamp(2.4rem,4.8vw,4.6rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-white"
               >
                 50 + 30. <br />
                 <span style={{ color: "var(--ek-accent-soft)" }}>Then the doors close.</span>
-              </h2>
+              </h3>
               <p
                 data-section-heading
                 className="mt-4 max-w-[40rem] text-[0.98rem] leading-7 text-[#dbe8ff] sm:text-[1rem]"
@@ -1298,12 +1295,12 @@ export function ElevateStarterKitClient() {
                 fillStyle="zigzag-line"
               />
             </div>
-            <h2
+            <h3
               data-section-heading
               className="mt-5 text-[clamp(2.25rem,4.5vw,4.05rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-[#171717]"
             >
               Questions founders ask before claiming a slot.
-            </h2>
+            </h3>
           </div>
 
           <div className="grid items-start gap-5 lg:grid-cols-2">
@@ -1393,7 +1390,7 @@ export function ElevateStarterKitClient() {
               fillStyle="zigzag-line"
             />
           </div>
-          <h2
+          <h3
             data-section-heading
             className={`mt-5 mx-auto max-w-[20ch] text-[clamp(2.6rem,5.6vw,5.2rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-white`}
           >
@@ -1401,7 +1398,7 @@ export function ElevateStarterKitClient() {
             <span style={{ color: "var(--ek-accent)" }}>30 growth slots.</span>
             <br />
             <span>Both close permanently.</span>
-          </h2>
+          </h3>
           <p
             data-section-heading
             className="mx-auto mt-5 max-w-[40rem] text-[0.98rem] leading-7 text-white/85"
@@ -1447,7 +1444,7 @@ export function ElevateStarterKitClient() {
       >
         <Image
           src="/icons/calendar_white.svg"
-          alt=""
+          alt="Open cohort application"
           width={48}
           height={48}
           className="object-contain"

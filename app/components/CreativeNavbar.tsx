@@ -68,11 +68,12 @@ export function CreativeNavbar({ headerRef }: CreativeNavbarProps) {
         aria-label="Sthyra Digital home"
       >
         <Image
-          src="/Sthyra_Logo_Png.png"
+          src="/Sthyra_Logo_Png.webp"
           alt="Sthyra Digital"
-          width={3508}
-          height={1168}
-          priority
+          width={160}
+          height={53}
+          preload
+          sizes="(max-width: 639px) 8rem, (max-width: 1023px) 9.25rem, 10rem"
           className="h-auto w-[8rem] sm:w-[9.25rem] lg:w-[10rem]"
         />
       </Link>

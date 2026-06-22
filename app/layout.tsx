@@ -7,8 +7,8 @@ import {
   geistSans,
   irishGrover,
 } from "./fonts";
+import { ClientLayoutEnhancements } from "@/app/components/ClientLayoutEnhancements";
 import { GlobalFooter } from "@/app/components/GlobalFooter";
-import { GlobalHandCursor } from "@/app/components/GlobalHandCursor";
 import { siteConfig } from "@/lib/seo";
 import "./globals.css";
 
@@ -68,7 +68,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <GlobalHandCursor />
+        <ClientLayoutEnhancements />
         <div className="flex-1">{children}</div>
         <GlobalFooter />
       </body>

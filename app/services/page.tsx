@@ -26,7 +26,7 @@ export const metadata: Metadata = buildPageMetadata({
     "technical SEO services",
   ],
   path: "/services",
-  title: "Bangalore Digital Marketing Services for Performance, Web & Creative",
+  title: "Web, SEO & Marketing Services",
 });
 
 const servicesFaqs = [
@@ -378,9 +378,9 @@ export default function ServicesIndexPage() {
           <div className="relative z-10 mx-auto max-w-[84rem]">
             <div className="mb-10 max-w-[48rem]">
               <SectionTag color="#ffe55a" label="How they fit together" text="#3b2b00" />
-              <h2 className="mt-5 text-[clamp(2.25rem,4.6vw,4.1rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-white">
+              <h3 className="mt-5 text-[clamp(2.25rem,4.6vw,4.1rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-white">
                 Different entry points, same growth backbone.
-              </h2>
+              </h3>
               <p className="mt-4 text-[0.98rem] leading-7 text-[#dbe8ff]">
                 Most brands enter through one bottleneck first. The system gets
                 stronger when media, site, and creative stop operating like
@@ -423,9 +423,9 @@ export default function ServicesIndexPage() {
           <div className="mx-auto grid max-w-[84rem] gap-8 lg:grid-cols-[0.95fr_1.05fr]">
             <div>
               <SectionTag color="#ff8b5e" label="Questions" text="#ffffff" />
-              <h2 className="mt-5 max-w-[14ch] text-[clamp(2.15rem,4.4vw,3.9rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-[#171717]">
+              <h3 className="mt-5 max-w-[14ch] text-[clamp(2.15rem,4.4vw,3.9rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-[#171717]">
                 The quick answers before you choose a lane.
-              </h2>
+              </h3>
               <p className="mt-4 max-w-[40rem] text-[1rem] leading-8 text-[#5a4d45]">
                 The goal here is clarity, not filler. If you already know which
                 lane fits, head into the service page. If not, send the team a

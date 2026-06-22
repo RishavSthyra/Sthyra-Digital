@@ -1,5 +1,38 @@
 import type { NextConfig } from "next";
 
+const securityHeaders = [
+  {
+    key: "Content-Security-Policy",
+    value: [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'self'",
+      "object-src 'none'",
+      "img-src 'self' data: blob: https://cdn.sthyra.com",
+      "media-src 'self' data: blob:",
+      "font-src 'self' data:",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com",
+      "style-src 'self' 'unsafe-inline'",
+      "connect-src 'self' https://cdn.sthyra.com https://assets.calendly.com https://calendly.com https://*.calendly.com",
+      "frame-src 'self' https://calendly.com https://*.calendly.com",
+      "upgrade-insecure-requests",
+    ].join("; "),
+  },
+  {
+    key: "Referrer-Policy",
+    value: "strict-origin-when-cross-origin",
+  },
+  {
+    key: "X-Content-Type-Options",
+    value: "nosniff",
+  },
+  {
+    key: "X-Frame-Options",
+    value: "SAMEORIGIN",
+  },
+];
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -8,6 +41,14 @@ const nextConfig: NextConfig = {
         hostname: "cdn.sthyra.com",
       },
     ],
+  },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: securityHeaders,
+      },
+    ];
   },
 };
 

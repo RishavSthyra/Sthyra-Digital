@@ -86,7 +86,7 @@ export const servicePages: ServicePageContent[] = [
     conciseAnswer:
       "Performance marketing services that connect paid social, paid search, landing pages, and conversion tracking into one measurable growth system.",
     metaDescription:
-      "Performance marketing services focused on paid social, search ads, landing page optimization, AEO-aware messaging, and conversion systems for ambitious brands.",
+      "Performance marketing services for paid social, search ads, landing page optimization, AEO-aware messaging, and cleaner conversion systems.",
     audience:
       "Best for brands that need a paid media partner who can shape the message, pressure-test the funnel, and keep creative performance tied to business outcomes.",
     primaryKeyword: "performance marketing agency",
@@ -471,7 +471,7 @@ export const servicePages: ServicePageContent[] = [
     conciseAnswer:
       "Creative management services that give brands clearer direction, stronger content systems, and a more repeatable campaign production workflow.",
     metaDescription:
-      "Creative management services for campaign direction, content operations, brand storytelling, repurposing systems, short-form video planning, and AI-assisted workflows.",
+      "Creative management services for campaign direction, content operations, brand storytelling, repurposing systems, and AI-assisted workflows.",
     audience:
       "Best for teams with ideas, channels, and collaborators already in motion who need stronger creative leadership and cleaner production systems.",
     primaryKeyword: "creative management services",

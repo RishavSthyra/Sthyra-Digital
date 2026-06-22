@@ -1,33 +1,35 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { ContactNotebookPopup } from "@/app/components/ContactNotebookPopup";
 import { OPEN_CONTACT_NOTEBOOK_EVENT } from "@/lib/contact-notebook";
 
 const tooltipOffset = { x: 22, y: 18 };
 const sparkleOffset = { x: 1, y: -10 };
+const ContactNotebookPopup = dynamic(
+  () =>
+    import("@/app/components/ContactNotebookPopup").then(
+      (mod) => mod.ContactNotebookPopup,
+    ),
+  {
+    ssr: false,
+  },
+);
 
 export function GlobalHandCursor() {
   const paperAudioRef = useRef<HTMLAudioElement | null>(null);
   const sparkleRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
+  const sparkleAnimationFrameRef = useRef<number | null>(null);
   const pointerRef = useRef({ x: 0, y: 0 });
   const [showTooltip, setShowTooltip] = useState(false);
   const [isNotebookOpen, setIsNotebookOpen] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const audio = new Audio("/audio/makigai_maimai-paper-245786.mp3");
-    audio.preload = "auto";
-    paperAudioRef.current = audio;
-
     return () => {
-      audio.pause();
+      paperAudioRef.current?.pause();
       paperAudioRef.current = null;
     };
   }, []);
@@ -64,10 +66,14 @@ export function GlobalHandCursor() {
       sparkleNode.style.top = `${event.clientY + sparkleOffset.y}px`;
       sparkleNode.classList.remove("cursor-click-sparkle-active");
 
-      // Force a reflow so the same animation can restart on rapid clicks.
-      void sparkleNode.offsetWidth;
+      if (sparkleAnimationFrameRef.current !== null) {
+        window.cancelAnimationFrame(sparkleAnimationFrameRef.current);
+      }
 
-      sparkleNode.classList.add("cursor-click-sparkle-active");
+      sparkleAnimationFrameRef.current = window.requestAnimationFrame(() => {
+        sparkleAnimationFrameRef.current = null;
+        sparkleNode.classList.add("cursor-click-sparkle-active");
+      });
     };
 
     window.addEventListener("mousemove", handlePointerMove, { passive: true });
@@ -82,10 +88,20 @@ export function GlobalHandCursor() {
       if (frameRef.current !== null) {
         window.cancelAnimationFrame(frameRef.current);
       }
+
+      if (sparkleAnimationFrameRef.current !== null) {
+        window.cancelAnimationFrame(sparkleAnimationFrameRef.current);
+      }
     };
   }, []);
 
   const playPaperSound = () => {
+    if (!paperAudioRef.current) {
+      const audio = new Audio("/audio/makigai_maimai-paper-245786.mp3");
+      audio.preload = "auto";
+      paperAudioRef.current = audio;
+    }
+
     const audio = paperAudioRef.current;
 
     if (!audio) {
@@ -136,10 +152,12 @@ export function GlobalHandCursor() {
 
   return (
     <>
-      <ContactNotebookPopup
-        isOpen={isNotebookOpen}
-        onClose={closeNotebook}
-      />
+      {isNotebookOpen ? (
+        <ContactNotebookPopup
+          isOpen={isNotebookOpen}
+          onClose={closeNotebook}
+        />
+      ) : null}
 
       <div className="pointer-events-none fixed inset-x-0 top-0 z-[140]">
         <button
@@ -152,12 +170,13 @@ export function GlobalHandCursor() {
         >
           <span className="relative block h-full w-full">
             <Image
-              src="/0001.svg"
-              alt=""
-              fill
+              src="/0001.webp"
+              alt="Open contact notebook tab"
+              width={108}
+              height={184}
               priority
               sizes="(max-width: 640px) 72px, (max-width: 1024px) 96px, 108px"
-              className="object-contain transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+              className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-[1.02]"
             />
           </span>
         </button>

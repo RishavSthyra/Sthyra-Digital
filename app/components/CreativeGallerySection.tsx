@@ -161,9 +161,10 @@ function DragCard({
         <Image
           src={src}
           alt={alt}
-          fill
+          width={800}
+          height={1000}
           sizes="(max-width: 640px) 40vw, (max-width: 1024px) 28vw, 20rem"
-          className="object-cover"
+          className="absolute inset-0 h-full w-full object-cover"
         />
       </div>
       <figcaption className="px-3 pt-3 font-[family:var(--font-geist-mono)] text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-[#473f39] sm:text-[0.68rem]">

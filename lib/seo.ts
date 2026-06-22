@@ -31,7 +31,7 @@ function getSiteUrl() {
 export const siteConfig = {
   countryName: "Bangalore",
   description:
-    "Sthyra Digital is a Bangalore digital marketing agency offering performance marketing, custom web development, technical SEO, and creative management for ambitious brands.",
+    "Sthyra Digital is a Bangalore agency for performance marketing, web development, technical SEO, and creative systems that help ambitious brands grow.",
   email: "hello@sthyra.digital",
   locale: "en_US",
   name: "Sthyra Digital",

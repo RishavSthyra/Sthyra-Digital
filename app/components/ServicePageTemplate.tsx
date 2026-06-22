@@ -399,11 +399,10 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
             className="absolute bottom-[-20rem] left-[-2rem] flex h-[44rem] w-[22rem] items-end justify-start opacity-95 lg:bottom-[-29rem] lg:left-[-3rem] lg:h-[64rem] lg:w-[32rem]"
           >
             <Image
-              src="/Man1.svg"
-              alt=""
+              src="/Man1.webp"
+              alt="Illustrated male figure"
               width={236}
               height={500}
-              unoptimized
               sizes="(min-width: 1024px) 512px, 352px"
               className="h-full w-auto object-contain"
             />
@@ -414,11 +413,10 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
             className="absolute bottom-[-20rem] right-[-2rem] flex h-[44rem] w-[22rem] items-end justify-end opacity-95 lg:bottom-[-29rem] lg:right-[-3rem] lg:h-[64rem] lg:w-[32rem]"
           >
             <Image
-              src="/Woman1.svg"
-              alt=""
+              src="/Woman1.webp"
+              alt="Illustrated female figure"
               width={236}
               height={500}
-              unoptimized
               sizes="(min-width: 1024px) 512px, 352px"
               className="h-full w-auto object-contain"
             />
@@ -431,11 +429,10 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
             className="absolute bottom-[-4.5rem] left-[-1.9rem] flex h-[20.5rem] w-[12.75rem] items-end justify-start opacity-95 sm:bottom-[-6.5rem] sm:left-[-2.2rem] sm:h-[24rem] sm:w-[14.75rem] md:bottom-[-17rem] md:left-[-3.5rem] md:h-[46rem] md:w-[27rem]"
           >
             <Image
-              src="/Man1.svg"
-              alt=""
+              src="/Man1.webp"
+              alt="Illustrated male figure"
               width={236}
               height={500}
-              unoptimized
               sizes="(min-width: 768px) 432px, 236px"
               className="h-full w-auto object-contain"
             />
@@ -446,11 +443,10 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
             className="absolute bottom-[-5rem] right-[-1.7rem] flex h-[19rem] w-[11.75rem] items-end justify-end opacity-95 sm:bottom-[-7rem] sm:right-[-2.2rem] sm:h-[24rem] sm:w-[14.75rem] md:bottom-[-17rem] md:right-[-3.5rem] md:h-[44rem] md:w-[26rem]"
           >
             <Image
-              src="/Woman1.svg"
-              alt=""
+              src="/Woman1.webp"
+              alt="Illustrated female figure"
               width={236}
               height={500}
-              unoptimized
               sizes="(min-width: 768px) 416px, 224px"
               className="h-full w-auto object-contain"
             />
@@ -767,11 +763,12 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
             style={{ transformOrigin: "50% 50%" }}
           >
             <Image
-              src="/measuring-circle-blank-circular-protractor-grid-measuring-degrees.png"
-              alt=""
-              fill
+              src="/measuring-circle-blank-circular-protractor-grid-measuring-degrees.webp"
+              alt="Decorative measurement grid illustration"
+              width={700}
+              height={594}
               sizes="(min-width: 1024px) 768px, 576px"
-              className="object-contain"
+              className="absolute inset-0 h-full w-full object-contain"
             />
           </motion.div>
         </div>
@@ -781,12 +778,12 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
             <div data-reveal-accent className="inline-block">
               <SectionTag color="var(--service-accent)" label="Workflow" text="#2f2100" />
             </div>
-            <h2
+            <h3
               data-section-heading
               className="mt-5 text-[clamp(2.4rem,4.8vw,4.6rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-white"
             >
-              The structure stays familiar. The service content does the heavy lifting.
-            </h2>
+              How we run your {service.shortName.toLowerCase()} workflow.
+            </h3>
           </div>
 
           <div className="grid gap-5 lg:grid-cols-4">
@@ -824,12 +821,12 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
                 text="#ffffff"
               />
             </div>
-            <h2
+            <h3
               data-section-heading
               className="mt-5 text-[clamp(2.25rem,4.5vw,4.05rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-[#171717]"
             >
               What your team actually gets, packed into expandable story cards.
-            </h2>
+            </h3>
           </div>
         </div>
 
@@ -1043,12 +1040,12 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
             <div data-reveal-accent className="inline-block">
               <SectionTag color="var(--service-accent-soft)" label="FAQ" text="#ffffff" />
             </div>
-            <h2
+            <h3
               data-section-heading
               className="mt-5 max-w-[14ch] text-[clamp(2.2rem,4.4vw,4rem)] font-semibold leading-[0.92] tracking-[-0.055em] text-[#171717]"
             >
               Questions teams ask before choosing this service.
-            </h2>
+            </h3>
 
             <div className="mt-8 space-y-4">
               {service.faq.map((item, index) => {

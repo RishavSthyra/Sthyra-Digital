@@ -126,10 +126,11 @@ export default function ProjectOverviewPage() {
               <div className="absolute -right-4 bottom-10 h-28 w-28 rounded-full bg-[#ff5d8f]/18 blur-3xl" />
               <div className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-white/8 p-4 shadow-[0_24px_60px_rgba(0,0,0,0.24)]">
                 <Image
-                  src="/illustration.png"
+                  src="/illustration.webp"
                   alt="Illustrated overview of the Sthyra Digital brand direction"
                   width={1148}
                   height={760}
+                  sizes="(max-width: 1024px) 100vw, 30rem"
                   className="h-auto w-full rounded-[1.4rem] object-cover"
                   priority
                 />
@@ -161,9 +162,9 @@ export default function ProjectOverviewPage() {
                   <div className="inline-flex rounded-full bg-white/60 px-3 py-1 font-[family:var(--font-geist-mono)] text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-[#5d5147]">
                     {card.chip}
                   </div>
-                  <h2 className="text-[1.8rem] font-semibold leading-[1.02] tracking-[-0.045em] text-[#171717]">
+                  <h3 className="text-[1.8rem] font-semibold leading-[1.02] tracking-[-0.045em] text-[#171717]">
                     {card.title}
-                  </h2>
+                  </h3>
                   <p className="text-[0.98rem] leading-7 text-[#554742]">
                     {card.body}
                   </p>
@@ -207,10 +208,11 @@ export default function ProjectOverviewPage() {
             >
               <div className="space-y-4">
                 <Image
-                  src="/Team.png"
+                  src="/Team.webp"
                   alt="The Sthyra Digital team"
                   width={1200}
-                  height={900}
+                  height={300}
+                  sizes="(max-width: 1024px) 100vw, 26rem"
                   className="h-auto w-full rounded-[1.2rem] object-cover"
                 />
                 <div className="flex flex-wrap gap-3">

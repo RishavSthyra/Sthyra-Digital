@@ -1,128 +1,7 @@
-"use client";
-
-import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { CherryBlossomSplash } from "@/app/components/CherryBlossomSplash";
-
-const brandLetters = "STHYRA".split("");
-const headlineVariants = {
-  hidden: {
-    opacity: 0,
-    y: "-1.25em",
-    rotate: -1.4,
-    filter: "blur(12px)",
-  },
-  visible: {
-    opacity: 1,
-    y: "0em",
-    rotate: 0,
-    filter: "blur(0px)",
-  },
-};
 
 export function GlobalFooter() {
-  const headlineRef = useRef<HTMLDivElement>(null);
-  const footerImageRefs = useRef<{
-    desktopBack: HTMLImageElement | null;
-    desktopFront: HTMLImageElement | null;
-    mobileBack: HTMLImageElement | null;
-    mobileFront: HTMLImageElement | null;
-  }>({
-    desktopBack: null,
-    desktopFront: null,
-    mobileBack: null,
-    mobileFront: null,
-  });
-  const warmedSourcesRef = useRef(new Set<string>());
-  const preloadRef = useRef<HTMLImageElement[]>([]);
-  const previousHeadlineInViewRef = useRef(false);
-  const headlineInView = useInView(headlineRef, {
-    once: false,
-    amount: 0.54,
-  });
-  const [splashBurstKey, setSplashBurstKey] = useState(0);
-
-  useEffect(() => {
-    const enteredView = headlineInView && !previousHeadlineInViewRef.current;
-    previousHeadlineInViewRef.current = headlineInView;
-
-    if (!enteredView) {
-      return;
-    }
-
-    const timer = window.setTimeout(() => {
-      setSplashBurstKey((current) => current + 1);
-    }, 220);
-
-    return () => window.clearTimeout(timer);
-  }, [headlineInView]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const idleWindow = window as Window &
-      typeof globalThis & {
-        cancelIdleCallback?: (handle: number) => void;
-        requestIdleCallback?: (
-          callback: IdleRequestCallback,
-          options?: IdleRequestOptions,
-        ) => number;
-      };
-
-    const warmFooterImages = () => {
-      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-      const activeImages = isDesktop
-        ? [
-            footerImageRefs.current.desktopBack,
-            footerImageRefs.current.desktopFront,
-          ]
-        : [
-            footerImageRefs.current.mobileBack,
-            footerImageRefs.current.mobileFront,
-          ];
-
-      activeImages.forEach((imageNode) => {
-        if (!imageNode) {
-          return;
-        }
-
-        const source = imageNode.currentSrc || imageNode.src;
-
-        if (!source || warmedSourcesRef.current.has(source)) {
-          return;
-        }
-
-        imageNode.loading = "eager";
-        imageNode.decoding = "async";
-        imageNode.fetchPriority = "low";
-
-        const preloadImage = new window.Image();
-        preloadImage.decoding = "async";
-        preloadImage.fetchPriority = "low";
-        preloadImage.src = source;
-
-        preloadRef.current.push(preloadImage);
-        warmedSourcesRef.current.add(source);
-      });
-    };
-
-    if (typeof idleWindow.requestIdleCallback === "function") {
-      const idleId = idleWindow.requestIdleCallback(warmFooterImages, {
-        timeout: 2200,
-      });
-
-      return () => idleWindow.cancelIdleCallback?.(idleId);
-    }
-
-    const timeoutId = globalThis.setTimeout(warmFooterImages, 1200);
-
-    return () => globalThis.clearTimeout(timeoutId);
-  }, []);
-
   return (
     <footer
       id="contact"
@@ -131,11 +10,8 @@ export function GlobalFooter() {
       <div className="relative min-h-[34rem] pt-24 sm:min-h-[42rem] sm:pt-28 lg:min-h-[50rem] lg:pt-36 xl:min-h-[58rem] xl:pt-40">
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 flex justify-center lg:hidden">
           <Image
-            ref={(node) => {
-              footerImageRefs.current.mobileBack = node;
-            }}
-            src="/BACK_SMALL.png"
-            alt=""
+            src="/BACK_SMALL.webp"
+            alt="Layered paper background illustration"
             width={1351}
             height={2400}
             sizes="100vw"
@@ -145,11 +21,8 @@ export function GlobalFooter() {
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 hidden justify-center lg:flex">
           <Image
-            ref={(node) => {
-              footerImageRefs.current.desktopBack = node;
-            }}
-            src="/BACK.png"
-            alt=""
+            src="/BACK.webp"
+            alt="Layered paper background illustration"
             width={2172}
             height={724}
             sizes="100vw"
@@ -158,13 +31,7 @@ export function GlobalFooter() {
         </div>
 
         <div className="relative z-10 mx-auto flex min-h-[inherit] w-full max-w-[1800px] flex-col justify-end px-4 pb-10 sm:px-6 sm:pb-14 lg:px-10 lg:pb-20 xl:pb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.35 }}
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto mb-4 max-w-[32rem] text-center sm:mb-6 lg:mb-8"
-          >
+          <div className="mx-auto mb-4 max-w-[32rem] text-center sm:mb-6 lg:mb-8">
             <p className="font-[family:var(--font-geist-mono)] text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-[#5f615d] sm:text-[0.8rem]">
               Sthyra Digital
             </p>
@@ -172,43 +39,22 @@ export function GlobalFooter() {
               Design, code, motion, and story layered into one living brand
               space.
             </p>
-          </motion.div>
+          </div>
 
-          <div
-            ref={headlineRef}
-            className="relative z-10 mx-auto -mt-2 flex w-full max-w-[1700px] justify-center sm:mt-0 lg:mt-2"
-          >
-            <motion.h2
+          <div className="relative z-10 mx-auto -mt-2 flex w-full max-w-[1700px] justify-center sm:mt-0 lg:mt-2">
+            <h2
               aria-label="STHYRA"
               className="flex flex-wrap justify-center gap-x-[0.025em] bg-[linear-gradient(135deg,#ff79b8_10%,#ff8fdf_42%,#bc7cff_72%,#7a53ff_100%)] bg-clip-text text-center font-sans text-[clamp(4.75rem,19vw,18rem)] font-black uppercase leading-[0.8] tracking-[-0.065em] text-transparent drop-shadow-[0_10px_24px_rgba(233,121,204,0.18)] sm:gap-x-[0.035em] sm:text-[clamp(6.5rem,19vw,18rem)]"
-              initial="hidden"
-              animate={headlineInView ? "visible" : "hidden"}
-              variants={headlineVariants}
-              transition={{
-                type: "spring",
-                stiffness: 112,
-                damping: 16,
-                mass: 1.02,
-              }}
             >
-              {brandLetters.map((letter, index) => (
-                <span key={`${letter}-${index}`} className="inline-block">
-                  {letter}
-                </span>
-              ))}
-            </motion.h2>
+              {"STHYRA"}
+            </h2>
           </div>
         </div>
 
-        <CherryBlossomSplash burstKey={splashBurstKey} />
-
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center lg:hidden">
           <Image
-            ref={(node) => {
-              footerImageRefs.current.mobileFront = node;
-            }}
-            src="/FRONT_SMALL.png"
-            alt=""
+            src="/FRONT_SMALL.webp"
+            alt="Foreground paper collage illustration"
             width={941}
             height={1672}
             sizes="100vw"
@@ -218,13 +64,10 @@ export function GlobalFooter() {
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 hidden justify-center lg:flex">
           <Image
-            ref={(node) => {
-              footerImageRefs.current.desktopFront = node;
-            }}
-            src="/BACK2.png"
-            alt=""
-            width={4344}
-            height={1448}
+            src="/BACK2.webp"
+            alt="Foreground paper collage illustration"
+            width={2400}
+            height={800}
             sizes="100vw"
             className="h-auto w-[126%] max-w-none xl:w-[112%]"
           />

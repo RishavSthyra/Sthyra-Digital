@@ -3,7 +3,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-import illustration from "@/public/illustration.png";
+import illustration from "@/public/illustration.webp";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { CreativeNavbar } from "@/app/components/CreativeNavbar";

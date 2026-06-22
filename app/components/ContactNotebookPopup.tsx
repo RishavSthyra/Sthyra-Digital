@@ -180,30 +180,33 @@ export function ContactNotebookPopup({
                 <div className="pointer-events-none absolute left-[1.1rem] top-[1rem] z-20 h-[clamp(3.8rem,7vw,5.8rem)] w-[clamp(4.4rem,11vw,7.6rem)] -rotate-[18deg] sm:left-[1.6rem] sm:top-[1.4rem] lg:left-[clamp(4.6rem,9vw,7.4rem)]">
                   <Image
                     src="/Tape Piece.svg"
-                    alt=""
-                    fill
+                    alt="Decorative tape accent"
+                    width={152}
+                    height={116}
                     sizes="(max-width: 640px) 88px, 128px"
-                    className="object-contain"
+                    className="h-full w-full object-contain"
                   />
                 </div>
 
                 <div className="pointer-events-none absolute right-[clamp(4.2rem,8vw,7.2rem)] top-[clamp(4rem,9vh,6rem)] z-10 h-[clamp(4rem,9vw,7.2rem)] w-[clamp(4rem,9vw,7.2rem)] rotate-[8deg] opacity-95">
                   <Image
                     src="/Heart 5.svg"
-                    alt=""
-                    fill
+                    alt="Decorative heart accent"
+                    width={120}
+                    height={120}
                     sizes="(max-width: 640px) 82px, 120px"
-                    className="object-contain"
+                    className="h-full w-full object-contain"
                   />
                 </div>
 
                 <div className="pointer-events-none absolute bottom-[clamp(0.5rem,2vw,1.8rem)] right-[clamp(0.6rem,2vw,1.8rem)] z-10 h-[clamp(8rem,18vw,14rem)] w-[clamp(8rem,18vw,14rem)] opacity-95">
                   <Image
                     src="/Pink twinkles.svg"
-                    alt=""
-                    fill
+                    alt="Decorative sparkle accent"
+                    width={224}
+                    height={224}
                     sizes="(max-width: 640px) 156px, 224px"
-                    className="object-contain"
+                    className="h-full w-full object-contain"
                   />
                 </div>
 

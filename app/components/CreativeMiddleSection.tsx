@@ -716,7 +716,7 @@ export function CreativeMiddleSection() {
                         </div>
                         <Image
                           src={highfiveIcon}
-                          alt=""
+                          alt="High-five icon"
                           className={topRightIconClassName}
                         />
                       </div>
@@ -755,7 +755,7 @@ export function CreativeMiddleSection() {
                           >
                             <Image
                               src={item.icon}
-                              alt=""
+                              alt={`${item.title} icon`}
                               className={featureIconClassName}
                             />
                             <div className="mb-3 text-sm font-semibold tracking-[-0.02em] text-[#151515]">
@@ -818,7 +818,7 @@ export function CreativeMiddleSection() {
                             </p>
                             <Image
                               src={smileyLoveIcon}
-                              alt=""
+                              alt="Smiley icon"
                               className={topRightIconClassName}
                             />
                           </div>
@@ -886,7 +886,7 @@ export function CreativeMiddleSection() {
                             </p>
                             <Image
                               src={smileyGrindingIcon}
-                              alt=""
+                              alt="Smiley icon"
                               className={topRightIconClassName}
                             />
                           </div>
@@ -962,7 +962,7 @@ export function CreativeMiddleSection() {
                         </div>
                         <Image
                           src={graphMonitorIcon}
-                          alt=""
+                          alt="Graph monitor icon"
                           className={topRightIconClassName}
                         />
                       </div>
@@ -1038,7 +1038,7 @@ export function CreativeMiddleSection() {
                       </div>
                       <Image
                         src={okHandIcon}
-                        alt=""
+                        alt="OK hand icon"
                         className={topRightIconClassName}
                       />
                     </div>

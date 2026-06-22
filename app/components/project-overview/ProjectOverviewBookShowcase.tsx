@@ -173,9 +173,9 @@ export function ProjectOverviewBookShowcase() {
                 <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[#9e4a18]">
                   Flip notes
                 </p>
-                <h2 className="mt-2 text-[1.45rem] font-semibold leading-[1.02] tracking-[-0.04em] text-[#171717]">
+                <h3 className="mt-2 text-[1.45rem] font-semibold leading-[1.02] tracking-[-0.04em] text-[#171717]">
                   A more hands-on project intro.
-                </h2>
+                </h3>
               </div>
               <div className="space-y-3 text-sm leading-6 text-[#51443c]">
                 <p>Click the book itself to keep turning forward.</p>
@@ -217,9 +217,9 @@ export function ProjectOverviewBookShowcase() {
                 <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[#8fd7ff]">
                   Page control
                 </p>
-                <h2 className="mt-2 text-[1.45rem] font-semibold leading-[1.02] tracking-[-0.04em]">
+                <h3 className="mt-2 text-[1.45rem] font-semibold leading-[1.02] tracking-[-0.04em]">
                   Jump anywhere.
-                </h2>
+                </h3>
               </div>
 
               <div className="flex flex-wrap gap-2">

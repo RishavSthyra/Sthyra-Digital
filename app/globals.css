@@ -82,7 +82,7 @@ body {
 }
 
 .hero-we-are {
-  will-change: transform;
+  opacity: 0.96;
 }
 
 .hero-letter {
@@ -94,6 +94,7 @@ body {
 .hero-marquee-track {
   width: max-content;
   will-change: transform;
+  animation: trusted-marquee 24s linear infinite;
 }
 
 .trusted-marquee-track {
@@ -104,6 +105,14 @@ body {
 
 .trusted-marquee-track-reverse {
   animation-direction: reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-marquee-track,
+  .trusted-marquee-track,
+  .cursor-click-sparkle-active {
+    animation: none !important;
+  }
 }
 
 .cursor-click-sparkle-active {

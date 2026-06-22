@@ -1,7 +1,6 @@
-import { CreativeGallerySection } from "@/app/components/CreativeGallerySection";
 import { CreativeHero } from "@/app/components/CreativeHero";
 import { CreativeMiddleSection } from "@/app/components/CreativeMiddleSection";
-import { CreativeShowcaseSection } from "@/app/components/CreativeShowcaseSection";
+import { HomeDeferredSections } from "@/app/components/HomeDeferredSections";
 import { HomeClientOverlays } from "@/app/components/HomeClientOverlays";
 import { MeetTheTeamSection } from "@/app/components/MeetTheTeamSection";
 import { TrustedPortfolioSection } from "@/app/components/TrustedPortfolioSection";
@@ -57,8 +56,7 @@ export default function Home() {
         <CreativeMiddleSection />
         <TrustedPortfolioSection />
         <MeetTheTeamSection />
-        <CreativeShowcaseSection />
-        <CreativeGallerySection />
+        <HomeDeferredSections />
         <HomeClientOverlays />
       </main>
     </>

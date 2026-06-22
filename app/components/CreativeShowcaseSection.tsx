@@ -1,14 +1,24 @@
 "use client";
 
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { baumans, comfortaa } from "@/app/fonts";
-import { PaperPlaneProgressOverlay } from "@/app/components/PaperPlaneProgressOverlay";
+import { DotLottieCanvas } from "@/app/components/DotLottieCanvas";
 import { SketchFrame } from "@/app/components/SketchFrame";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const PaperPlaneProgressOverlay = dynamic(
+  () =>
+    import("@/app/components/PaperPlaneProgressOverlay").then(
+      (mod) => mod.PaperPlaneProgressOverlay,
+    ),
+  {
+    ssr: false,
+  },
+);
 
 type ShowcaseSlide = {
   accent: string;
@@ -402,12 +412,14 @@ function ShowcasePanel({
   compact = false,
   contentRef,
   panelRef,
+  shouldLoadInteractiveMedia,
 }: {
   slide: ShowcaseSlide;
   panelWidth: string;
   compact?: boolean;
   contentRef?: (node: HTMLDivElement | null) => void;
   panelRef?: (node: HTMLElement | null) => void;
+  shouldLoadInteractiveMedia: boolean;
 }) {
   return (
     <article
@@ -428,16 +440,25 @@ function ShowcasePanel({
             <RoughBubble slide={slide} />
           </div>
 
-          <DotLottieReact
-            src={slide.lottieSrc}
-            loop
-            autoplay
-            className={`mx-auto w-full ${
-              compact
-                ? "h-[clamp(22rem,48vh,34rem)] xl:h-[clamp(26rem,56vh,40rem)]"
-                : "h-[clamp(28rem,58vh,42rem)] xl:h-[clamp(34rem,72vh,56rem)]"
-            }`}
-          />
+          {shouldLoadInteractiveMedia ? (
+            <DotLottieCanvas
+              src={slide.lottieSrc}
+              className={`mx-auto w-full ${
+                compact
+                  ? "h-[clamp(22rem,48vh,34rem)] xl:h-[clamp(26rem,56vh,40rem)]"
+                  : "h-[clamp(28rem,58vh,42rem)] xl:h-[clamp(34rem,72vh,56rem)]"
+              }`}
+            />
+          ) : (
+            <div
+              aria-hidden="true"
+              className={`mx-auto w-full ${
+                compact
+                  ? "h-[clamp(22rem,48vh,34rem)] xl:h-[clamp(26rem,56vh,40rem)]"
+                  : "h-[clamp(28rem,58vh,42rem)] xl:h-[clamp(34rem,72vh,56rem)]"
+              }`}
+            />
+          )}
         </div>
 
         <div className="relative flex w-full justify-center">
@@ -450,8 +471,10 @@ function ShowcasePanel({
 
 function ShowcaseMobileCard({
   slide,
+  shouldLoadInteractiveMedia,
 }: {
   slide: ShowcaseSlide;
+  shouldLoadInteractiveMedia: boolean;
 }) {
   return (
     <article
@@ -463,12 +486,17 @@ function ShowcaseMobileCard({
           <RoughBubble slide={slide} />
         </div>
 
-        <DotLottieReact
-          src={slide.lottieSrc}
-          loop
-          autoplay
-          className="h-[19rem] w-full sm:h-[24rem]"
-        />
+        {shouldLoadInteractiveMedia ? (
+          <DotLottieCanvas
+            src={slide.lottieSrc}
+            className="h-[19rem] w-full sm:h-[24rem]"
+          />
+        ) : (
+          <div
+            aria-hidden="true"
+            className="h-[19rem] w-full sm:h-[24rem]"
+          />
+        )}
 
         <WorkflowCalendarCard slide={slide} mobile />
       </div>
@@ -487,6 +515,37 @@ export function CreativeShowcaseSection() {
     null,
   );
   const [isCompactDesktop, setIsCompactDesktop] = useState(false);
+  const [shouldLoadInteractiveMedia, setShouldLoadInteractiveMedia] =
+    useState(false);
+
+  useEffect(() => {
+    if (shouldLoadInteractiveMedia) {
+      return;
+    }
+
+    const section = sectionRef.current;
+
+    if (!section || typeof IntersectionObserver === "undefined") {
+      setShouldLoadInteractiveMedia(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldLoadInteractiveMedia(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: "420px 0px",
+      },
+    );
+
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  }, [shouldLoadInteractiveMedia]);
 
   useEffect(() => {
     const updateDesktopViewportHeight = () => {
@@ -758,6 +817,7 @@ export function CreativeShowcaseSection() {
           <ShowcaseMobileCard
             key={slide.title}
             slide={slide}
+            shouldLoadInteractiveMedia={shouldLoadInteractiveMedia}
           />
         ))}
       </div>
@@ -771,7 +831,7 @@ export function CreativeShowcaseSection() {
             : undefined
         }
       >
-        {desktopViewportHeight ? (
+        {desktopViewportHeight && shouldLoadInteractiveMedia ? (
           <PaperPlaneProgressOverlay
             progressRef={desktopScrollProgressRef}
             compact={isCompactDesktop}
@@ -789,6 +849,7 @@ export function CreativeShowcaseSection() {
               slide={slide}
               compact={isCompactDesktop}
               panelWidth={`${100 / slides.length}%`}
+              shouldLoadInteractiveMedia={shouldLoadInteractiveMedia}
               panelRef={(node) => {
                 desktopPanelRefs.current[index] = node;
               }}

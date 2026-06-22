@@ -24,18 +24,21 @@ export const irishGrover = Irish_Grover({
 });
 
 export const baumans = Baumans({
+  preload: false,
   variable: "--font-baumans",
   weight: "400",
   subsets: ["latin"],
 });
 
 export const comfortaa = Comfortaa({
+  preload: false,
   variable: "--font-comfortaa",
   weight: ["400", "700"],
   subsets: ["latin"],
 });
 
 export const cabinSketch = Cabin_Sketch({
+  preload: false,
   variable: "--font-cabin-sketch",
   weight: ["400", "700"],
   subsets: ["latin"],

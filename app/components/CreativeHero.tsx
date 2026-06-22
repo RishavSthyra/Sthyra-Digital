@@ -11,9 +11,11 @@ const marqueeLoopText = [
   "Too F** Creative",
   "Built Different",
   "Too F** Targeted",
+  "Campaigns With Teeth",
   "Too F** Creative",
   "Built Different",
   "Too F** Targeted",
+  "Campaigns With Teeth",
 ];
 
 export function CreativeHero() {
@@ -33,48 +35,52 @@ export function CreativeHero() {
             className="pointer-events-none absolute left-1/2 top-[15%] z-10 max-w-none -translate-x-1/2 select-none sm:top-[14%] md:top-[15%] lg:top-[12%]"
             style={{ width: `${SVG_WIDTH_RATIO * 100}vw` }}
           >
-            <Image
-              src="/we-are-new.svg"
-              alt=""
-              aria-hidden="true"
-              width={1397}
-              height={526}
-              unoptimized
-              priority
-              sizes="100vw"
-              className="hero-we-are h-auto w-full"
-            />
-          </div>
-
-          <div className="relative z-20 mt-[8svh] translate-x-[clamp(0.9rem,2.2vw,2.8rem)] sm:mt-[8svh] md:mt-[10svh] lg:mt-[10svh] xl:mt-[8svh]">
-            <div
-              className="absolute inset-x-0 bottom-[-1.8rem] z-10 mx-auto h-12 rounded-full bg-[#0d3554]/28 blur-3xl sm:h-14 md:bottom-[-2.2rem] md:h-16"
-              style={{
-                width: `${ILLUSTRATION_WIDTH_RATIO * 68}vw`,
-              }}
-            />
-            <div
-              className="hero-illustration-shell relative z-20"
-              style={{ width: `${ILLUSTRATION_WIDTH_RATIO * 100}vw` }}
-            >
+            <div className="hero-svg-shell">
               <Image
-                src={illustration}
-                alt="Three creative teammates working across bright floating platforms"
-                preload
-                fetchPriority="high"
-                sizes="(max-width: 767px) 92vw, 79.944vw"
-                className="h-auto w-full drop-shadow-[0_35px_50px_rgba(9,23,43,0.26)]"
+                src="/we-are-new.svg"
+                alt=""
+                aria-hidden="true"
+                width={1397}
+                height={526}
+                unoptimized
+                priority
+                sizes="100vw"
+                className="hero-we-are h-auto w-full"
               />
             </div>
           </div>
 
-          <div className="relative z-30 mt-[clamp(0.5rem,2vh,1.5rem)] flex w-full flex-col items-center gap-5 sm:gap-6">
-            <div className="pointer-events-none relative left-1/2 w-screen -translate-x-1/2 overflow-hidden sm:left-[52%]">
+          <div className="relative z-20 mt-[8svh] translate-x-[clamp(0.9rem,2.2vw,2.8rem)] sm:mt-[8svh] md:mt-[10svh] lg:mt-[10svh] xl:mt-[8svh]">
+            <div className="hero-illustration-group">
+              <div
+                className="hero-shadow absolute inset-x-0 bottom-[-1.8rem] z-10 mx-auto h-12 rounded-full bg-[#0d3554]/28 blur-3xl sm:h-14 md:bottom-[-2.2rem] md:h-16"
+                style={{
+                  width: `${ILLUSTRATION_WIDTH_RATIO * 68}vw`,
+                }}
+              />
+              <div
+                className="hero-illustration-shell relative z-20"
+                style={{ width: `${ILLUSTRATION_WIDTH_RATIO * 100}vw` }}
+              >
+                <Image
+                  src={illustration}
+                  alt="Three creative teammates working across bright floating platforms"
+                  preload
+                  fetchPriority="high"
+                  sizes="(max-width: 767px) 92vw, 79.944vw"
+                  className="h-auto w-full drop-shadow-[0_35px_50px_rgba(9,23,43,0.26)]"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="hero-copy relative z-30 mt-[clamp(0.5rem,2vh,1.5rem)] flex w-full flex-col items-center gap-5 sm:gap-6">
+            <div className="hero-marquee-wrap pointer-events-none relative left-1/2 w-screen -translate-x-1/2 overflow-hidden sm:left-[52%]">
               <div className="hero-marquee-track flex items-end whitespace-nowrap">
                 {marqueeLoopText.map((text, index) => (
                   <div
                     key={`${text}-${index}`}
-                    className="font-display flex h-full w-screen shrink-0 items-end justify-center px-4 text-center text-[clamp(3.4rem,10vw,8rem)] leading-[0.9] tracking-[-0.04em] text-white"
+                    className="font-display flex h-full min-w-[max(20rem,88vw)] shrink-0 items-end justify-center px-4 text-center text-[clamp(4.25rem,12vw,9.75rem)] leading-[0.88] tracking-[-0.045em] text-white sm:min-w-[max(24rem,76vw)]"
                   >
                     <span>{text}</span>
                   </div>

@@ -359,9 +359,7 @@ export function MeetTheTeamSection() {
               alt="Meet the Team"
               width={1600}
               height={400}
-              preload
-              loading="eager"
-              fetchPriority="high"
+              quality={65}
               sizes="(max-width: 640px) 88vw, (max-width: 1024px) 56vw, 46rem"
               className="mx-auto h-auto w-full max-w-[46rem]"
             />

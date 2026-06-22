@@ -20,6 +20,7 @@ const marqueeMeasureText = marqueeText.reduce((longest, current) =>
   current.length > longest.length ? current : longest,
 );
 const marqueeMeasureBase = 200;
+const marqueeFallbackFontSize = "clamp(5rem, 12vw, 12rem)";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -327,8 +328,10 @@ export function CreativeHero() {
               <Image
                 src={illustration}
                 alt="Three creative teammates working across bright floating platforms"
-                preload
-                sizes="(max-width: 767px) 92vw, 79.944vw"
+                quality={70}
+                loading="eager"
+                fetchPriority="high"
+                sizes="79.944vw"
                 className="h-auto w-full drop-shadow-[0_35px_50px_rgba(9,23,43,0.26)]"
               />
             </div>
@@ -342,6 +345,9 @@ export function CreativeHero() {
                 width: marqueeViewportWidth
                   ? `${marqueeViewportWidth}px`
                   : "100vw",
+                minHeight: marqueeViewportWidth
+                  ? `${Math.ceil(marqueeFontSize)}px`
+                  : marqueeFallbackFontSize,
               }}
             >
               <div
@@ -356,7 +362,9 @@ export function CreativeHero() {
                       width: marqueeViewportWidth
                         ? `${marqueeViewportWidth}px`
                         : "100vw",
-                      fontSize: `${marqueeFontSize}px`,
+                      fontSize: marqueeViewportWidth
+                        ? `${marqueeFontSize}px`
+                        : marqueeFallbackFontSize,
                     }}
                   >
                     <span>{text}</span>

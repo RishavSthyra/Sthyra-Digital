@@ -73,6 +73,7 @@ export function CreativeNavbar({ headerRef }: CreativeNavbarProps) {
           width={160}
           height={53}
           preload
+          quality={60}
           sizes="(max-width: 639px) 8rem, (max-width: 1023px) 9.25rem, 10rem"
           className="h-auto w-[8rem] sm:w-[9.25rem] lg:w-[10rem]"
         />

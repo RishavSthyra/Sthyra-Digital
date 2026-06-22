@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
-import { useRef, useState, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { twMerge } from "tailwind-merge";
 import { SketchFrame } from "@/app/components/SketchFrame";
 import { SquigglyText } from "@/components/ui/squiggly-text";
@@ -176,6 +176,45 @@ function DragCard({
 
 export function CreativeGallerySection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const preloadRef = useRef<HTMLImageElement[]>([]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const idleWindow = window as Window &
+      typeof globalThis & {
+        cancelIdleCallback?: (handle: number) => void;
+        requestIdleCallback?: (
+          callback: IdleRequestCallback,
+          options?: IdleRequestOptions,
+        ) => number;
+      };
+
+    const warmGalleryImages = () => {
+      preloadRef.current = galleryCards.map((card) => {
+        const image = new window.Image();
+        image.decoding = "async";
+        image.fetchPriority = "low";
+        image.src = card.src;
+
+        return image;
+      });
+    };
+
+    if (typeof idleWindow.requestIdleCallback === "function") {
+      const idleId = idleWindow.requestIdleCallback(warmGalleryImages, {
+        timeout: 1800,
+      });
+
+      return () => idleWindow.cancelIdleCallback?.(idleId);
+    }
+
+    const timeoutId = globalThis.setTimeout(warmGalleryImages, 900);
+
+    return () => globalThis.clearTimeout(timeoutId);
+  }, []);
 
   return (
     <section

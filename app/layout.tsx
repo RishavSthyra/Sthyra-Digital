@@ -57,6 +57,16 @@ export default function RootLayout({
       lang="en"
       className={`site-doodle-cursor ${geistSans.variable} ${geistMono.variable} ${irishGrover.variable} ${baumans.variable} ${comfortaa.variable} ${cabinSketch.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preconnect" href="https://cdn.sthyra.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://cdn.sthyra.com" />
+        <link rel="dns-prefetch" href="https://lottie.host" />
+        <link
+          rel="preconnect"
+          href="https://assets.calendly.com"
+          crossOrigin=""
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <ClientLayoutEnhancements />
         <div className="flex-1">{children}</div>

@@ -20,7 +20,7 @@ const sketchBursts = [
 ];
 
 type CreativeNavbarProps = {
-  headerRef?: RefObject<HTMLElement | null>;
+  headerRef: RefObject<HTMLElement | null>;
 };
 
 type TalkButtonProps = {

@@ -166,6 +166,9 @@ export function GlobalFooter() {
               <Link href="/services" className="transition hover:opacity-65">
                 Services
               </Link>
+              <Link href="/contact" className="transition hover:opacity-65">
+                Contact
+              </Link>
               <Link
                 href="/services/performance-marketing"
                 className="transition hover:opacity-65"

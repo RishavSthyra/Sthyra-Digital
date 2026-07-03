@@ -9,7 +9,7 @@ const navItems = [
   { href: "#top", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "#notes", label: "Work" },
-  { href: "#contact", label: "Studio" },
+  { href: "/contact", label: "Contact" },
 ];
 
 const sketchBursts = [

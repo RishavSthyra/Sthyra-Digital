@@ -58,6 +58,19 @@ export default function RootLayout({
       className={`site-doodle-cursor ${geistSans.variable} ${geistMono.variable} ${irishGrover.variable} ${baumans.variable} ${comfortaa.variable} ${cabinSketch.variable} h-full antialiased`}
     >
       <head>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-KL3NLSTQ4X"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-KL3NLSTQ4X');`,
+          }}
+        />
         <link rel="preconnect" href="https://cdn.sthyra.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://cdn.sthyra.com" />
         <link rel="dns-prefetch" href="https://lottie.host" />
